@@ -1,0 +1,44 @@
+{template 'common/myheader'}
+    <div id="page_pubin" class="page page_pubin page-current">
+		<div class="content infinite-scroll " data-distance="50">
+			
+			{loop $tasksort $item}
+				<a href="{php echo $this->createMobileUrl('pub',array('sid'=>$item['id']))}">
+					<div class="tsort_item">
+						<div class="tsort_itemimg">
+							<img src="{php echo empty( $item['img'] ) ? '../addons/zofui_taskself/public/images/icon_p.png' : tomedia($item['img'])}">
+						</div>
+						<div class="tsort_itemname">
+							{$item['name']}
+						</div>
+					</div>
+				</a>
+			{/loop}
+			{if $_W['set']['isusetask'] == 1}	
+				<a href="{php echo $this->createMobileUrl('pubuse')}">
+					<div class="tsort_item">
+						<div class="tsort_itemimg">
+							<img src="../addons/zofui_taskself/public/images/icon_p.png">
+						</div>
+						<div class="tsort_itemname">
+							试用任务
+						</div>
+					</div>
+				</a>
+			{/if}
+			{if empty($_W['set']['isusetask']) && $_W['set']['istbtask'] == 1 && empty($_W['set']['ispubtbtask'])}	
+				<a href="{php echo $this->createMobileUrl('pubtb')}">
+					<div class="tsort_item">
+						<div class="tsort_itemimg">
+							<img src="../addons/zofui_taskself/public/images/icon_p.png">
+						</div>
+						<div class="tsort_itemname">
+							担保任务
+						</div>
+					</div>
+				</a>
+			{/if}		
+		</div>
+	</div>
+{template 'common/nav'}	
+{template 'common/myfooter'}

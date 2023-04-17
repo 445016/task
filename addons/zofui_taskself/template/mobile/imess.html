@@ -1,0 +1,36 @@
+{template 'common/myheader'}
+
+    <div id="page_find" class="page page-current page_find">
+		<div class="content infinite-scroll" data-distance="50">
+			<div class="imgess_top ">当前有<font class="pri-color nownum">{php echo empty($imess) ? 0 : $imess}</font>条未读消息  <span class="imgess_readall pri-color pri-border">全部设为已读</span></div>
+			<div class="list_container drop_class ">
+				<!-- <a href="">
+					<div class="imess_item">
+						<div class="imess_top item_cell_box">
+							<div class="imess_left item_cell_flex">
+								<div class="imess_title">
+									无法改完全放弃我发起发起发起
+								</div>
+								<div class="imess_time font_13px_999">
+									2019-12-22 12:22
+								</div>
+								<div class="imess_content">
+									无法改完全放弃我发起发起发起
+								</div>
+							</div>
+							<div class="imess_status">
+								<span class="imess_readed">已阅</span>
+							</div>
+						</div>
+					</div>
+				</a> -->
+				
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}
+

@@ -1,0 +1,20 @@
+{if $mustnick == 1}
+    <div class="setnick_box">
+        <div class="mask" style="z-index:3"></div>
+        <div class="setnick_content">
+            <div class="setnick_nick">
+                <input type="text" name="nick" value="{$userinfo['nickname']}" placeholder="输入昵称">
+            </div>
+            <div class="pub_images_list setnick_head">
+                <div class="upload_images_views">
+                    <li class="fl upload_image_item">
+                        <img src="{php echo tomedia( $userinfo['headimgurl'] )}">
+                        <input value="{$userinfo['headimgurl']}" type="hidden" name="headimg[]">
+                    </li>
+                </div>
+                <div class="uploader_input setnick_headbtn" id="setnick_headbtn"></div>
+            </div>
+            <div class="btn setnick_btn" id="confirm_setnick">确定</div>
+        </div>
+    </div>
+{/if}

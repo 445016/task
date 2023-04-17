@@ -1,0 +1,31 @@
+{template 'common/myheader'}
+	
+    <div id="page_activity" class="page page_activity page-current">
+		<div class="content infinite-scroll " data-distance="50">
+			{template 'common/top'}
+			
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						兑换数量
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="act" class="form_input form_into" value="" placeholder="请输入活跃度数量" />
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+			</div>
+			<p class="form_tips tr ">充值比例:1{$_W['cname']}={$_W['set']['actper']}活跃度，您还有<font class="font_ff5f27 nowactivity">{$userinfo['activity']}</font>活跃度</p>
+			<p class="form_tips tr pri-color">活跃度每天凌晨清零</p>
+
+			<div class="popup_bot page_money_inbtn">
+			  	<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_addact">兑换</a>
+			</div>
+
+		</div>
+		
+	</div>
+
+{template 'common/myfooter'}

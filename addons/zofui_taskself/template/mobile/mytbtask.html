@@ -1,0 +1,78 @@
+{template 'common/myheader'}
+
+    <div id="page_mypub" class="page page-current page_mypub">
+		<header class="bar bar-nav mypub_nav item_cell_box">
+			<div class="bar_nav_l bar_nav_item" >
+			</div>
+			<div class="buttons-row item_cell_flex">
+				<div class="nav_buttons_row">
+				    <li style="font-size: 0.7rem;">
+				    	{if $_GPC['op'] == 0}待审核
+				    	{elseif $_GPC['op'] == 1}未通过
+				    	{elseif $_GPC['op'] == 2}执行中
+				    	{elseif $_GPC['op'] == 3}已完成
+				    	{elseif $_GPC['op'] == 4}待确认失败
+				    	{elseif $_GPC['op'] == 5}已失败
+				    	{elseif $_GPC['op'] == 6}申诉中{/if}
+				    </li>
+			    </div>
+			</div>
+			<div class="bar_nav_r bar_nav_item">
+			</div>
+		</header>
+		<div class="content infinite-scroll" data-distance="50">
+			<div class="list_container mt025">
+				<!-- <a href="">
+					<div class="myreply_item">
+						<div class="myreply_item_in">
+							<div class="myreply_item_title">
+								无法改完全放弃我发起发起发起
+							</div>
+							<div class="myreply_item_body font_mini">
+								无法改完全放弃我发起发起发起
+							</div>
+							<div class="myreply_item_bot item_cell_box">
+								<li class="item_cell_flex font_13px_999">
+									<span class="font_ff5f27">已采纳</span> 
+									<span class="font_ff5f27 money_icon">0.55</span> 
+								</li>
+								<li class="font_13px_999">5分钟前</li>
+							</div>						
+						</div>
+					</div>
+				</a> -->
+				
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+
+		<div class="index_navtwo" style="top: 40%;">
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>0))}" >
+				<li>待审核</li>
+			</a>
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>1))}">
+				<li>未通过</li>
+			</a>
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>2))}">
+				<li>执行中</li>
+			</a>
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>3))}" >
+				<li>已完成</li>
+			</a>
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>4))}" >
+				<li>待确认</li>
+			</a>
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>5))}" >
+				<li>已失败</li>
+			</a>
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>6))}" >
+				<li>申诉中</li>
+			</a>												
+		</div>
+
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}
+

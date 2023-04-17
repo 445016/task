@@ -1,0 +1,1162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="www.zy40.cn" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[任务管理平台]]></name>
+		<identifie><![CDATA[zofui_taskself]]></identifie>
+		<version><![CDATA[3.0.6]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[任务平台]]></ability>
+		<description><![CDATA[任务管理平台]]></description>
+		<author><![CDATA[好源码网]]></author>
+		<url><![CDATA[http://www.zy40.cn]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+		<supports>
+			
+		</supports>
+	</platform>
+	<bindings>
+	    <cover>
+	        <entry title="平台答疑中心" do="quest" state="" direct="false" />
+<entry title="账户设置" do="set" state="" direct="false" />
+<entry title="消息通知" do="imess" state="" direct="false" />
+<entry title="合伙人" do="down" state="" direct="false" />
+<entry title="担保任务" do="tblist" state="" direct="false" />
+<entry title="发布任务" do="pubin" state="" direct="false" />
+<entry title="试用任务" do="usetask" state="" direct="false" />
+<entry title="个人中心" do="user" state="" direct="false" />
+<entry title="找人" do="find" state="" direct="false" />
+<entry title="主页入口" do="index" state="" direct="false" />
+
+		</cover>
+		<rule>
+		    
+		</rule>
+		<menu>
+			<entry title="普通任务管理" do="comtask" state="" direct="false" />
+<entry title="数据信息" do="data" state="" direct="false" />
+<entry title="提现管理" do="money" state="" direct="false" />
+<entry title="私包任务" do="privatetask" state="" direct="false" />
+<entry title="保证金管理" do="deposit" state="" direct="false" />
+<entry title="试用任务" do="usetask" state="" direct="false" />
+<entry title="邀请海报" do="poster" state="" direct="false" />
+<entry title="答疑中心" do="quest" state="" direct="false" />
+<entry title="任务分类" do="tasksort" state="" direct="false" />
+<entry title="首页轮播" do="slider" state="" direct="false" />
+<entry title="人物分类" do="guysort" state="" direct="false" />
+<entry title="模块使用说明" do="explain" state="" direct="false" />
+<entry title="滚动广告" do="ad" state="" direct="false" />
+<entry title="会员数据" do="userdata" state="" direct="false" />
+
+		</menu>
+	</bindings>
+	<install><![CDATA[CREATE TABLE `ims_zofui_task_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(50) NOT NULL DEFAULT '',
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `logintime` int(11) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '默认0 正常 1认证（已缴纳保证金） 2拉黑',
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `deposit` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '保证金',
+  `city` varchar(20) NOT NULL DEFAULT '0',
+  `mobile` varchar(15) NOT NULL DEFAULT '0' COMMENT '手机号码',
+  `qrcode` varchar(200) NOT NULL DEFAULT '0' COMMENT '微信二维码',
+  `pubnumber` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发布数量',
+  `acceptnumber` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '采纳数量',
+  `creditscore` decimal(6,1) NOT NULL DEFAULT '10.0' COMMENT '信誉分数',
+  `guytype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '人物类型，1是发任务的，2是接任务的',
+  `guydesc` varchar(200) DEFAULT NULL COMMENT '个人描述',
+  `guysort` int(5) unsigned NOT NULL DEFAULT '0' COMMENT '所属人物分类',
+  `contacttype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '联系方式 0没有联系方式，1手机 2微信二维码 3两者都支持',
+  `replynumber` int(9) unsigned NOT NULL DEFAULT '0' COMMENT '回复数量',
+  `acceptednumber` int(9) unsigned NOT NULL DEFAULT '0' COMMENT '被采纳数量',
+  `nickname` varchar(64) DEFAULT NULL COMMENT '淘宝版本里用到 昵称',
+  `headimgurl` varchar(300) DEFAULT NULL COMMENT '淘宝版本里用到 头像',
+  `sex` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 1男 2女',
+  `activity` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 活跃度',
+  `uptime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 更新活跃度时间',
+  `ispub` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 0不是发任务的 1是',
+  `isacc` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 0不是接任务的 1是',
+  `conweixin` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 0不开启微信联系 1 开启',
+  `conmobile` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 0不开启电话联系 1开启',
+  `parent` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '淘宝版本里用到 上级id',
+  `limitnum` int(5) unsigned NOT NULL DEFAULT '0' COMMENT '回复次数限制',
+  `account` varchar(20) DEFAULT NULL COMMENT '账户，绑定电话号码',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `giveparent` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上级获得提成总额',
+  `authopenid` varchar(64) DEFAULT NULL COMMENT '被借权公众号的openid',
+  `alipayname` varchar(32) DEFAULT NULL COMMENT '支付宝姓名',
+  `alipay` varchar(64) DEFAULT NULL COMMENT '支付宝账户',
+  `verifystatus` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未提交认证 1已提交认证 2认证通过 3认证不通过',
+  `verifyform` text COMMENT '额外提交的表单',
+  `mark` varchar(200) DEFAULT NULL COMMENT '标记备注内容',
+  `limitday` int(5) unsigned NOT NULL DEFAULT '0' COMMENT '限制抢任务的天数',
+  `tbpub` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发布担保任务数量',
+  `tbsuccess` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '采纳担保任务数量',
+  `tbtake` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '抢到担保任务数量',
+  `tbcom` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '完成担保任务数量',
+  `payqr` varchar(500) DEFAULT NULL,
+  `uselimitnum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '限制抢试用任务数量',
+  `uselimitday` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '限制抢试用任务数量',
+  `givetwo` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '累计给上上级的提成',
+  `givethree` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '累计给上上级的提成',
+  `level` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0普通 1一级 2二级',
+  `utime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员到期时间',
+  `anwm` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '累计付费阅读',
+  `yinp` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `baoshi` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `verifyend` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '认证结束',
+  `iscostauth` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未付费认证 1已付',
+  `qq` varchar(20) DEFAULT NULL,
+  `pp` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上上级',
+  `ppp` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上上级',
+  PRIMARY KEY (`id`),
+  KEY `inx_openid` (`openid`,`uniacid`),
+  KEY `inx_guy` (`guysort`,`guydesc`,`city`),
+  KEY `index_uid` (`uid`),
+  KEY `createtime` (`createtime`),
+  KEY `pp` (`pp`),
+  KEY `ppp` (`ppp`)
+) ENGINE=InnoDB AUTO_INCREMENT=1563 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_ad` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(2000) NOT NULL DEFAULT '0' COMMENT '标题',
+  `number` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分类排序，越大越前',
+  `content` mediumtext COMMENT '广告内容',
+  `time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发布时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0显示 1下架',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_anwbox` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务id',
+  `readid` int(11) unsigned NOT NULL DEFAULT '0',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '金额',
+  `endtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未领取 1已领取',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `gettime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '领取时间',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `uid` (`uid`),
+  KEY `taskdi` (`taskid`),
+  KEY `endtime` (`endtime`),
+  KEY `readid` (`readid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_anwgeted` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `thisday` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回馈的日期',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `uid` (`uid`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_anwread` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员uid',
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务id',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `cost` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '花费',
+  `endtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '到期时间',
+  `puberfee` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '发布者的',
+  `lrfee` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '系统利润',
+  `boxfee` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '宝箱',
+  `sysfee` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '系统成本',
+  `isshared` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已分成宝箱 0未 1已分',
+  `iscountbox` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未计算宝箱 1已计算宝箱',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `uid` (`uid`),
+  KEY `taskid` (`taskid`),
+  KEY `createtime` (`createtime`),
+  KEY `iscountbox` (`iscountbox`),
+  KEY `isshared` (`isshared`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_authform` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(150) DEFAULT NULL COMMENT '表单名称',
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序序号',
+  `formtype` varchar(32) DEFAULT NULL COMMENT '类型',
+  `useric` varchar(2500) DEFAULT NULL COMMENT '虚假昵称',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_banner` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `img` varchar(500) DEFAULT NULL,
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序，越大越前',
+  `url` varchar(500) DEFAULT NULL,
+  `name` varchar(32) NOT NULL DEFAULT '0' COMMENT '名称',
+  `desc` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`number`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_codekey` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(33) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_complain` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `content` varchar(1500) DEFAULT NULL,
+  `images` varchar(2000) DEFAULT NULL,
+  `time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '时间',
+  `openid` varchar(64) DEFAULT NULL,
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务id',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未处理 1已处理',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`openid`,`taskid`),
+  KEY `taskid` (`taskid`),
+  KEY `uniacid` (`uniacid`),
+  KEY `openid` (`openid`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='投诉';
+CREATE TABLE `ims_zofui_tasktb_continue` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '连续奖励金额',
+  `totalmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '奖励的总金额',
+  `totalnum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '数量',
+  `backmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '结算退回金额',
+  `prizemoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '已给的奖励金额',
+  `isback` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未结算 1已结算',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='连续任务数据';
+CREATE TABLE `ims_zofui_tasktb_draw` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) NOT NULL DEFAULT '0',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '金额',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态 0待确认 1已支付 2退回 3拒绝',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `dealtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '处理时间',
+  `backreason` varchar(125) NOT NULL DEFAULT '0' COMMENT '退回理由',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1余额 2保证金',
+  `refusereason` varchar(255) DEFAULT NULL COMMENT '拒绝支付理由',
+  `paytype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0微信支付 1支付宝支付',
+  `alipayname` varchar(32) DEFAULT NULL,
+  `alipay` varchar(64) DEFAULT NULL,
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `payno` varchar(64) DEFAULT NULL,
+  `server` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '服务费',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`openid`,`status`),
+  KEY `createtime` (`createtime`),
+  KEY `dealtime` (`dealtime`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1194 DEFAULT CHARSET=utf8 COMMENT='提现表';
+CREATE TABLE `ims_zofui_tasktb_group` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `mem` int(11) unsigned NOT NULL DEFAULT '0',
+  `totalcost` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '总计花费',
+  `totalback` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '总计返回',
+  `endtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1已结束',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_groupbs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `baoshi` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `createtime` (`createtime`),
+  KEY `uid` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_groupds` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0',
+  `takedid` int(11) unsigned NOT NULL DEFAULT '0',
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0',
+  `yinp` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `givedser` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '给打赏者的',
+  `givedsed` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '给被打赏者的',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `createtime` (`createtime`),
+  KEY `uid` (`uid`),
+  KEY `takedid` (`takedid`),
+  KEY `taskid` (`taskid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_grouplog` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0',
+  `gid` int(11) unsigned NOT NULL DEFAULT '0',
+  `cost` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `geted` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '最后活动',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未发放 1已发放',
+  `endtime` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_guysort` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `img` varchar(500) DEFAULT NULL,
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序，越大越前',
+  `name` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`number`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_imess` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL,
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'member uid',
+  `type` varchar(120) NOT NULL DEFAULT '0' COMMENT '类型',
+  `targetid` int(11) unsigned NOT NULL DEFAULT '0',
+  `remark` varchar(255) DEFAULT '' COMMENT '备注',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未读 1已读',
+  `url` varchar(255) DEFAULT NULL,
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `content` varchar(2000) DEFAULT NULL,
+  `isbig` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0弹窗提醒 1不弹窗提醒',
+  `istop` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `openid` (`openid`),
+  KEY `uid` (`uid`),
+  KEY `type` (`type`),
+  KEY `targetid` (`targetid`),
+  KEY `status` (`status`),
+  KEY `isbig` (`isbig`),
+  KEY `createtime` (`createtime`),
+  KEY `istop` (`istop`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_instruct` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `down` text,
+  `set` text,
+  `level` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='投诉';
+CREATE TABLE `ims_zofui_tasktb_instructa` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `content` text,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0答案',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `type` (`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='说明';
+CREATE TABLE `ims_zofui_tasktb_mess` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL,
+  `taked` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '任务被回复通知 0开启 1关闭',
+  `messaged` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '被留言提问',
+  `count` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '任务被结算',
+  `reply` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '回复被处理',
+  `getmessage` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '留言被回复',
+  `getpri` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '获得私包任务',
+  `newdown` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '新增小弟',
+  `downmoney` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '小弟提成',
+  `downact` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '获赠活跃度通知',
+  `usesuborder` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '私包任务 提交订单内容',
+  `useaddcontent` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '使用任务补充内容',
+  `newtask` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '新任务通知',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`openid`),
+  KEY `openid` (`openid`),
+  KEY `uniacid` (`uniacid`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_message` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `str` varchar(64) DEFAULT NULL,
+  `openid` varchar(64) DEFAULT NULL,
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='投诉';
+CREATE TABLE `ims_zofui_tasktb_moneylog` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) NOT NULL DEFAULT '0',
+  `taskid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '对应的任务id',
+  `money` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '金额',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '资金记录状态',
+  `time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '变化时间',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '资金记录类型 1任务资金，2平台使用费，3提现扣除余额，4任务完成收入 5私包任务支出 6私包任务被取消退回资金 7私包任务收益 8任务自动结束退回资金，9加急扣除，10管理员变动，11提现退回，12充值收入，13任务不通过退回',
+  `aftermoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '变动后余额',
+  `mtype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1余额记录 2保证金记录',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `inx_moneylog` (`uniacid`,`openid`,`taskid`,`type`),
+  KEY `openid` (`openid`),
+  KEY `taskid` (`taskid`),
+  KEY `type` (`type`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11440 DEFAULT CHARSET=utf8 COMMENT='资金记录';
+CREATE TABLE `ims_zofui_tasktb_paylog` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) NOT NULL DEFAULT '0',
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '支付或者创建时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '类型 0未支付  1已支付',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '类型 1任务保证金 2充值',
+  `fee` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '金额',
+  `orderid` varchar(64) NOT NULL DEFAULT '0' COMMENT '内部订单编号',
+  `uorderid` varchar(64) NOT NULL DEFAULT '0' COMMENT '微信订单编号',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `utype` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '升级会员类型',
+  PRIMARY KEY (`id`),
+  KEY `inx_many` (`uniacid`,`openid`,`uid`,`orderid`,`uorderid`),
+  KEY `openid` (`openid`),
+  KEY `orderid` (`orderid`),
+  KEY `uorderid` (`uorderid`),
+  KEY `time` (`time`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=969 DEFAULT CHARSET=utf8 COMMENT='支付记录';
+CREATE TABLE `ims_zofui_tasktb_privatetask` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `puber` varchar(64) NOT NULL DEFAULT '0' COMMENT '发起者',
+  `accepter` varchar(64) DEFAULT NULL,
+  `workeropenid` varchar(64) NOT NULL DEFAULT '0' COMMENT '任务执行者openid',
+  `bossopenid` varchar(64) NOT NULL DEFAULT '0' COMMENT '任务雇主openid',
+  `tasktitle` varchar(255) NOT NULL DEFAULT '0' COMMENT '任务内容',
+  `taskmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '任务金额',
+  `workerserver` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '扣做任务者 平台使用费',
+  `images` varchar(1500) NOT NULL DEFAULT '0' COMMENT '任务图片',
+  `limittime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '限时，小时为单位',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `accepttime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '接受者处理时间',
+  `workerdealtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行者提交完成.或取消时间',
+  `bossdealtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇主确认或拒绝时间',
+  `complaintime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇员同意拒绝或投诉时间',
+  `admindealtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '管理员对投诉处理时间',
+  `status` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '任务状态 0等待确认，1任务被拒绝，2执行中，3雇员提交完成待雇主确认， 4雇员主动取消执行任务，5雇员没有提交完成而自动取消，6雇主确认后任务完成，7任务完成效果不好被雇主拒绝，8任务被雇员同意拒绝而结束，9任务被雇员投诉阶段，10管理员处理后结束,11雇主没有确认完成任务自动确认完成，12待雇员接受拒绝或投诉状态而没有处理自动接受，13管理员判给雇员而结束，14管理员判给雇主而结束',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '类型，1索要的任务。2主动发给对方任务，2是已支付的',
+  `complainreason` varchar(200) NOT NULL DEFAULT '0' COMMENT '投诉内容',
+  `admindealresult` varchar(200) NOT NULL DEFAULT '0' COMMENT '管理员处理结果',
+  `refusereason` varchar(200) NOT NULL DEFAULT '0' COMMENT '雇主拒绝理由',
+  `overtime0` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '待确认的任务自动取消时间',
+  `overtime2` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '执行中任务自动结束时间',
+  `overtime3` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '待雇主确认状态自动确认时间',
+  `overtime7` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇员确认拒绝状态自动确认时间',
+  `completecontent` text COMMENT '回复的内容',
+  `bossserver` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '扣雇主服务费',
+  `isend` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未结束 1已结束',
+  `giveparent` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上级奖励',
+  `pubuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `acceptuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `bossuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `workeruid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `inx_private` (`uniacid`,`puber`,`workeropenid`,`bossopenid`,`status`,`accepter`),
+  KEY `uniacid` (`uniacid`),
+  KEY `puber` (`puber`),
+  KEY `accepter` (`accepter`),
+  KEY `workeropenid` (`workeropenid`),
+  KEY `bossopenid` (`bossopenid`),
+  KEY `createtime` (`createtime`),
+  KEY `pubuid` (`pubuid`),
+  KEY `acceptuid` (`acceptuid`),
+  KEY `bossuid` (`bossuid`),
+  KEY `workeruid` (`workeruid`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='私包任务';
+CREATE TABLE `ims_zofui_tasktb_puber` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `headimg` varchar(500) DEFAULT NULL,
+  `nickname` varchar(32) DEFAULT NULL,
+  `falsepub` int(11) unsigned NOT NULL DEFAULT '0',
+  `falsetake` int(11) unsigned NOT NULL DEFAULT '0',
+  `falsedep` int(11) unsigned NOT NULL DEFAULT '0',
+  `pub` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发布量',
+  `take` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '采纳量',
+  `cost` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '支出',
+  `pubnum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发布任务个数',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_readtask` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0',
+  `tid` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`),
+  KEY `uid` (`uid`),
+  KEY `tid` (`tid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_remindlog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '时间',
+  `takedid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回复id',
+  `content` varchar(500) DEFAULT NULL COMMENT '内容',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0前端发的 1后端发的',
+  `images` varchar(2500) DEFAULT NULL COMMENT '图片',
+  `mtype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0提醒 1补充的内容',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `takedid` (`takedid`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB AUTO_INCREMENT=1560 DEFAULT CHARSET=utf8 COMMENT='普通任务提醒 和 补充内容';
+CREATE TABLE `ims_zofui_tasktb_scan` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `times` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '访问次数',
+  `pubed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '已发布数量',
+  `comed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '已完成',
+  `commpubed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '普通任务发布数量',
+  `commcomed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '普通任务完成数量',
+  `privatepubed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '私包任务发布数量',
+  `privatecomed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '私包任务完成数量',
+  `usepubed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '试用任务发布数量',
+  `usecomed` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '试用任务完成数量',
+  `tbpubed` int(11) unsigned NOT NULL DEFAULT '0',
+  `tbcomed` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_selfposter` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `params` mediumtext,
+  `bgimg` varchar(500) DEFAULT NULL,
+  `key` varchar(100) DEFAULT NULL COMMENT '关键词',
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '规则id',
+  `content` varchar(2000) DEFAULT NULL COMMENT '扫码后提示',
+  `ccontent` varchar(2000) DEFAULT NULL COMMENT '生成海报后提示',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `key` (`key`),
+  KEY `pid` (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_selfqrcode` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL,
+  `qrcodeid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'qrcode表里的id',
+  `sence` varchar(64) DEFAULT NULL,
+  `expire` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '过期时间',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `openid` (`openid`),
+  KEY `qrcodeid` (`qrcodeid`),
+  KEY `sence` (`sence`),
+  KEY `index` (`uniacid`,`openid`,`qrcodeid`,`sence`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_selfquest` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(500) DEFAULT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0用户答疑 1商家答疑',
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序序号，越大越前',
+  `content` mediumtext COMMENT '内容',
+  `settype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1系统添加的 0自己添加的',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1隐藏',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_sign` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'uid',
+  `day` varchar(22) DEFAULT NULL,
+  `give` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `flag` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `createtime` (`createtime`),
+  KEY `uid` (`uid`),
+  KEY `day` (`day`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_slider` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `img` varchar(500) DEFAULT NULL,
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序，越大越前',
+  `url` varchar(500) DEFAULT NULL,
+  `isindex` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '0不显示 1主页显示',
+  `isusetask` tinyint(1) unsigned DEFAULT '1' COMMENT '0不显示 1试用任务页面显示',
+  `istbtask` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '0不显示',
+  `isguy` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '找人页面',
+  `dayy` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`number`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_step` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `step` text,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `istemp` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不是模板 1模板',
+  `name` varchar(122) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `istemp` (`istemp`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_tabbar` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL DEFAULT '0' COMMENT '分类名称',
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '越大越前',
+  `img` varchar(500) DEFAULT NULL,
+  `url` varchar(500) DEFAULT NULL,
+  `color` varchar(22) DEFAULT NULL,
+  `actcolor` varchar(22) DEFAULT NULL,
+  `actimg` varchar(555) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='导航';
+CREATE TABLE `ims_zofui_tasktb_taked` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL COMMENT '抢的人',
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务id',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `waittime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '能回复的时间',
+  `endtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '释放时间，如果时间大于现在占用，小于现在已释放',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0刚抢到还没回复 1已回复 2已采纳 3已被拒绝',
+  `content` text COMMENT '回复内容',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '赏金',
+  `server` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '扣除平台费',
+  `ewai` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '额外奖励',
+  `replytime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回复时间',
+  `dealtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇主或系统处理时间',
+  `images` varchar(2000) DEFAULT NULL COMMENT '回复的图片',
+  `puber` varchar(64) DEFAULT NULL COMMENT '发布者openid  方便计算数量限制',
+  `giveparent` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '给上级奖励',
+  `continueid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务对于的连续id',
+  `reason` varchar(200) DEFAULT NULL COMMENT '拒绝理由',
+  `ip` varchar(42) DEFAULT NULL,
+  `isscan` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0可以浏览看见 1不允许看见',
+  `subform` text,
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `pubuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `twoupmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上级提成',
+  `threeupmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上上级奖励',
+  `adminadd` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '管理员增加余额数值',
+  `ds` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1虚假的',
+  `nick` varchar(32) DEFAULT NULL COMMENT '虚假昵称',
+  `headimg` varchar(555) DEFAULT NULL COMMENT '虚假头像',
+  `isfalse` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1虚假的',
+  `falseuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '虚拟会员id',
+  `isremind` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未提醒 1已提醒',
+  `gid` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`openid`,`taskid`,`continueid`,`ip`,`puber`,`endtime`),
+  KEY `taskid` (`taskid`),
+  KEY `openid` (`openid`),
+  KEY `continueid` (`continueid`),
+  KEY `ip` (`ip`),
+  KEY `puber` (`puber`),
+  KEY `endtime` (`endtime`),
+  KEY `uniacid` (`uniacid`),
+  KEY `ewai` (`ewai`),
+  KEY `createtime` (`createtime`),
+  KEY `status` (`status`),
+  KEY `userid` (`userid`),
+  KEY `pubuid` (`pubuid`),
+  KEY `type` (`type`),
+  KEY `isremind` (`isremind`),
+  KEY `gid` (`gid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11345 DEFAULT CHARSET=utf8 COMMENT='抢任务记录';
+CREATE TABLE `ims_zofui_tasktb_task` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(500) DEFAULT NULL,
+  `content` text COMMENT '任务内容',
+  `images` varchar(2000) DEFAULT NULL COMMENT '图片',
+  `iska` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不卡首屏 1卡首屏',
+  `num` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务数量',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '任务单价',
+  `replytime` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '等待回复时间',
+  `limitnum` int(6) unsigned NOT NULL DEFAULT '0' COMMENT '限制回复数量',
+  `sex` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不限制性别 1男性可回复 2女性可回复',
+  `ishide` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不隐藏 1隐藏',
+  `continue` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不连续发布 1连续发布',
+  `continueid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '连续发布任务的id',
+  `kagoodid` varchar(64) DEFAULT '' COMMENT '卡首屏商品id',
+  `kakey` varchar(2000) DEFAULT NULL COMMENT '卡首屏关键字',
+  `start` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '开始时间',
+  `end` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1审核中 2下架',
+  `closereason` varchar(300) DEFAULT NULL COMMENT '审核不通过原因',
+  `istop` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未置顶 1置顶',
+  `puber` varchar(64) DEFAULT NULL COMMENT '发布者',
+  `sortid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分类id',
+  `isimage` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不限制图片 1抢到后才可见',
+  `iscount` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0还未结算 1已结算结束',
+  `backmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '结算退回钱',
+  `counttime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '结算时间',
+  `costserver` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '花费的服务费',
+  `costka` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '花费的卡首屏',
+  `isempty` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0没有被抢光 1被抢光了',
+  `scan` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `isstart` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0已开始 1未开始',
+  `costtop` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '置顶费用',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `link` varchar(2000) DEFAULT NULL,
+  `hidecontent` text COMMENT '定制的 隐藏内容',
+  `autoaddnum` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '定制的 自动追加数量',
+  `autotime` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '定制的 自动追加的次数',
+  `costautoadd` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '定制的 自动追加花费',
+  `backautoadd` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '定制的 退回自动追加',
+  `skiptype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '定制的 0链接跳转 1口令跳转',
+  `isautoadd` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '定制的 0不自动追加 1自动追加',
+  `totalauto` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '定制的 总计自动追加数量',
+  `autoadded` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '定制的 已增加的自动追加',
+  `paymoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '需支付金额',
+  `prizetype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '奖励类型 0赏金 1实物',
+  `prizetitle` varchar(500) DEFAULT NULL COMMENT '奖励标题',
+  `prizeimg` varchar(350) DEFAULT NULL COMMENT '奖励图片',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0普通任务 1试用任务',
+  `pic` varchar(350) DEFAULT NULL COMMENT '淘宝商品图片',
+  `taokey` varchar(150) DEFAULT NULL COMMENT '下单商品淘口令',
+  `findtype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'WQ 搜商品方式 0直接跳转 1关键字搜 2都关闭',
+  `findkey` varchar(2500) DEFAULT NULL COMMENT '搜商品关键词',
+  `isarealimit` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不做区域限制 1限制到区县 2限制到市',
+  `province` varchar(64) DEFAULT NULL COMMENT '限制的省份',
+  `city` varchar(64) DEFAULT NULL COMMENT '城市',
+  `country` varchar(64) DEFAULT NULL COMMENT '区县',
+  `costfindkey` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '试用任务花费的关键词搜',
+  `ispause` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '开启任务',
+  `isform` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不用提交表单 1提交表单',
+  `gtitle` varchar(500) DEFAULT NULL COMMENT '淘宝商品标题',
+  `istaskform` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不使用模板 1使用回复模板',
+  `formid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '模板id',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `giveparent` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '发任务上级提成',
+  `givetwo` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上级',
+  `givethree` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `address` varchar(255) DEFAULT NULL COMMENT '任务地址',
+  `readprice` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '查看答案价格',
+  `isread` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '0不可看 1可看',
+  `falsepuber` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '虚拟id',
+  `falsenum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '虚拟数量',
+  `useric` varchar(200) DEFAULT NULL COMMENT '虚假昵称',
+  `idcode` varchar(15) DEFAULT NULL,
+  `headimg` varchar(255) DEFAULT NULL,
+  `levellim` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不限制 1一级可接 2二级可接 3二三级可接',
+  `mark` varchar(200) DEFAULT NULL,
+  `gid` varchar(32) DEFAULT NULL,
+  `stepid` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`continueid`,`start`,`end`,`puber`,`sortid`,`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `continueid` (`continueid`),
+  KEY `start` (`start`),
+  KEY `end` (`end`),
+  KEY `sortid` (`sortid`),
+  KEY `status` (`status`),
+  KEY `iscount` (`iscount`),
+  KEY `puber` (`puber`),
+  KEY `createtime` (`createtime`),
+  KEY `userid` (`userid`),
+  KEY `limitnum` (`limitnum`),
+  KEY `type` (`type`),
+  KEY `isempty` (`isempty`),
+  KEY `ispause` (`ispause`),
+  KEY `counttime` (`counttime`),
+  KEY `falsepuber` (`falsepuber`),
+  KEY `idcode` (`idcode`),
+  KEY `levellim` (`levellim`),
+  KEY `gid` (`gid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1187 DEFAULT CHARSET=utf8 COMMENT='普通任务';
+CREATE TABLE `ims_zofui_tasktb_taskform` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL DEFAULT '0' COMMENT '分类名称',
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '越大越前',
+  `form` text,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0普通任务',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_taskmessage` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `content` varchar(1000) DEFAULT NULL,
+  `openid` varchar(64) DEFAULT NULL,
+  `parent` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回复的id',
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务id',
+  `time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '留言时间',
+  `isadmin` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不是管理员发布的任务，1是的',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0普通任务',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`,`openid`,`parent`,`taskid`),
+  KEY `uniacid` (`uniacid`),
+  KEY `openid` (`openid`),
+  KEY `taskid` (`taskid`),
+  KEY `parent` (`parent`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=532 DEFAULT CHARSET=utf8 COMMENT='任务留言';
+CREATE TABLE `ims_zofui_tasktb_tasksort` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL DEFAULT '0' COMMENT '分类名称',
+  `order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分类排序，越大越前',
+  `title` varchar(1000) DEFAULT NULL COMMENT '默认发布任务的标题',
+  `content` text COMMENT '默认 任务内容',
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '越大越前',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1下线',
+  `img` varchar(500) DEFAULT NULL,
+  `dmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '默认金额',
+  `other` mediumtext,
+  PRIMARY KEY (`id`),
+  KEY `index` (`uniacid`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='任务分类';
+CREATE TABLE `ims_zofui_tasktb_tbblack` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL COMMENT '会员openid',
+  `target` varchar(64) DEFAULT NULL COMMENT '黑名单目标',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `targetuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `openid` (`openid`),
+  KEY `target` (`target`),
+  KEY `userid` (`userid`),
+  KEY `targetuid` (`targetuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='黑名单';
+CREATE TABLE `ims_zofui_tasktb_tbcert` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '时间',
+  `takedid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回复id',
+  `content` varchar(500) DEFAULT NULL COMMENT '内容',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0前端发的 1后端发的',
+  `images` varchar(2500) DEFAULT NULL COMMENT '图片',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `takedid` (`takedid`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='担保任务申诉凭证';
+CREATE TABLE `ims_zofui_tasktb_tbform` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(66) DEFAULT NULL,
+  `number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '越大越前',
+  `title` varchar(255) DEFAULT NULL,
+  `num` int(11) unsigned NOT NULL DEFAULT '0',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `tbmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `step` varchar(2222) DEFAULT NULL,
+  `content` text,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1下架',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_tbremind` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '时间',
+  `takedid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回复id',
+  `content` varchar(500) DEFAULT NULL COMMENT '内容',
+  `pos` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0前端发的 1后端发的',
+  `from` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0担保任务提醒',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0提醒 1发佣金',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `takedid` (`takedid`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='普通任务提醒 和 补充内容';
+CREATE TABLE `ims_zofui_tasktb_tbtaked` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL COMMENT '抢的人',
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务id',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0抢到任务待审核 1审核未通过 2审核通过进行中 3任务完成 4失败待雇员确认 5任务失败 6申诉中 7管理员已判 8申诉失败任务失败 9申诉成功任务完成',
+  `content` text COMMENT '回复内容',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '扣除的赏金',
+  `server` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '收益扣除平台费',
+  `puber` varchar(64) DEFAULT NULL COMMENT '发布者openid  方便计算数量限制',
+  `giveparent` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '给上级奖励',
+  `reason` varchar(200) DEFAULT NULL COMMENT '拒绝理由',
+  `isend` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0任务进行中 1任务结束',
+  `takecontent` varchar(4000) DEFAULT NULL COMMENT '抢任务提交的内容',
+  `passtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '通过时间',
+  `nopasstime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未通过时间',
+  `nopassreason` varchar(200) DEFAULT NULL COMMENT '未过审核原因',
+  `step` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '任务步骤 1上传浏览图片 2上传下单图片 3上传签收图片 4上传评价图片 5备注留言 6完成',
+  `stepcontent` text COMMENT '每个步骤的内容',
+  `tbmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '扣除的保证金',
+  `costserver` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '审核任务扣除服务费',
+  `comtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '完成时间',
+  `setfailtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇主设为失败的时间',
+  `failreason` varchar(150) DEFAULT NULL COMMENT '失败原因',
+  `confirmfailtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇员确认失败时间',
+  `complaintime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇员申诉时间',
+  `complainstep` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '0申诉中 1已判给雇员 2已判给雇主',
+  `adminsettime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '管理员判断时间',
+  `complainentime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '申诉结束时间',
+  `complainto` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '申诉最终判给谁 0雇员 1雇主',
+  `subcomtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传完资料，提交完成时间',
+  `islimitstep` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不限定第一步结束时间 1限定',
+  `mtype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0用保证金支付的 1用余额支付的',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `pubuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `givetwo` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上级',
+  `givethree` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上上级',
+  `gid` varchar(32) DEFAULT NULL,
+  `gived` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '已经发放的金额',
+  `iscangive` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不可发佣金 1可发佣金',
+  PRIMARY KEY (`id`),
+  KEY `taskid` (`taskid`),
+  KEY `openid` (`openid`),
+  KEY `puber` (`puber`),
+  KEY `uniacid` (`uniacid`),
+  KEY `createtime` (`createtime`),
+  KEY `subcomtime` (`subcomtime`),
+  KEY `setfailtime` (`setfailtime`),
+  KEY `complainentime` (`complainentime`),
+  KEY `passtime` (`passtime`),
+  KEY `userid` (`userid`),
+  KEY `pubuid` (`pubuid`),
+  KEY `gid` (`gid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='抢担保任务记录';
+CREATE TABLE `ims_zofui_tasktb_tbtask` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(500) DEFAULT NULL,
+  `content` text COMMENT '任务内容',
+  `images` varchar(2000) DEFAULT NULL COMMENT '图片',
+  `hideimages` varchar(2000) DEFAULT NULL COMMENT '隐藏的图片',
+  `iska` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不卡首屏 1卡首屏',
+  `num` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务数量',
+  `money` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '任务单价',
+  `limitnum` int(6) unsigned NOT NULL DEFAULT '0' COMMENT '限制抢的次数',
+  `sex` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不限制性别 1男性可回复 2女性可回复',
+  `kagoodid` varchar(64) DEFAULT '' COMMENT '卡首屏商品id',
+  `kakey` varchar(2000) DEFAULT NULL COMMENT '卡首屏关键字',
+  `start` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '开始时间',
+  `end` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '0正常 1审核中 2下架',
+  `istop` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未置顶 1置顶',
+  `puber` varchar(64) DEFAULT NULL COMMENT '发布者',
+  `iscount` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0还未结算 1已结算结束',
+  `backmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '结算退回钱',
+  `counttime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '结算时间',
+  `costserver` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '花费的服务费',
+  `costka` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '花费的卡首屏',
+  `isempty` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0没有被抢光 1被抢光了',
+  `scan` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '浏览量',
+  `costtop` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '置顶费用',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `link` varchar(2000) DEFAULT NULL,
+  `hidecontent` text COMMENT '定制的 隐藏内容',
+  `skiptype` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '定制的 0链接跳转 1口令跳转',
+  `tbmoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '担保金额',
+  `isstart` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0 开始中 1未开始',
+  `step` varchar(2000) DEFAULT NULL,
+  `closereason` varchar(255) DEFAULT NULL COMMENT '审核不通过原因',
+  `topendtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '置顶结束时间',
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `giveparent` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '发任务上级提成',
+  `givetwo` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上级',
+  `givethree` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `isarealimit` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0不做区域限制 1限制到区县 2限制市',
+  `province` varchar(64) DEFAULT NULL,
+  `city` varchar(64) DEFAULT NULL,
+  `country` varchar(64) DEFAULT NULL,
+  `tkl` varchar(500) DEFAULT NULL COMMENT '淘口令',
+  `gid` varchar(32) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL COMMENT '任务地址',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `start` (`start`),
+  KEY `end` (`end`),
+  KEY `puber` (`puber`),
+  KEY `createtime` (`createtime`),
+  KEY `countdata` (`uniacid`,`end`,`iscount`),
+  KEY `topendtime` (`topendtime`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='担保任务';
+CREATE TABLE `ims_zofui_tasktb_tbtaskstep` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL,
+  `step` varchar(2000) DEFAULT NULL,
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `openid` (`openid`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='任务步骤';
+CREATE TABLE `ims_zofui_tasktb_useaddcontent` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `content` varchar(800) DEFAULT NULL,
+  `img` varchar(2000) DEFAULT NULL,
+  `takedid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回复的id',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0补充内容 1提醒内容',
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务id',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `takedid` (`takedid`),
+  KEY `taskid` (`taskid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_useric` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(32) DEFAULT NULL,
+  `number` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='支付记录';
+CREATE TABLE `ims_zofui_tasktb_userics` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL DEFAULT '0',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员uid',
+  `icid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '标签id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='支付记录';
+CREATE TABLE `ims_zofui_tasktb_usersort` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) unsigned NOT NULL DEFAULT '0',
+  `sortid` int(11) unsigned NOT NULL DEFAULT '0',
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  KEY `sortid` (`sortid`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_usetasklog` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `openid` varchar(64) DEFAULT NULL,
+  `taskid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务编号',
+  `createtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0申请中 1已通过 2审核不通过 3雇员主动取消 4已提交订单号 5已完成 6已拒绝结果失败',
+  `isactivity` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否有效的试用 0有效 1无效 ，当被拒绝或取消后变为1记为无效',
+  `passortime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '通过或拒绝时间',
+  `canceltime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '雇员主动取消任务时间',
+  `subcontent` varchar(2000) DEFAULT NULL COMMENT '提交内容',
+  `subtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '提交订单时间',
+  `suctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '设为成功时间',
+  `prizemoney` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '赏金金额',
+  `reason` varchar(200) DEFAULT NULL COMMENT '拒绝和失败原因',
+  `tosuctime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '转为成功时间',
+  `failtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '任务失败时间',
+  `iscomplained` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '0未被投诉 1被投诉',
+  `giveparent` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '给上级的提成',
+  `initcontent` varchar(2000) DEFAULT NULL COMMENT '抢任务提交的内容',
+  `puber` varchar(64) DEFAULT NULL,
+  `userid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `pubuid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '会员id',
+  `givetwo` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上级',
+  `givethree` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '上上上级',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `openid` (`openid`),
+  KEY `taskid` (`taskid`),
+  KEY `passortime` (`passortime`),
+  KEY `createtime` (`createtime`),
+  KEY `puber` (`puber`),
+  KEY `userid` (`userid`),
+  KEY `pubuid` (`pubuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_zofui_tasktb_vauth` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) unsigned NOT NULL DEFAULT '0',
+  `params` text,
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_zofui_task_user`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_ad`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_anwbox`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_anwgeted`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_anwread`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_authform`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_banner`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_codekey`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_complain`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_continue`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_draw`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_group`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_groupbs`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_groupds`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_grouplog`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_guysort`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_imess`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_instruct`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_instructa`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_mess`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_message`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_moneylog`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_paylog`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_privatetask`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_puber`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_readtask`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_remindlog`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_scan`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_selfposter`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_selfqrcode`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_selfquest`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_sign`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_slider`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_step`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tabbar`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_taked`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_task`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_taskform`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_taskmessage`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tasksort`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tbblack`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tbcert`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tbform`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tbremind`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tbtaked`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tbtask`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_tbtaskstep`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_useaddcontent`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_useric`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_userics`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_usersort`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_usetasklog`;
+DROP TABLE IF EXISTS `ims_zofui_tasktb_vauth`;
+]]></uninstall>
+	<upgrade><![CDATA[m_upgrade.php]]></upgrade>
+</manifest>

@@ -1,0 +1,21 @@
+<div class="top_box item_cell_box">
+	<div class="top_left">
+	{if $_GPC['do'] != 'index'}
+		<a href="javascript:;">
+			<span class="top_back"></span>返回
+		</a>
+	{/if}
+	</div>
+	<div class="top_mid item_cell_flex">
+		<!-- {if $_GPC['do'] == 'index'}
+			 <span>全国</span> <span class="top_mid_down"></span>
+		{else}
+		{/if} -->
+		{$settings['title']}
+	</div>
+	
+	<div class="top_right {if $settings['topexplain'] == 1}show_explain{/if}">
+		{if $settings['topexplain'] == 1}说明{/if}
+	</div>
+
+</div>

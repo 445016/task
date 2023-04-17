@@ -1,0 +1,53 @@
+{template 'common/myheader'}
+	
+    <div id="page_rank" class="page page_rank page-current">
+		<div class="content" data-distance="50">
+			
+			<div class="rank_head pri-bg">
+				<div class="rank_headitem {if empty($_GPC['type'])}act{/if}">
+					<a href="{php echo $this->createMobileUrl('rank',array('type'=>0))}">总榜</a>
+				</div>
+				<div class="rank_headitem {if $_GPC['type'] == 1}act{/if}">
+					<a href="{php echo $this->createMobileUrl('rank',array('type'=>1))}">月榜</a>
+				</div>
+				<div class="rank_headitem {if $_GPC['type'] == 2}act{/if}">
+					<a href="{php echo $this->createMobileUrl('rank',array('type'=>2))}">周榜</a>
+				</div>
+			</div>
+            <div class="rank-info">
+                <div class="avatar">
+                    <img src="{php echo tomedia($userinfo['headimgurl'])}">
+                </div>
+                <div class="info">
+                    <div class="name">{$userinfo['nickname']}</div>
+                    <div class="totalm">提成:{$mytotal}元</div>
+                </div>
+                <div class="rank">
+                	{if $myrank > 0}
+	                    <div>
+	                        <text class="num">{$myrank}</text> 名
+	                    </div>
+                    {else}
+                    	<div>暂无排名</div>
+                    {/if}
+                </div>
+            </div>
+            {if !empty($rank)}
+	            <div class="rank-lists">
+	            	{loop $rank $key $item}
+		                <div class="item thin-border_t" >
+		                    <div class="num">{php echo $key+1}.</div>
+		                    <img class="avatar" src="{php echo empty( $item['headimgurl'] ) ? '../addons/zofui_taskself/public/images/dhead.png' : tomedia($item['headimgurl'])}">
+		                    <div class="name">{$item['nickname']}</div>
+		                    <div class="price">{$item['totalmoney']}元</div>
+		                </div>
+	                {/loop}
+	            </div>
+            {else}
+            	<div class="no_data">还没有排名</div>
+            {/if}
+			
+		</div>
+	</div>
+{template 'common/nav'}	
+{template 'common/myfooter'}

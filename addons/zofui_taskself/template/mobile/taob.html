@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>提示</title>
+	<meta content="telephone=no, address=no" name="format-detection">
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<style type="text/css">
+		.weixin-tip {
+			position: fixed;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			background: rgba(0,0,0,0.8);
+			filter: alpha(opacity=80);
+			height: 100%;
+			width: 100%;
+			z-index: 100;
+		}
+		.weixin-tip img {
+			max-width: 100%;
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="weixin-tip" class="weixin-tip">
+		<p>
+		{if $agent == 'iphone'}
+			<img src="{php echo TSTB_URL}public/images/weixin2.png">
+		{else}
+			<img src="{php echo TSTB_URL}public/images/weixin1.png">
+		{/if}
+		</p>
+	</div>
+</body>
+</html>

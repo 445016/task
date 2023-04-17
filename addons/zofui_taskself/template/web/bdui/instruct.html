@@ -1,0 +1,96 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+    <div class="table-wrap" >
+
+        {if $_GPC['op'] == 'code'}
+        <form method="post" >
+            <div class="frm_control_group">
+                <label for="" class="frm_label"></label>
+                <div class="frm_controls">
+                </div>
+            </div>
+
+            <div class="form-row  " >
+                <label>秘钥</label>
+                <div class="form-value">
+                    <esui-text-box class="ui-ctrl ui-textbox">
+                        <input type="text" name="key" value="{$keay['key']}">
+                    </esui-text-box>
+                    <div class="note input_500">不必须填，是保证发消息安全的秘钥。可随意填</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label></label>
+                <div class="form-value ">
+                    <input name="createkey" type="submit" value="确定" class="ui-button skin-ok-button" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </div>
+            </div>
+        </form>
+        {else}
+		<form method="post" >
+			<div class="frm_control_group">
+				<label for="" class="frm_label"></label>
+				<div class="frm_controls">
+				</div>
+			</div>
+
+            <div class="form-row" >
+                <label>我的合伙人内说明</label>
+                <div class="form-value input_500">
+                    {php echo tpl_ueditor('down', htmlspecialchars_decode($info['down']));}
+                </div>
+            </div>
+
+            <div class="form-row " >
+                <label>账户设置内说明</label>
+                <div class="form-value input_500">
+                    {php echo tpl_ueditor('set', htmlspecialchars_decode($info['set']));}
+                </div>
+            </div>
+            {if $this->module['config']['ulevel'] == 1}
+            <div class="form-row " >
+                <label>会员等级内说明</label>
+                <div class="form-value input_500">
+                    {php echo tpl_ueditor('level', htmlspecialchars_decode($info['level']));}
+                </div>
+            </div>
+            {/if}
+            {if $this->module['config']['isanw'] == 1}
+            <div class="form-row " >
+                <label>回馈利润说明</label>
+                <div class="form-value input_500">
+                    {php echo tpl_ueditor('anw', htmlspecialchars_decode($anw['content']));}
+                </div>
+            </div>
+            {/if}
+            <div class="form-row " >
+                <label>发布任务规则</label>
+                <div class="form-value input_500">
+                    {php echo tpl_ueditor('pubrule', htmlspecialchars_decode($pubrule['content']));}
+                </div>
+            </div>
+            <div class="form-row " >
+                <label>提交普通任务提示内容</label>
+                <div class="form-value input_500">
+                    {php echo tpl_ueditor('takerule', htmlspecialchars_decode($takerule['content']));}
+                </div>
+            </div>
+
+
+            <div class="form-row">
+                <label></label>
+                <div class="form-value ">
+                    <input name="create" type="submit" value="确定" class="ui-button skin-ok-button" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </div>
+            </div>
+			<div style="color: red !important;">&#x597D;&#x6E90;&#x7801;&#x7F51;&#x5206;&#x4EAB;</div>
+		</form>
+        {/if}
+	</div>
+</div>
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}  	
+{template 'common/footer'}

@@ -1,0 +1,141 @@
+<div class="table-full-wrap" >
+        <div class="operation-wrap" data-follow-thead="table">
+        	{php $tophide = array('shopname','status')}
+            <div class="buttons-wrap">
+                {php echo $html['tophtml']}
+            </div>
+        </div>
+
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            {php echo $html['tdhtml']}
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+			     			{if $item['topendtime'] > TIMESTAMP}<span class="font_ff5f27">[顶]</span>{/if}{$item['title']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+			     			<p>数量：{$item['num']}</p>
+			     			<p>赏金：{$item['money']}</p>
+			     			<p>担保：{$item['tbmoney']}</p>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{if !empty( $item['userid'] )}
+				     			<a target="_blank" href="{php echo $this->createWebUrl('user',array('op'=>'info','id'=>$item['user']['id']))}">
+				    				{$item['user']['nickname']}
+				    				<p>ID:{$item['user']['id']}</p>
+				     			</a>
+				     		{else}
+				     			管理员
+				     		{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{php echo date('m-d H:i',$item['createtime'])}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		{if $item['status'] == 0}
+				    			{if $item['isstart'] == 1}
+				    				未开始
+				    			{else}
+				    				<p class="font_green">正常</p>
+				    			{/if}
+				    		{elseif $item['status'] == 1 }
+				    			<p class="font_ff5f27">审核中</p>
+				    		{elseif $item['status'] == 2 }
+				    			被下架
+				    		{/if}
+			    			{if $item['iscount'] == 1}
+			    				<p class="font_ff5f27">已结算</p>
+			    			{else}
+			    				{if $item['end'] < TIMESTAMP}
+			    					<p class="font_mini">处于结算期</p>
+			    				{else}
+			    					<p class="">未结算</p>
+			    				{/if}
+			    			{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+						    <div>
+						    	<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'edit','id'=>$item['id']))}">编辑</a>
+						    	<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('删除不能恢复，且任务的相关图片资源也会被删除，确定要删除吗？');">删除</a>
+						    	<a target="_blank" href="{php echo $this->createWebUrl('tbtask',array('op'=>'info','id'=>$item['id']))}">详情</a>
+						    </div>
+						    <div>
+						    	
+						    	{if $item['status'] == 1}
+						    		<p>
+						    			<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'up','id'=>$item['id']))}">通过</a>
+						    			<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'down','id'=>$item['id']))}">下架</a>
+						    		</p>
+						    	{/if}
+						    	{if $item['status'] == 0}
+						    		<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'down','id'=>$item['id']))}">下架任务</a>
+						    	{/if}
+						    	{if $item['status'] == 2}
+						    		<a class="font_ff5f27" href="{php echo $this->createWebUrl('tbtask',array('op'=>'up','id'=>$item['id']))}">上架任务</a>
+						    	{/if}			    	
+						    </div>
+						    {if $item['end'] > TIMESTAMP}
+		                        <div class="ui-table-cell-text-last edit_table_item">
+		                            <a href="javascript:;" class="edit_bot" >增加置顶时间</a>
+		                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+		                                <div class="ui-table-editor-opt">
+		                                    <div>置顶时间(数字前加-是减，单位/小时){if $item['addtoptime']['last'] > 0}，当前任务置顶还剩{php echo $item['addtoptime']['last']}小时{/if}
+		                                        <esui-text-box class="ui-ctrl ui-textbox">
+		                                            <input type="text" class="drop_down_input" name="money" value="">
+		                                        </esui-text-box>
+		                                    </div>
+		                                    <div class="ui-button skin-ok skin-ok-button confirm_addtoptime" id="{$item['id']}">确定</div>
+		                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+		                                </div>
+		                            </div>
+		                        </div>
+						    {/if}
+                            <div>
+                                <a href="javascript:;" class="deleteallimg color-green" type="tbtask" tid="{$item['id']}">删除图片文件</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input name="deleteall" class="ui-button ui-dialog-ok-btn" value="删除" onclick="return confirm('任务的相关图片资源也会被删除，确定要删除选择的吗？');" type="submit">
+            <input name="passall" class="ui-button ui-dialog-ok-btn" value="通过" onclick="return confirm('确定要审核通过选择的吗？');" type="submit">
+            {php echo $html['pagenum']}
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>

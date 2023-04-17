@@ -1,0 +1,22 @@
+{template 'common/myheader'}
+	
+    <div id="page_ad" class="page page_ad page-current">
+		<div class="content" data-distance="50">
+			{template 'common/top'}
+			<div class="ad_content">
+				<div class="article_head">
+					<h2 class="article_title" >
+		                {$ad['title']} 
+		            </h2>
+				</div>
+				<div class="article_meta">
+	                <em class="article_meta_time" ng-cloak>{php echo date('Y-m-d',$ad['time'])}</em>
+				</div>
+				<div class="mobile_body">
+					{php echo htmlspecialchars_decode($ad['content'])}
+				</div>
+			</div>
+		</div>
+	</div>
+
+{template 'common/myfooter'}

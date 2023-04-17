@@ -1,0 +1,110 @@
+
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+
+
+            {php echo $html['tdhtml']}
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+			     			{$item['content']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{loop $item['images'] $in}
+				     			<a target="_blank" href="{php echo tomedia( $in )}">
+				     				<img src="{php echo tomedia( $in )}" width="30px" height="30px" style="margin: 0 5px 5px 0">
+				     			</a>
+				     		{/loop}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		<a href="{php echo $this->createWebUrl('user',array('op'=>'info','id'=>$item['user']['id']))}">
+				    			<img src="{$item['user']['headimgurl']}" width="30px" height="30px">
+				    			<p>{$item['user']['nickname']}</p>
+				     		</a>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		{if $item['task']['type'] == 0}
+					    		<a target="_blank" href="{php echo $this->createWebUrl('comtask',array('op'=>'info','id'=>$item['taskid']))}">{$item['task']['title']}</a>
+				    		{else}
+					    		<a target="_blank" href="{php echo $this->createWebUrl('usetask',array('op'=>'info','u'=>$item['userid'],'id'=>$item['taskid']))}">{$item['task']['title']}</a>	    			
+				    		{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {if $item['status'] == 0}
+                            	未处理
+                            {elseif $item['status'] == 1}
+                            	已处理
+                            {/if}
+                        </div>
+                    </td>                                   
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	{if $item['status'] == 0}
+					    		
+				    		    <!--  <a href="{php echo $this->createWebUrl('data',array('op'=>'changetodealed','type'=>1,'id'=>$item['id']))}" onclick="return confirm('确定要设为已处理吗？');"></a> -->
+
+                                <div class="ui-table-cell-text-last edit_table_item">
+                                    <a href="javascript:;" class="edit_bot" >设为已处理</a>
+                                    <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+                                        <div class="ui-table-editor-opt">
+                                            <div>发送内容
+                                                <esui-text-box class="ui-ctrl ui-textbox">
+                                                    <textarea class="drop_down_textarea" name="tou"></textarea>
+                                                </esui-text-box>
+                                            </div>
+                                            <div class="ui-button skin-ok skin-ok-button mark_complain" id="{$item['id']}">确定</div>
+                                            <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                                        </div>
+                                    </div>
+                                </div>
+					    	{/if}
+					    	{if $item['status'] == 1}
+					    		<p>
+					    		<a href="{php echo $this->createWebUrl('data',array('op'=>'changetodealed','type'=>0,'id'=>$item['id']))}" onclick="return confirm('确定要设为已处理吗？');">设为未处理</a>
+					    		</p>
+					    	{/if}
+					    	<a href="{php echo $this->createWebUrl('data',array('op'=>'deletecomplain','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="deleteallcomplain" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            {php echo $html['pagenum']}
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>

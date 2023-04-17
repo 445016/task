@@ -1,0 +1,395 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+
+{if $op == 'list'}
+
+<form action="" method="post">
+    <div class="table-full-wrap" >
+
+        <div class="operation-wrap" data-follow-thead="table">
+            <div class="buttons-wrap" style="height: 30px;">
+            </div>
+            <div class="buttons-quick-wrap">
+                <a href="javascript:;" class="ui-ctrl ui-button skin-ok-button " id="addbarone" >使用导航一</a>
+                <a href="javascript:;" class="ui-ctrl ui-button skin-ok-button topbar_jsbtn" js="addtasksort" >添加导航(若没有导航数据会使用默认的导航)</a>
+            </div>
+        </div>
+
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">名称</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">图标</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">排序</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                        </div>
+                    </td> 		     		
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+			     			{$item['name']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+			    			<img src="{php echo tomedia( $item['img'] )}" height="40px">
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+							<span class="edit_number">
+			    				<input type="text" id="{$item['id']}" inputname="tabbarnumber" inputtype="text" value="{$item['number']}" class="edit_number_input tl">
+			    			</span>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+			    			<a  href="javascript:;" class="edit_listitem" id="{$item['id']}">编辑</a>
+			    			<a href="{php echo $this->createWebUrl('tabbar',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('删除不能恢复，确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input name="deleteall" class="ui-button ui-dialog-ok-btn" value="删除所选" onclick="return confirm('确定要删除选择的吗？');" type="submit">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div> 
+    </div>
+</form> 
+
+<div class="my_model form_model" addtasksort>
+	<esui-dialog class="ui-dialog skin-confirm in modala" >
+		<div class="dialog_body">
+		    <div class="ui-dialog-head" >
+		    </div>
+		    <div class="ui-dialog-body-panel " >
+            <form>    
+                <div class="form-row">
+                    <label>导航名称</label>
+                    <div class="form-value">
+                        <esui-text-box class="ui-ctrl ui-textbox">
+                            <input type="text" class="input_300"  name="name" value="{$info['name']}">
+                        </esui-text-box>
+                        <div class="note">建议在4个字内</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label>跳转链接</label>
+                    <div class="form-value">
+                        <esui-text-box class="ui-ctrl ui-textbox">
+                            <input type="text" class="input_300"  name="url" value="{$info['url']}">
+                        </esui-text-box>
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <label>排序序号</label>
+                    <div class="form-value">
+                        <esui-text-box class="ui-ctrl ui-textbox">
+                            <input type="text" class="input_300"  name="number" value="{$info['number']}">
+                        </esui-text-box>
+                        <p class="note frm_tips_default">填数字，数字越大越靠前</p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label>默认颜色</label>
+                    <div class="form-value">
+                        <esui-text-box class="ui-ctrl ui-textbox">
+                            <input type="color" class="input_300"  name="color" value="{$info['color']}">
+                        </esui-text-box>
+                        <div class="note"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label>激活颜色</label>
+                    <div class="form-value">
+                        <esui-text-box class="ui-ctrl ui-textbox">
+                            <input type="color" class="input_300"  name="actcolor" value="{$info['actcolor']}">
+                        </esui-text-box>
+                    </div>
+                </div>
+                <div class="form-row single_img_upload single_img_uploada" >
+                    <label>默认图标</label>
+                    <div class="form-value">
+                        {php echo  WebCommon::tpl_form_field_image('img',$info['img'])}
+                        <p class="note frm_tips_default">图标尺寸建议182x182(像素)</p>
+                    </div>
+                </div>
+                <div class="form-row single_img_upload single_img_uploadb" >
+                    <label>激活图标</label>
+                    <div class="form-value">
+                        {php echo  WebCommon::tpl_form_field_image('actimg',$info['actimg'])}
+                        <p class="note frm_tips_default">图标尺寸建议182x182(像素)</p>
+                    </div>
+                </div>
+            </form>    
+		    </div>
+		    <div class="ui-dialog-foot-panel tr" >
+		        <a href="javascript:;" class="ui-dialog-ok-btn ui-button" id="confirm_addform" >确定</a>
+		        <a href="javascript:;" class="skin-cancel-button ui-button" data-dismiss="modal">取消</a>
+		    </div>
+		</div>
+	</esui-dialog>
+	<div class="modal-backdrop in"></div>
+</div>
+
+
+
+<!-- 
+<div class="tr">
+	<a href="javascript:;" class="add_form_btn topbar_jsbtn" js="addtasksort">添加导航(若没有导航数据会使用默认的导航)</a>
+</div>
+{if !empty($list)}
+  <table class="table" cellspacing="0"> 
+   <thead class="thead"> 
+    	<tr> 
+     		<th class="table_cell td_col_1 title"> 
+     			<label class="frm_checkbox_label" for="selectAll"> 
+     				<i class="icon_checkbox"></i> 
+     				<span class="lbl_content">id</span> 
+     				<input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+     			</label>
+     		</th> 
+     		<th class="table_cell td_col_1 tl">名称</th>
+     		<th class="table_cell td_col_1 tl">图标</th>
+     		<th class="table_cell td_col_1 tl">排序</th>	
+     		<th class="table_cell td_col_1 tr">操作</th>
+    	</tr> 
+   </thead> 
+   <tbody class="tbody" id="js_goods">
+   <form method="post">
+	   {loop $list $item}
+	    	<tr> 
+	     		<td class="table_cell title"> 
+	      			<div class="goods_info">
+	      			 	<label class="frm_checkbox_label" > 
+	       					<i class="icon_checkbox"></i> 
+	       					<input type="checkbox" name="checkall[]" class="frm_checkbox" value="{$item['id']}" /> 
+	       					{$item['id']}
+	       				</label>
+	      			</div>
+	     		</td>
+	     		<td class="table_cell price tl">
+	    			{$item['name']}
+	     		</td>	
+	     		<td class="table_cell price tl">
+	    			<img src="{php echo tomedia( $item['img'] )}" height="40px">
+	     		</td>     		
+	     		<td class="table_cell price tl">
+	    			<span class="edit_number">
+	    				<input type="text" id="{$item['id']}" inputname="tabbarnumber" inputtype="text" value="{$item['number']}" class="edit_number_input tl">
+	    			</span>
+	     		</td>
+	     			     		     		
+			    <td class="table_cell oper last_child tr opclass" style="position: relative;">
+			    	<a  href="javascript:;" class="edit_listitem" id="{$item['id']}">编辑</a>
+			    	<a href="{php echo $this->createWebUrl('tabbar',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('删除不能恢复，确定要删除吗？');">删除</a>
+			    </td>
+	    	</tr>
+	    {/loop}
+   	</tbody>
+  	</table>
+	<div class="bottom_page item_cell_box">
+		<div class="dib tl">
+     			<label class="frm_checkbox_label" for="selectAll"> 
+     				<i class="icon_checkbox"></i> 
+     				<span class="lbl_content">全选</span> 
+     				<input type="checkbox" class="frm_checkbox" id="selectAll" /> 
+     			</label>
+  			<div class="filter_content dropdown_topbar"> 
+		   		<div class="dropdown_menu ">
+		    		<a href="javascript:;" class="btn dropdown_switch jsDropdownBt">
+		    			<label class="jsBtLabel">批量操作</label>
+		    			<i class="arrow"></i>
+		    		</a> 
+		    		<div class="dropdown_data_container jsDropdownList" > 
+			     		<ul class="dropdown_data_list"> 
+			      			<li class="dropdown_data_item "> 
+			      				<input name="deleteall" class="alldeal_btn" value="删除所选" onclick="return confirm('确定要删除选择的吗？');" type="submit">
+			      			</li>			      			
+			    		</ul> 
+		    		</div> 
+		   		</div>
+  			</div>
+		</div>
+		<div class="tr dib item_cell_flex">
+			{$pager}
+		</div>
+	</div>
+		<input name="token" type="hidden" value="{$_W['token']}" />
+	</form>
+{else}
+<div class="no_data">没有数据</div>
+{/if}
+<div class="my_model" addtasksort style="display: none">
+    <div class=" ui-draggable " >
+        <div class="dialog">
+            <div class="dialog_hd">
+                <a href="javascript:;" class="icon16_opr closed pop_closed model_close" >关闭</a>
+            </div>
+            <div class="dialog_bd info_box" >
+                <form>
+					<div class="frm_control_group">
+						<label for="" class="frm_label">导航名称</label>
+						<div class="frm_controls msg">
+							<span class="frm_input_box">
+								<input type="text" class="frm_input"  name="name" value="{$info['name']}">
+							</span>
+							<p class="frm_tips frm_tips_default">建议在4个字内</p>
+						</div>
+					</div>
+					<div class="frm_control_group">
+						<label for="" class="frm_label">跳转链接</label>
+						<div class="frm_controls msg">
+							<span class="frm_input_box">
+								<input type="text" class="frm_input"  name="url" value="{$info['url']}">
+							</span>
+							<p class="frm_tips frm_tips_default">输入链接</p>
+						</div>
+					</div>
+					<div class="frm_control_group">
+						<label for="" class="frm_label">排序序号</label>
+						<div class="frm_controls msg">
+							<span class="frm_input_box">
+								<input type="text" class="frm_input"  name="number" value="{$info['number']}">
+							</span>
+							<p class="frm_tips frm_tips_default">填入数字，越大越前</p>
+						</div>
+					</div>
+					<div class="frm_control_group single_img_upload">
+						<label for="" class="frm_label">图标</label>
+						<div class="frm_controls">
+							{php echo  WebCommon::tpl_form_field_image('img',$info['img'])}
+							<p class="frm_tips frm_tips_default">图标尺寸建议182x182(像素)</p>
+						</div>
+					</div>
+                </form>
+            </div>
+            <div class="dialog_ft">
+                <span class="btn btn_primary btn_input js_btn_p" id="confirm_addform" >
+                    <button type="button" class="js_btn">保存</button>
+                </span>
+                <span class="btn btn_default btn_input js_btn_p model_close" >
+                    <button type="button" class="js_btn">取消</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="mask ui-draggable" style="display: block;"></div>
+</div> -->
+
+<script type="text/javascript">
+	$(function(){
+
+		$('.topbar_jsbtn').click(function(){
+			fid = 0;
+		})
+
+		var fid = 0;
+		$('.edit_listitem').click(function(){
+			var nowfid = $(this).attr('id');
+			Http('post','json','findtabbar',{fid:nowfid},function(data){
+				if(data.status == 200){
+					fid = nowfid; // 防止取消后再添加异常
+					$('input[name=name]').val(data.obj.name);
+					$('input[name=number]').val(data.obj.number);
+					$('input[name=url]').val(data.obj.url);
+                    $('input[name=color]').val(data.obj.color);
+                    $('input[name=actcolor]').val(data.obj.actcolor);
+
+					if( data.obj.img ) {
+						$('input[name=img]').val(data.obj.img);
+						if( data.obj.img ) $('.img-thumbnail').attr('src',data.obj.showimg).parent().show();
+					}else{
+						$('input[name=img]').val('');
+						$('.img-thumbnail').attr('src','').parent().hide();
+					}
+                    if( data.obj.actimg ) {
+                        $('input[name=actimg]').val(data.obj.actimg);
+                        if( data.obj.actimg ) $('.single_img_uploadb .img-thumbnail').attr('src',data.obj.showactimg).parent().show();
+                    }else{
+                        $('input[name=actimg]').val('');
+                        $('.single_img_uploadb .img-thumbnail').attr('src','').parent().hide();
+                    }
+
+					$('.my_model[addtasksort]').show();
+
+				}else{
+					webAlert(data.res);
+				}
+			},true);
+		});
+		
+		$('#confirm_addform').click(function(){
+			var postdata = {
+				fid : fid,
+				name : $('input[name=name]').val(),
+				number : $('input[name=number]').val(),
+				url : $('input[name=url]').val(),
+				img : $('input[name=img]').val(),
+                actimg : $('input[name=actimg]').val(),
+                color : $('input[name=color]').val(),
+                actcolor : $('input[name=actcolor]').val(),
+			};
+			
+			Http('post','json','addtabbar',postdata,function(data){
+				if(data.status == 200){
+					webAlert(data.res);
+					setTimeout(function(){
+						location.href = '';
+					},500);
+				}else{
+					webAlert(data.res);
+				}
+			},true);
+
+		});
+
+	});
+</script>
+
+{/if}
+	
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}  	
+{template 'common/footer'}

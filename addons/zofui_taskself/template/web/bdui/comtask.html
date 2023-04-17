@@ -1,0 +1,614 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+{if $_GPC['op'] == 'edit' || $_GPC['op'] == 'create'}
+    {php echo $html}
+
+{elseif $_GPC['op'] == 'list'}
+	
+ 	{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/task'}
+
+{elseif $_GPC['op'] == 'info' }
+		
+<form action="" method="post" class="ui-table">
+<div class="create-content left taskinfo_l" style="width: {php echo empty($sintype) ? 75 : 100}%; float: left;margin-bottom: 100px;padding-bottom: 100px;">
+	<div class="create-main" style="padding: 20px;">
+        <h4 class="borderl">任务详情</h4>
+        <div class="info_item">{$info['title']}</div>
+        <div class="info_item">{php echo htmlspecialchars_decode($info['content']) }</div>
+		{loop $info['images'] $item}
+			<a target="_blank" href="{php echo tomedia($item)}">
+				<img class="media-object" src="{php echo tomedia($item)}" style="width: 70px;height: 70px;margin: 0 10px 10px 0px;">
+			</a>
+		{/loop}
+		<div class="info_item task_head_bottom font_ff5f27">
+    		{if $info['status'] == 0}
+    			{if $info['iscount'] == 1}
+    				已结算
+    			{else}
+	    			{if $info['isstart'] == 1}
+	    				未开始
+	    			{else}
+	    				<span>距离自动结束：{php echo Util::lastTime($info['end'])}</span>
+	    			{/if}
+    			{/if}	
+    		{elseif $info['status'] == 1 }
+    			{if $info['iscount'] == 1}
+    				已结算
+    			{else}
+    				<p class="font_ff5f27">审核中</p>
+    			{/if}
+    		{elseif $info['status'] == 2 }
+    			被下架
+    		{/if}
+		</div>
+		<div class="info_item">
+			<span>总计花费:{php echo $info['num']*$info['money']+$info['costserver']+$info['costka']+$info['costtop'] }元，</span>
+			<span>任务总量:{$info['num']}，</span>
+			<span>每项赏金:{$info['money']}元</span>
+		</div>
+		<div class="info_item">
+			<span>服务费:{$info['costserver']}元，</span>
+			<span>{if $info['iska'] == 1}卡首屏费:{$info['costka']}元，{else}未卡首屏，{/if}</span>
+			{if $info['continue'] == 1}
+				<span>额外奖励费:{$continue['totalmoney']}元(未算在总计花费内)，</span>
+			{/if}
+			<span>{if $info['istop'] == 0}未置顶{else}置顶(置顶费{$info['costtop']}元){/if}</span>
+			{if $info['giveparent'] > 0} <span>，上级提成:{$info['giveparent']}元</span> {/if}
+			{if $info['givetwo'] > 0} <span>，上上级提成:{$info['givetwo']}元</span> {/if}
+			{if $info['givethree'] > 0} <span>，上上上级提成:{$info['givethree']}元</span> {/if}
+		</div>					
+		{if $info['iscount'] == 1}
+			<div class="info_item">
+				<span>退回资金:{$info['backmoney']}元</span>
+				{if $info['continue'] == 1 && $continue['isback'] == 1  }
+					<span>退回额外奖励:{$continue['backmoney']}元</span>
+				{/if}
+			</div>
+		{/if}
+        {if $info['isread'] == 1}
+            <div class="info_item">
+                <span>查看答案价格:{$info['readprice']}元</span>
+            </div>
+        {/if}
+		<h4 class="borderl">操作任务</h4>
+
+		<div class="info_item item_cell_box" style="align-items: center;">
+			<div class="reply_number inlineblock">{$reply}待采纳</div>
+			<div class="reply_number inlineblock">{$agree}采纳</div>
+			<div class="reply_number inlineblock">{$refuse}拒绝</div>
+			
+            <div class="ui-table-cell-text-last edit_table_item inlineblock">
+                <a href="javascript:;" class="edit_bot ui-button" >提醒商家</a>
+                <div class="ui-table-editor dropdown_menu_box dropdown_data_list" style="left: 0;right: initial;">
+                    <div class="ui-table-editor-opt">
+                    	提醒内容
+                        <div>
+                            <esui-text-box class="ui-ctrl ui-textbox">
+                                <textarea class="drop_down_textarea" name="remind">请及时处理您的任务</textarea>
+                            </esui-text-box>
+                        </div>
+                        <div class="ui-button skin-ok skin-ok-button confirm_remind" type="3" id="{$info['id']}">确定</div>
+                        <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                    </div>
+                </div>
+            </div>
+            
+	        <div class="input_150 inlineblock">
+	            <div class="ui-select-out input_150">
+	                <div class="ui-select input_150">
+	                    <span class="ui-select-text">
+		    				{if empty( $_GPC['status'] ) }
+		    					筛选回复
+		    				{elseif $_GPC['status'] == 1 }
+		    					待采纳
+		    				{elseif $_GPC['status'] == 2 }
+		    					已采纳
+		    				{elseif $_GPC['status'] == 3 }
+		    					已拒绝
+		    				{/if}
+	                    </span>
+	                </div>
+	                <ol class="ui-select-layer ui-layer" >
+	                    <li class="ui-select-item" >
+	                    	<a href="{php echo WebCommon::commonstructUrl('id',$_GPC['id'],array('status'=>''))}">
+	                    		<span title="">全部</span>
+	                    	</a>
+	                    </li>
+		                <li class="ui-select-item" > 
+	                    	<a href="{php echo WebCommon::logUrl('status',1)}">
+	                    		<span title="">待采纳</span>
+	                    	</a>
+	                    </li>
+	                    <li class="ui-select-item" >
+	                    	<a href="{php echo WebCommon::logUrl('status',2)}">
+	                    		<span title="">已采纳</span>
+	                    	</a>
+	                    </li>
+	                    <li class="ui-select-item" >
+	                    	<a href="{php echo WebCommon::logUrl('status',3)}">
+	                    		<span title="">已拒绝</span>
+	                    	</a>
+	                    </li>    
+	                </ol>
+	            </div>
+	        </div>
+            {if empty($sintype)}
+                <a href="{php echo WebCommon::logUrl('sintype',1)}" class="tosintype ml10">魔方显示</a>
+            {else}
+                <a href="{php echo WebCommon::logUrl('sintype',2)}" class="tosintype ml10">列表显示</a>
+            {/if}
+		</div>
+		<h4 class="borderl">提交内容</h4>
+
+		<div class="taskinfo_sub">
+			
+			{loop $replyinfo $item}
+                {if $sintype == 0}
+				<div class="media taskinfo_item taskinfo_itemaaa" style="overflow: inherit">
+				  <div class="media-left padding0">
+					<a href="#">
+					  <img class="media-object img-rounded" src="{$item['user']['headimgurl']}" style="width: 60px; height: 60px;">
+					</a>
+				  </div>
+				  <div class="media-body" >
+					<p style="height: 44px;">
+						<a target="_blank" href="{php echo $this->createWebUrl('userinfo',array('id'=>$item['user']['id']))}">{$item['user']['nickname']}(会员编号:{$item['user']['id']})</a>
+					</p>
+					<p class="media-heading">{$item['content']}</p>
+					<div class="task_images ">
+						{loop $item['images'] $img}
+					    	<span class="good_qrcode_box">
+					    		<a target="_blank" href="javascript:;" class="show_good_qrcode">
+					    			<img class="media-object" src="{php echo tomedia($img)}" style="width: 64px; height: 64px;">
+					    		</a>
+					    		<img class="actimg" src="{php echo tomedia($img)}" style="width: 300px;height: auto;">
+					    	</span>
+						{/loop}
+						<div class="fc"></div>
+					</div>
+					{if !empty( $item['subform'] )}
+						<div class="task_addcontent">
+							{loop $item['subform'] $in}
+								{if $in['type'] == 'img'}
+									<div class="item_cell_box">
+										<div style="width: 80px">{$in['name']}:</div>
+										<div class="item_cell_flex">
+											<li>
+												{loop $in['value'] $inn}
+											    	<span class="good_qrcode_box">
+											    		<a target="_blank" href="javascript:;" class="show_good_qrcode">
+											    			<img class="media-object" src="{php echo tomedia($inn)}" style="width: 64px; height: 64px;">
+											    		</a>
+											    		<img class="actimg" src="{php echo tomedia($inn)}" style="width: 300px;height: auto;">
+											    	</span>
+
+												{/loop}
+											</li>
+										</div>
+									</div>
+								{else}
+									<div class="item_cell_box">
+										<div style="width: 80px">{$in['name']}:</div>
+										<div class="item_cell_flex">
+											<li>{$in['value']}</li>
+										</div>
+									</div>
+								{/if}
+							{/loop}
+						</div>
+					{/if}
+					{if !empty( $item['addlist'] ) }
+						<div class="task_addcontent">
+							{loop $item['addlist'] $in}
+								<div class="item_cell_box font_mini">
+									<div style="width: 80px">补充内容：</div>
+									<div class="item_cell_flex">
+										<li class="">{$in['content']} <span > —— {php echo date('Y-m-d H:i:s',$in['createtime'])}</span></li>
+										<li>
+											{loop $in['images'] $inn}
+										    	<span class="good_qrcode_box">
+										    		<a target="_blank" href="javascript:;" class="show_good_qrcode">
+										    			<img class="media-object" src="{php echo tomedia($inn)}" style="width: 64px; height: 64px;">
+										    		</a>
+										    		<img class="actimg" src="{php echo tomedia($inn)}" style="width: 300px;height: auto;">
+										    	</span>
+
+											{/loop}
+										</li>
+									</div>
+								</div>
+							{/loop}
+						</div>
+					{/if}
+					{if !empty( $item['remind'] ) }
+						<div class="task_remind">
+							{loop $item['remind'] $in}
+								<div class="item_cell_box font_mini">
+									<li style="width: 80px">提醒内容：</li>
+									<li class="item_cell_flex remind_content">{$in['content']}<span class="remind_time"> —— {php echo date('Y-m-d H:i:s',$in['createtime'])}</span></li>
+								</div>
+							{/loop}
+						</div>
+					{/if}
+					{if $item['adminadd']*1 != 0  }
+						<div class="task_remind">
+							<div class="item_cell_box font_mini">
+								管理员为提交者增加 {php echo $item['adminadd']} {$_W['cname']} 
+							</div>
+						</div>
+					{/if}
+					<div class="task_reply_icon margin_top20 info_item">
+						<span>{php echo Util::formatTime($item['createtime'])}，</span> 
+						<span class="reply_status">
+						{if $item['isscan'] == 0}
+							{if $item['status'] == 1}等待采纳{elseif $item['status'] == 2}已采纳{elseif $item['status'] == 3}被拒绝{/if}，
+						{elseif $item['isscan'] == 1}
+							已禁止浏览，
+						{/if}
+						</span>
+						{if $item['status'] == 2}
+							<span>赏金:{$item['money']} {if $item['ewai'] > 0}+{$item['ewai']}{/if} 元</span>，
+							{if $item['giveparent'] > 0}
+								<span>上级提成:{$item['giveparent']}</span>，
+							{/if}
+							{if $item['twoupmoney'] > 0}
+								<span>上上级提成:{$item['twoupmoney']}</span>，
+							{/if}
+							{if $item['threeupmoney'] > 0}
+								<span>上上上级提成:{$item['threeupmoney']}</span>
+							{/if}									
+						{/if}
+					</div>
+				  </div>
+						
+					<div class="reply_bottom text-right task_status_acceptrefuse" data-replyid="{$item['id']}" data-taskid="{$item['taskid']}">
+	      			 	<div class=" inlineblock" style="height: 15px;"> 
+	       					<input type="checkbox" name="checkall[]" class="ui-table-multi-select" value="{$item['id']}" /> 
+	       				</div>
+						{if $item['status'] == 1}
+	                        <div class="ui-table-cell-text-last edit_table_item inlineblock">
+	                            <a href="javascript:;" class="edit_bot" >提醒</a>
+	                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+	                                <div class="ui-table-editor-opt">
+	                                	提醒内容
+	                                    <div>
+	                                        <esui-text-box class="ui-ctrl ui-textbox">
+	                                            <textarea class="drop_down_textarea" name="messcontent"></textarea>
+	                                        </esui-text-box>
+	                                    </div>
+	                                    <div class="ui-button skin-ok skin-ok-button dealreply" data-type="remind" data-alert="确定要提醒对方吗？">发送</div>
+	                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+	                                </div>
+	                            </div>
+	                        </div>
+
+							<a href="javascript:;" class="dealreply" data-type="accept" data-alert="确定要采纳此回复吗？">采纳</a> 
+
+	                        <div class="ui-table-cell-text-last edit_table_item inlineblock">
+	                            <a href="javascript:;" class="edit_bot" >拒绝</a>
+	                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+	                                <div class="ui-table-editor-opt">
+	                                	拒绝理由
+	                                    <div>
+	                                        <esui-text-box class="ui-ctrl ui-textbox">
+	                                            <textarea class="drop_down_textarea" name="messcontent"></textarea>
+	                                        </esui-text-box>
+	                                    </div>
+	                                    <div class="ui-button skin-ok skin-ok-button dealreply" data-type="refuse" data-alert="确定要拒绝此回复吗？">确定</div>
+	                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+	                                </div>
+	                            </div>
+	                        </div>
+						{elseif $item['status'] == 2}
+							<font class="font_mini">采纳时间：{php echo date('Y-m-d H:i:s',$item['dealtime'])}</font>
+						{elseif $item['status'] == 3}
+							<font class="font_mini">拒绝时间：{php echo date('Y-m-d H:i:s',$item['dealtime'])}</font>
+						{/if}
+						<a href="javascript:;" class="dealreply" data-type="noscan" data-alert="确定要禁止别人浏览此回复吗？" {if $item['isscan'] == 1}style="display:none"{/if} >禁止浏览</a>
+						<a href="javascript:;" class="font_ff5f27 dealreply" data-type="allowscan" data-alert="确定要将此回复恢复浏览吗？" {if $item['isscan'] == 0}style="display:none"{/if} >恢复浏览</a>
+                        <a href="javascript:;" class="dealreply" data-type="delete" data-alert="已采纳的回复不要删除，否则会导致结算任务的时候多退还资金给发布者，确定要删除？">删除</a>
+					</div>
+				</div>
+                {else}
+                    <div class="" style="width: 200px;box-shadow: 1px 1px 11px rgba(0,0,0,0.2);padding: 5px;float: left;margin: 0 10px 10px 0;">
+                        <div style="height: 200px;">
+                        {if empty($item['thumbimg'])}
+                            <div class="media-heading" style="max-height:100px;overflow:hidden;">
+                                {$item['content']}
+                            </div>
+                            <div class="task_images ">
+                                {loop $item['images'] $img}
+                                    <span class="good_qrcode_box">
+                                        <a target="_blank" href="javascript:;" class="show_good_qrcode">
+                                            <img class="media-object" src="{php echo tomedia($img)}" style="width: 54px; height: 54px;">
+                                        </a>
+                                        <img class="actimg" src="{php echo tomedia($img)}" style="right:initial;left: 0;width: 300px;height: auto;">
+                                    </span>
+                                {/loop}
+                                <div class="fc"></div>
+                            </div>
+
+                            {if !empty( $item['subform'] )}
+                                <div class="task_addcontent">
+                                    {loop $item['subform'] $in}
+                                        {if $in['type'] == 'img'}
+                                            {loop $in['value'] $inn}
+                                                <span class="good_qrcode_box">
+                                                    <a target="_blank" href="javascript:;" class="show_good_qrcode">
+                                                        <img class="media-object" src="{php echo tomedia($inn)}" style="width: 54px; height: 54px;">
+                                                    </a>
+                                                    <img class="actimg" src="{php echo tomedia($inn)}" style="width: 300px;height: auto;right:initial;left: 0;">
+                                                </span>
+                                            {/loop}
+                                        {else}
+                                            <li>{$in['value']}</li>
+                                        {/if}
+                                    {/loop}
+                                </div>
+                            {/if}
+                        {else}
+                            <div class="good_qrcode_box" style="height: 200px;width:100%;">
+                                <a target="_blank" href="javascript:;" class="show_good_qrcode">
+                                    <div style="width: 100%; height: 100%;margin-left:0px;margin-top:0;background-image:url({php echo tomedia($item['thumbimg'])});background-repeat:no-repeat;background-size: 100%;"></div>
+                                </a>
+                                <img class="actimg" src="{php echo tomedia($item['thumbimg'])}" style="width: 300px;height: auto;right:initial;left: 0;">
+                            </div>
+                        {/if}
+                        </div>
+                        <div style="" >
+                            <div class="">
+                                <div class="">{$item['user']['nickname']}(id:{$item['user']['id']})</div>
+                                <div class="">
+                                    ip:{$item['ip']}
+                                </div>
+                            </div>
+                            <div class="item_cell_box" style="padding:5px 0">
+                                <div class="item_cell_flex">
+                                    {php echo Util::formatTime($item['createtime'])}
+                                </div>
+                                <div>
+                                    {if $item['isscan'] == 0}
+                                        {if $item['status'] == 1}等待采纳{elseif $item['status'] == 2}已采纳{elseif $item['status'] == 3}被拒绝{/if}
+                                    {elseif $item['isscan'] == 1}
+                                        已禁止浏览，
+                                    {/if}
+                                    {if $item['status'] >= 1}
+                                        <span>赏金:{$item['money']} {if $item['ewai'] > 0}+{$item['ewai']}{/if} 元</span>                                  
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reply_bottom text-right task_status_acceptrefuse" data-replyid="{$item['id']}" data-taskid="{$item['taskid']}">
+                            <div class=" inlineblock" style="height: 15px;float: left;"> 
+                                <input type="checkbox" name="checkall[]" class="ui-table-multi-select" value="{$item['id']}" /> 
+                            </div>
+                            {if $item['status'] == 1}
+                                <div class="ui-table-cell-text-last edit_table_item inlineblock">
+                                    <a href="javascript:;" class="edit_bot" >提醒</a>
+                                    <div class="ui-table-editor dropdown_menu_box dropdown_data_list" style="right:initial;left: 0;">
+                                        <div class="ui-table-editor-opt">
+                                            提醒内容
+                                            <div>
+                                                <esui-text-box class="ui-ctrl ui-textbox">
+                                                    <textarea class="drop_down_textarea" name="messcontent"></textarea>
+                                                </esui-text-box>
+                                            </div>
+                                            <div class="ui-button skin-ok skin-ok-button dealreply" data-type="remind" data-alert="确定要提醒对方吗？">发送</div>
+                                            <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="javascript:;" class="dealreply" data-type="accept" data-alert="确定要采纳此回复吗？">采纳</a> 
+
+                                <div class="ui-table-cell-text-last edit_table_item inlineblock">
+                                    <a href="javascript:;" class="edit_bot" >拒绝</a>
+                                    <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+                                        <div class="ui-table-editor-opt">
+                                            拒绝理由
+                                            <div>
+                                                <esui-text-box class="ui-ctrl ui-textbox">
+                                                    <textarea class="drop_down_textarea" name="messcontent"></textarea>
+                                                </esui-text-box>
+                                            </div>
+                                            <div class="ui-button skin-ok skin-ok-button dealreply" data-type="refuse" data-alert="确定要拒绝此回复吗？">确定</div>
+                                            <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {elseif $item['status'] == 2}
+                                
+                            {elseif $item['status'] == 3}
+                                
+                            {/if}
+                            <a href="javascript:;" class="dealreply" data-type="noscan" data-alert="确定要禁止别人浏览此回复吗？" {if $item['isscan'] == 1}style="display:none"{/if} >禁看</a>
+                            <a href="javascript:;" class="font_ff5f27 dealreply" data-type="allowscan" data-alert="确定要将此回复恢复浏览吗？" {if $item['isscan'] == 0}style="display:none"{/if} >恢复</a>
+                            <a href="javascript:;" class="dealreply" data-type="delete" data-alert="已采纳的回复不要删除，否则会导致结算任务的时候多退还资金给发布者，确定要删除？">删除</a>
+                        </div>
+                    </div>
+                {/if}
+			{/loop}
+            <div style="clear:both;"></div>
+		</div>
+
+        <div class="inlineblock fl" style="line-height: 30px;margin-right: 10px;">
+            <input type="checkbox" class="ui-table-select-all" id="selectAll" />全选
+        </div>
+<div style="color: red !important;">&#x597D;&#x6E90;&#x7801;&#x7F51;&#x5206;&#x4EAB;</div>
+        <div class="ui-table-cell-text-last edit_table_item inlineblock fl" style="line-height: 30px;margin-right: 10px;">
+            <a href="javascript:;" class="edit_bot ui-button" >批量发放余额</a>
+            <div class="ui-table-editor dropdown_menu_box dropdown_data_list addmoneyall_box" style="left: 0;right: initial;">
+                <div class="ui-table-editor-opt">
+                    <div>增减值(数字前加-是减)
+                        <esui-text-box class="ui-ctrl ui-textbox">
+                            <input type="text" class="drop_down_input" name="money" value="">
+                        </esui-text-box>
+                    </div>
+                    <div class="ui-button skin-ok skin-ok-button addmoneyall" >确定</div>
+                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                </div>
+            </div>
+        </div>
+
+    	<div class="ui-select-out input_100 fl">
+			<div class="ui-select">
+				<span class="ui-select-text">
+					批量操作
+				</span>
+			</div>
+			<ol class="ui-select-layer ui-layer" style="top: initial;bottom:30px;">
+				<li class="ui-select-item ">
+					<span title="">
+						<input name="agreeall" class="alldeal_btn" value="采纳所选" onclick="return confirm('确定要采纳选择的吗？');" type="submit">
+					</span>
+				</li>
+				<li class="ui-select-item ">
+					<span title="">
+						<input name="refuseall" class="alldeal_btn" value="拒绝所选" onclick="return confirm('确定要拒绝选择的吗？');" type="submit">
+					</span>
+				</li>
+				<li class="ui-select-item ">
+					<span title="">
+						<input name="counttask" class="alldeal_btn" value="结算任务" onclick="return confirm('确定要结算任务吗？');" type="submit">
+					</span>
+				</li>
+			</ol>
+    	</div>
+    	
+    	<div class="ui-select-out input_100 fl" style="margin-left: 10px;">
+			<div class="ui-select">
+				<span class="ui-select-text">
+					每页{php echo empty( $_GPC['pnum'] ) ? 10 : $_GPC['pnum'] }项
+				</span>
+			</div>
+			<ol class="ui-select-layer ui-layer" style="top: initial;bottom:30px;">
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',10)}">
+                		<span title="">10项</span>
+                	</a>
+				</li>
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',20)}">
+                		<span title="">20项</span>
+                	</a>
+				</li>
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',50)}">
+                		<span title="">50项</span>
+                	</a>
+				</li>
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',100)}">
+                		<span title="">100项</span>
+                	</a>
+				</li>
+			</ol>
+    	</div>
+    	
+        <input type="hidden" name="token" value="{$_W['token']}">
+
+	</div>
+
+    <div class="ui-pager" style="display: block;margin-top: 30px;padding-left: 10px;">
+        {$pager}
+    </div>
+
+</div>
+
+{if empty($sintype)}
+<div class="create-content right taskinfo_r" style="width: calc(25% - 20px);float: left;margin-left: 20px;height: 100%;">
+    <div class="create-main" style="padding: 20px;">
+		{if !empty( $puber )}
+			<div class="task_author_head tc">
+				<a target="_blank" href="{php echo $this->createWebUrl('user',array('op'=>'info','id'=>$puber['id']))}">
+					<div class="info_item">
+						<img class="media-object img-rounded" src="{$puber['headimgurl']}" style="width: 50px; height: 50px;">
+					</div>
+					
+					<div class="info_item">{$puber['nickname']}</div>
+					<div class="info_item">会员ID：{$puber['id']}</div>
+				</a>
+			</div>
+			<div class="task_author_info ">
+				<div class="info_item">发布：{$puber['pubnumber']} </div>
+				<div class="info_item">采纳：{$puber['acceptnumber']} </div>
+				<div class="info_item">余额：{$credit['credit2']} 元</div>
+				<div class="info_item">保证金：{$puber['deposit']} 元</div>					
+			</div>
+		{else}
+			<div class="task_author_head tc">
+				管理员
+			</div>
+		{/if}
+    </div>
+</div>
+{/if}
+
+</form>
+
+{elseif $_GPC['op'] == 'reply'}
+
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/reply'}
+
+{elseif $_GPC['op'] == 'step' || $_GPC['op'] == 'steptemp'}
+
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/step'}
+
+{elseif $_GPC['op'] == 'editreply' }
+	<div class="list-content">
+		<div class="table-wrap" >
+		<form method="post" action="">
+            <div class="form-row">
+                <label>回复内容</label>
+                <div class="form-value">
+                    <esui-text-box class="ui-ctrl ui-textbox">
+                        <textarea  name="content" class="frm_textarea" rows="6" placeholder="">{$info['content']}</textarea>
+                    </esui-text-box>
+                </div>
+            </div>
+            <div class="form-row single_img_upload">
+                <label>回复图片</label>
+                <div class="form-value">
+                    <esui-text-box class="ui-ctrl ui-textbox">
+                        {php echo WebCommon::tpl_form_field_multi_image('images', $info['images'],'');}
+                    </esui-text-box>
+                </div>
+            </div>
+            {if !empty($info['subform'])}
+            {loop $info['subform'] $item}
+                {if $item['type'] == 'img'}
+                    <div class="form-row single_img_upload">
+                        <label>{$item['name']}</label>
+                        <div class="form-value">
+                            <esui-text-box class="ui-ctrl ui-textbox">
+                                {php echo WebCommon::tpl_form_field_multi_image($item['name'], $item['value'],'');}
+                            </esui-text-box>
+                        </div>
+                    </div>
+                {else}
+                    <div class="form-row">
+                        <label>{$item['name']}</label>
+                        <div class="form-value">
+                            <esui-text-box class="ui-ctrl ui-textbox">
+                                <textarea  name="{$item['name']}" class="frm_textarea" rows="6" placeholder="">{$item['value']}</textarea>
+                            </esui-text-box>
+                        </div>
+                    </div>
+                {/if}
+            {/loop}
+            {/if}
+            <div class="form-row">
+                <label></label>
+                <div class="form-value">
+                    <input name="editreply" type="submit" value="保存" class="ui-button skin-ok-button" />
+                    <input name="token" type="hidden" value="{$_W['token']}" />
+                </div>
+            </div>
+		</form>
+		</div>
+	{/if}
+</div>	
+{if $_GPC['op'] != 'info'}
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'} 
+{/if}
+{template 'common/footer'}

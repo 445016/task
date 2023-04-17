@@ -1,0 +1,471 @@
+{template 'common/myheader'}
+
+    <div id="page_set" class="page page-current page_set">
+		
+		<div class="content" >
+			{template 'common/top'}
+			<form>
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						手机号
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="tel" class="form_input form_into" value="{php echo empty($userinfo['mobile']) ? '' : $userinfo['mobile']}" placeholder="输入您的手机号">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+				{if $_W['set']['isverify'] == 1}
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						验证码
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="code" class="form_input form_into" value="" placeholder="">
+						</li>
+						<li class="form_per get_code"><span id="getvertify">获取验证码</span></li>
+					</div>
+				</div>
+				{/if}
+
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						QQ号码
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="qq" class="form_input form_into" value="{php echo empty($userinfo['qq']) ? '' : $userinfo['qq']}" placeholder="输入您的qq号">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+				
+			</div>
+			{if $_W['dev'] == 'wap'}
+				<div class="form_list">
+					<div class="mb05 form_group item_cell_box">
+						<div class="form_title" style="width: 4rem;">
+							你的昵称
+						</div>
+						<div class="form_right item_cell_flex item_cell_box">
+							<li class="item_cell_flex">
+								<input type="text" name="nickname" class="form_input form_into" value="{$userinfo['nickname']}" placeholder="">
+							</li>
+							<li class="form_per"></li>
+						</div>
+					</div>
+					<div class="pub_content">
+						<div class="pub_content_title">你的头像</div>
+						<div class="pub_images_list">
+							<div class="upload_images_views">
+							{if !empty( $userinfo['headimgurl'] )}
+								<li class="fl upload_image_item">
+									<img src="{php echo tomedia( $userinfo['headimgurl'] )}"><input value="{$userinfo['headimgurl']}" type="hidden" name="images[]">
+								</li>
+							{/if}
+							</div>
+							<div class="uploader_input uploader_input_headimgurl" id="uploader_input_headimgurl"></div>
+						</div>
+					</div>
+				</div>
+			{/if}
+			{if ($_W['set']['paytype'] == 2 && $_W['dev'] == 'wx') || ($_W['set']['wappaytype'] == 0 && $_W['dev'] == 'wap')}
+				{if empty($_W['set']['iseditali']) || ( empty($userinfo['alipayname']) || empty($userinfo['alipay']) )}
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								提现支付宝姓名
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="text" name="aliname" class="form_input form_into" value="{$userinfo['alipayname']}" placeholder="输入提现支付宝账户姓名">
+								</li>
+								<li class="form_per"></li>
+							</div>
+						</div>
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								提现支付宝账户
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="text" name="alipay" class="form_input form_into" value="{$userinfo['alipay']}" placeholder="输入提现的支付宝账户">
+								</li>
+								<li class="form_per"></li>
+							</div>
+						</div>
+					</div>
+					<p class="form_tips ">支付宝账户作为您提现到账的账户，请认真填写</p>
+				{else}
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								提现支付宝姓名
+							</div>
+							<div class=" item_cell_flex item_cell_box">
+								{$userinfo['alipayname']}
+							</div>
+						</div>
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								提现支付宝账户
+							</div>
+							<div class=" item_cell_flex item_cell_box">
+								{$userinfo['alipay']}
+							</div>
+						</div>
+					</div>
+					<p class="form_tips ">支付宝账户作为您提现到账的账户，不可修改</p>
+				{/if}
+			{/if}
+			<div class="form_list">
+				<div class="pub_content">
+					<div class="pub_content_title">微信二维码</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views">
+						{if !empty( $userinfo['qrcode'] )}
+							<li class="fl upload_image_item">
+								<img src="{php echo tomedia( $userinfo['qrcode'] )}"><input value="{$userinfo['qrcode']}" type="hidden" name="images[]">
+							</li>
+						{/if}
+						</div>
+						<div class="uploader_input uploader_input_qrcode" id="uploader_input_qrcode"></div>
+					</div>
+				</div>
+			</div>
+			
+			{if ($_W['set']['paytype'] == 3 && $_W['dev'] == 'wx') || ($_W['set']['wappaytype'] == 1 && $_W['dev'] == 'wap')}
+				{if empty($_W['set']['iseditali']) || empty($userinfo['payqr']) }
+				<div class="form_list">
+					<div class="pub_content">
+						<div class="pub_content_title">微信收款二维码</div>
+						<div class="pub_images_list">
+							<div class="upload_images_views upload_images_viewsa">
+							{if !empty( $userinfo['payqr'] )}
+								<li class="fl upload_image_item">
+									<img src="{php echo tomedia( $userinfo['payqr'] )}">
+								</li>
+							{/if}
+							</div>
+							<div class="uploader_input uploader_input_payqr" id="uploader_input_payqr"></div>
+						</div>
+					</div>
+				</div>
+				{else}
+					<div class="form_list">
+						<div class="pub_content">
+							<div class="pub_content_title">微信收款二维码</div>
+							<div class="pub_images_list">
+								<div class="upload_images_views">
+								{if !empty( $userinfo['payqr'] )}
+									<li class="fl upload_image_item">
+										<img src="{php echo tomedia( $userinfo['payqr'] )}"><input value="{$userinfo['payqr']}" type="hidden" name="payqr[]">
+									</li>
+								{/if}
+								</div>
+							</div>
+						</div>
+					</div>
+				{/if}
+			{/if}
+			{if empty( $_W['set']['isclosefind'] )}
+				<div class="form_list mb05 form_group item_cell_box">
+					<div class="form_title">
+						业务类型
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						{loop $guysort $item}
+							<label class="weui_cell weui_check_label needsclick form_cityitem mb05" style="margin-right:0.2rem;" >
+								<div class="weui_cell_hd needsclick">
+									<input type="checkbox" class="weui_check needsclick" name="guysort[]"  value="{$item['id']}" {loop $usersort $in}{if $in['sortid'] == $item['id']}checked="checked"{/if}{/loop} >
+									<i class="weui_icon_checked needsclick"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">{$item['name']}</span>
+								</div>
+							</label>
+						{/loop}					
+					</div>
+				</div>
+			{/if}
+			{if $userinfo['sex'] != 3 && $userinfo['sex'] != 4}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						您的性别
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox" style="padding-left: 0">
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="sex" value="3" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">男性</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="sex" value="4" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">女性</span>
+							</div>
+						</label>						
+					</div>
+				</div>
+			</div>
+			<p class="form_tips ">性别一旦设置就不能更改！</p>
+			{/if}
+
+			{if empty( $_W['set']['isclosefind'] )}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						个人简述
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<textarea name="guydesc" class="form_textarea" placeholder="在此简述自己的业务范围，便于雇主/雇员知道你是干什么的">{php echo empty($userinfo['guydesc']) ? '' : $userinfo['guydesc'] }</textarea>
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+			</div>
+			<div class="form_list">
+				<div class="pb05 bordbot form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						我发任务
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" name="ispub" {if $userinfo['ispub'] == 1}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>
+				<div class="pt05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						我接任务
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" name="isacc" {if $userinfo['isacc'] == 1}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>				
+			</div>	
+			<p class="form_tips ">若开启，在找人-接任务的/发任务的栏目内展示</p>
+			{/if}
+			
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title font_mini">
+						接普通任务限制
+					</div>
+					<div class="form_right item_cell_flex " style="border-bottom: 0">
+						<span class="font_mini">每人</span>
+						<li style="display:inline-block;">
+							<input type="tel" name="limitday" class="form_input form_into short_input" value="{$userinfo['limitday']}" placeholder="" >
+						</li>
+						<span class="font_mini">天内能接我发布的</span>
+						<li class="item_cell_flex" style="display:inline-block;">
+							<input type="tel" name="limitnum" class="form_input form_into short_input" value="{$userinfo['limitnum']}" placeholder="" style="width: 2rem">
+						</li>
+						<li class="form_per" style="display:inline-block;">项普通任务</li>
+					</div>
+				</div>
+			</div>
+			<p class="form_tips ">接普通任务限制是限制会员接你发布的普通任务。</p>
+
+			{if $_W['set']['isusetask'] == 1}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title font_mini">
+						抢试用任务限制
+					</div>
+					<div class="form_right item_cell_flex " style="border-bottom: 0">
+						<span class="font_mini">每人</span>
+						<li class="" style="display:inline-block;">
+							<input type="tel" name="uselimitday" class="form_input form_into short_input" value="{$userinfo['uselimitday']}" placeholder="" >
+						</li>
+						<span class="font_mini">天内能接我发布的</span>
+						<li class="item_cell_flex" style="display:inline-block;">
+							<input type="tel" name="uselimitnum" class="form_input form_into short_input" value="{$userinfo['uselimitnum']}" placeholder="" style="width: 2rem">
+						</li>
+						<li class="form_per" style="display:inline-block;">项试用任务</li>
+					</div>
+				</div>
+			</div>
+			<p class="form_tips ">接试用任务限制是限制会员接你发布的试用任务。</p>
+			{/if}
+			
+			
+			<div class="form_list">
+				<div class="pb05 bordbot form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						微信联系
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" name="conweixin" {if $userinfo['conweixin'] == 1}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>
+				<div class="pt05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						手机联系
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" name="conmobile" {if $userinfo['conmobile'] == 1}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>				
+			</div>	
+			<p class="form_tips ">若开启，可在个人页面展示联系方式，建议开启其中一项，方便任务沟通。</p>
+			
+			{if $isauthed == 0 && $_W['set']['isauth'] != 0 }
+				<div class="form_list" >
+					<div class="form_group item_cell_box" >
+						<div class="form_title item_cell_flex pl0">开启认证</div>
+			            <div class="item-input needsclick">
+			              <label class="label-switch needsclick">
+			                <input type="checkbox" name="isauth" value="1" >
+			                <div class="checkbox needsclick" ></div>
+			              </label>
+			            </div>
+					</div>
+				</div>
+			{/if}
+
+			<div class="isauth hideitem" {if $isauthed > 0}style="display:block"{/if}>
+				{if $isauthed == 1 || ($isauthed == 2 && $_W['set']['iseditauth'] == 0) }
+					{if !empty( $userinfo['verifyform'] )}
+						<div class="set_showform_box">
+							{loop $userinfo['verifyform'] $item}
+								<div class="set_showform_item item_cell_box">
+									<li class="set_showform_l">{$item['name']}</li>
+									<li class="item_cell_flex">
+										{if $item['type'] == 'image'}
+											<img src="{php echo tomedia( $item['value'] )}">
+										{else}
+											{$item['value']}
+										{/if}
+									</li>
+								</div>
+							{/loop}
+						</div>
+					{/if}
+				{else}
+					{if $isauthed == 2 && $_W['set']['iseditauth'] == 1}
+						<input type="hidden" name="isauth" value="1" >
+					{/if}
+					{if !empty( $form ) }
+						{loop $form $k $item}
+							{if $item['formtype'] == 'char'}
+								<div class="form_list">
+									<div class="form_group item_cell_box">
+										<div class="form_title">{$item['name']}</div>
+										<div class="form_right item_cell_flex item_cell_box">
+											<li class="item_cell_flex">
+												<input type="text" name="form[]" formtype="char" class="form_input form_into" value="{loop $userinfo['verifyform'] $in}{if $in['id'] == $item['id']}{$in['value']}{/if}{/loop}" placeholder="">
+											</li>
+											<input type="hidden" name="formid[]" value="{$item['id']}" >
+										</div>
+									</div>
+								</div>
+							{elseif $item['formtype'] == 'int'}
+								<div class="form_list">
+									<div class="form_group item_cell_box">
+										<div class="form_title">{$item['name']}</div>
+										<div class="form_right item_cell_flex item_cell_box">
+											<li class="item_cell_flex">
+												<input type="tel" name="form[]" formtype="int" class="form_input form_into" value="{loop $userinfo['verifyform'] $in}{if $in['id'] == $item['id']}{$in['value']}{/if}{/loop}" placeholder="">
+											</li>
+											<input type="hidden" name="formid[]" value="{$item['id']}" >
+										</div>
+									</div>
+								</div>
+							{elseif $item['formtype'] == 'mobile'}
+								<div class="form_list">
+									<div class="form_group item_cell_box">
+										<div class="form_title">{$item['name']}</div>
+										<div class="form_right item_cell_flex item_cell_box">
+											<li class="item_cell_flex">
+												<input type="tel" name="form[]" formtype="mobile" class="form_input form_into" value="{loop $userinfo['verifyform'] $in}{if $in['id'] == $item['id']}{$in['value']}{/if}{/loop}" placeholder="">
+											</li>
+											<input type="hidden" name="formid[]" value="{$item['id']}" >
+										</div>
+									</div>
+								</div>
+							{elseif $item['formtype'] == 'time'}
+								<div class="form_list">
+									<div class="form_group item_cell_box">
+										<div class="form_title">{$item['name']}</div>
+										<div class="item_cell_flex item_cell_box">
+											<li class="">
+												<input type="tel" name="form[]" formtype="time" class="form_input form_into datetime-picker" value="{loop $userinfo['verifyform'] $in}{if $in['id'] == $item['id']}{$in['value']}{/if}{/loop}" placeholder="点击选择时间">
+											</li>
+											<input type="hidden" name="formid[]" value="{$item['id']}" >
+										</div>
+									</div>
+								</div>
+							{elseif $item['formtype'] == 'city'}
+								<div class="form_list">
+									<div class="form_group item_cell_box">
+										<div class="form_title">{$item['name']}</div>
+										<div class="item_cell_flex item_cell_box">
+											<li class="" style="width: 100%;">
+												<input type="text" name="form[]" placeholder="请点击选择城市" class="city-picker" readonly="" value="{loop $userinfo['verifyform'] $in}{if $in['id'] == $item['id']}{$in['value']}{/if}{/loop}" style="width: 100%;">
+											</li>
+											<input type="hidden" name="formid[]" value="{$item['id']}" >
+										</div>
+									</div>
+								</div>
+							{elseif $item['formtype'] == 'image'}
+								<div class="form_list">
+									<div class="pub_content">
+										<div class="pub_content_title">{$item['name']}</div>
+										<div class="pub_images_list">
+											<div class="upload_images_views">
+												{php $isin = 0}
+												{loop $userinfo['verifyform'] $in}
+													{if $in['id'] == $item['id'] }
+														{php $isin = 1}
+														<li class="fl  upload_image_item">
+															<img src="{php echo tomedia( $in['value'] )}"><input value="{$in['value']}" type="hidden" name="form[]">
+														</li>
+													{/if}
+												{/loop}
+												{if $isin == 0}
+													<input value="" type="hidden" name="form[]">
+												{/if}
+											</div>
+											<input type="hidden" name="formid[]" value="{$item['id']}" >
+											<div class="uploader_input form_upload" name="form[{$k}]" id="form_upload"></div>
+										</div>
+									</div>
+								</div>																						
+							{/if}
+						{/loop}
+					{/if}
+				{/if}
+			</div>
+			</form>
+		  	<div class="popup_bot pd05">
+		  		<a href="javascript:;" class="popup_btn popup_confirm" id="save_set">保存</a>
+		  	</div>
+
+		</div>
+	</div>
+{template 'common/myfooter'}
+

@@ -1,0 +1,94 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content create-main">
+    <div class="table-wrap detail-parts-table" >
+
+ 		<dl class="detail-create detail-part-1-col">
+		    <dt><h4>配置步骤</h4></dt>
+		    <dd>
+		        <label>1、</label>
+		        <div>设置好模块参数设置内的所有参数和选项。</div>
+		    </dd>
+		    <dd>
+		        <label>2、</label>
+		        <div>在微信公众号后台——公众号设置——功能选项中设置‘JS接口安全域名’，域名为:{php echo trim(str_replace(array('http://','https://'),'',$_W['siteroot']),'/')}</div>
+		    </dd>
+		    <dd>
+		        <label>3、</label>
+		        <div>在微信公众号后台——公众号设置——功能选项中设置‘网页授权域名’，域名为:{php echo trim(str_replace(array('http://','https://'),'',$_W['siteroot']),'/')}</div>
+		    </dd>
+		    <dd>
+		        <label>4、</label>
+		        <div>在微擎系统后台——系统管理——公众号列表——进入公众号——左侧的参数配置内——支付参数中设置‘微信支付’内的参数。</div>
+		    </dd>
+		    <dd>
+		        <label>5、</label>
+		        <div>在微信公众号后台——微信支付——开发配置中设置‘支付授权目录’，目录为:{php echo $_W['siteroot'].'payment/wechat/'}</div>
+		    </dd>
+		    <dd>
+		        <label>6、</label>
+		        <div>在微信公众号后台——基本配置中设置‘IP白名单’，ip是你的服务器ip</div>
+		    </dd>
+		</dl>
+
+ 		<dl class="detail-create detail-part-1-col">
+		    <dt><h4>模块一些链接</h4></dt>
+		    <dd>
+		        <label></label>
+		        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('quest')}" >会员答疑中心链接</a></div>
+		    </dd>
+		    <dd>
+		        <label></label>
+		        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('money',array('op'=>'log'))}" >资金明细</a></div>
+		    </dd>
+		    <dd>
+		        <label></label>
+		        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('money',array('op'=>'in'))}" >充值</a></div>
+		    </dd>
+		    <dd>
+		        <label></label>
+		        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('money',array('op'=>'out'))}" >提现</a></div>
+		    </dd>
+		    <dd>
+		        <label></label>
+		        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('deposit',array('op'=>'out'))}" >保证金提现</a></div>
+		    </dd>
+		    <dd>
+		        <label></label>
+		        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('level')}" >会员</a></div>
+		    </dd>
+		    <dd>
+		        <label></label>
+		        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('down')}" >合伙人</a></div>
+		    </dd>
+		    {if $this->module['config']['ulevel'] == 1}
+			    <dd>
+			        <label></label>
+			        <div><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('level')}" >会员等级页面链接</a></div>
+			    </dd>
+		    {/if}
+		    {if $this->module['config']['ulevel'] == 1}
+			    <dd>
+			        <label></label>
+			        <div>
+			        	<p><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('taskbak',array('level'=>1))}" >所有会员可抢任务链接</a></p>
+			        	<p><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('taskbak',array('level'=>2))}" >一级会员可抢任务链接</a></p>
+			        	<p><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('taskbak',array('level'=>3))}" >二级会员可抢任务链接</a></p>
+			        	<p><a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('taskbak',array('level'=>4))}" >一、二级会员可抢任务链接</a></p>
+			        </div>
+			    </dd>
+		    {/if}
+
+		    <dd>
+		        <label></label>
+		        <div><a href="{php echo $this->createWebUrl('upup')}" >升级数据（从公众号版本升级到网页版本时使用）</a></div>
+		    </dd>
+
+		</dl>
+
+
+
+</div>
+</div>
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}	
+{template 'common/footer'}

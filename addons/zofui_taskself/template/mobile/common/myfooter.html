@@ -1,0 +1,28 @@
+		
+		</div>
+		<script src="../addons/{php echo MODULE}/public/js/app/config.js"></script>
+		<script src="../addons/{php echo MODULE}/public/js/lib/sm.js?v=2"></script>
+		<script src="../addons/{php echo MODULE}/public/js/lib/sm-extend.js"></script>
+		{if $_GPC['do'] == 'pub' || $_GPC['do'] == 'set' || $_GPC['do'] == 'pubtb'}
+			<script src="../addons/{php echo MODULE}/template/web/bdui/js/areatocounty.js"></script>
+			<script src="../addons/{php echo MODULE}/public/js/lib/sm-city-picker.js"></script>
+		{/if}
+		<script type="text/javascript" src="../addons/{php echo MODULE}/public/js/lib/fastclick.js"></script>
+		<script type="text/javascript" src="../addons/{php echo MODULE}/public/js/lib/detail2list.js?v=1"></script>
+		<script type="text/javascript" src="../addons/{php echo MODULE}/public/js/lib/clipboard.min.js"></script>
+				
+		{if $_W['dev'] == 'wap'}
+			<link rel="stylesheet" type="text/css" href="{php echo $_W['siteroot']}web/resource/components/webuploader/webuploader.css">
+			<script type="text/javascript" src="{php echo $_W['siteroot']}web/resource/components/webuploader/webuploader.min.js" ></script>
+		{/if}
+		{if $_W['dev'] != 'wap'}
+			<script src="../addons/{php echo MODULE}/public/js/app/weixinJs.js{$jstime}"></script>
+		{/if}
+		<script src="../addons/{php echo MODULE}/public/js/app/super.js{$jstime}"></script>
+		<div class="count_code" style="display: none!important">
+			{php echo htmlspecialchars_decode($this->module['config']['countcode'])}
+		</div>
+		<div id="photobrow_box"></div>
+		{template 'common/popup'}
+	</body>
+</html>

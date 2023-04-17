@@ -1,0 +1,122 @@
+{template 'common/myheader'}
+
+    <div id="page_down" class="page page-current page_down">
+		
+		<div class="content infinite-scroll" data-distance="50">
+	        <div class="user-top pri-bg">
+	            <div class="detial">
+	                <div class="item">
+	                    昨日推广
+	                    <div class="num">{php echo $yestodayall <= 0 ? 0 : $yestodayall}</div>
+	                </div>
+	                <div class="item">
+	                    今日推广
+	                    <div class="num">{php echo $todayall <= 0 ? 0 : $todayall}</div>
+	                </div>
+	                <div class="item">
+	                    总计推广
+	                    <div class="num">{php echo $all <= 0 ? 0 : $all}</div>
+	                </div>
+	            </div>
+	        </div>
+	        {if !empty($parent)}
+	        <div class="down_up">
+	        	邀请人 {$parent['nickname']}（{$parent['id']}）
+	        </div>
+	        {/if}
+	        <div class="user-link wrap {if $_W['set']['hhrtype'] == 1}downcenter{/if}" >
+
+	        	{if empty($_W['set']['hhrtype'])}
+	            <div class="item bg01 createPoset" >
+	                <image class="icon" src="https://img11.360buyimg.com/ddimg/jfs/t1/49813/16/259/2117/5cd3e067E91236ffe/378b8d988d15c95c.png"></image>
+	                <div>推广海报</div>
+	            </div>
+	            <div class="item bg03 linkshare" >
+	                <image class="icon" src="https://img11.360buyimg.com/ddimg/jfs/t1/38517/36/6813/1767/5cd3e05eE7e0ed03c/d7be2ec698ad437c.png"></image>
+	                <div>链接推广</div>
+	            </div>
+	            {else}
+	            <div class="item bg03" id="showshare">
+	                <image class="icon" src="https://img11.360buyimg.com/ddimg/jfs/t1/38517/36/6813/1767/5cd3e05eE7e0ed03c/d7be2ec698ad437c.png"></image>
+	                <div>发展团队</div>
+	            </div>
+	            {/if}
+	            <a class="item bg02" href="{php echo $this->createMobileUrl('rank')}" >
+	                <image class="icon" src="https://img11.360buyimg.com/ddimg/jfs/t1/35086/7/10123/2227/5cd3e062E0ccb795d/6066b18db9201e8b.png"></image>
+	                <div>达人排行</div>
+	            </a>
+	        </div>
+	        <div class="link_box mb05">
+				<a class="" href="{php echo $this->createMobileUrl('downexplain')}">
+					<div class="linka_item item_cell_box" style="padding: 0;">
+						<li class="linka_l item_cell_flex">什么是合伙人？如何发展合伙人？</li>
+						<li class="right_icon">
+						</li>
+					</div>
+				</a>
+	        </div>
+
+			<div class="buttons-tab down_tab">
+				{if $_W['set']['downnum'] == 0}
+					<div class="down_tabin"><a href="javascript:;" class=" button active pri-color pri-border" type="0">合伙人成员</a></div>
+				{elseif $_W['set']['downnum'] == 1}
+					<div class="down_tabin">
+						<a href="javascript:;" class=" button active pri-color pri-border" type="0">直接合伙人</a>
+					</div>
+					<div class="down_tabin">
+						<a href="javascript:;"  class="button" type="1">二级合伙人</a>
+					</div>
+				{elseif $_W['set']['downnum'] == 2}
+		      		<div class="down_tabin"><a href="javascript:;" class=" button active pri-color pri-border" type="0">直接合伙人</a></div>
+		      		<div class="down_tabin"><a href="javascript:;" class="button" type="1">二级合伙人</a></div>
+		      		<div class="down_tabin"><a href="javascript:;" class=" button" type="2">三级合伙人</a></div>
+				{/if}
+		    </div>
+			<div class="list_container drop_class ">
+				<!-- <div class=" down_item">
+					<div class="down_item_in item_cell_box">
+						<div class=" down_item_l">
+							<img src="../addons/zofui_tasktb/public/images/1.jpg">
+						</div>
+						<div class="item_cell_flex down_item_r nickname">
+							111111
+						</div>
+					</div>
+				</div> -->			
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="down_showposter" id="down_showposter">
+		<div class="mask"></div>
+		<div class="down_imgbox">
+			<img src="">
+		</div>
+	</div>
+
+	<div class="down_sharep">
+		<div class="mask"></div>
+		<img src="https://img11.360buyimg.com/ddimg/jfs/t1/51548/30/277/6264/5cd3ebe1E64d6819b/c77145042c0a538e.png">
+	</div>
+
+    <div class="down_copybox">
+        <div class="mask" style="z-index:3"></div>
+        <div class="setnick_content">
+	     	<div class="taotitle pri-border">
+	      		<div id="iphone_code"  class="copybox" style="display: block;padding:1rem 0.5rem;word-break: break-all;">{$wapshare}</div>
+	      		<div id="android_code" contenteditable="true"  class="copybox" style="padding:1rem 0.5rem;word-break: break-all;">{$wapshare}</div>
+	     	</div>
+            <div class="btn setnick_btn pri-bg" id="copy_it" data-clipboard-text="{$settings['sharelink']}" >复制内容</div>
+        </div>
+    </div>
+    
+{template 'common/setnick'}
+{template 'common/nav'}	
+{template 'common/myfooter'}
+

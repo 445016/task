@@ -1,0 +1,83 @@
+{template 'common/myheader'}
+	
+    <div id="page_guy" class="page page_guy page-current">
+		<div class="content ">
+			{template 'common/top'}
+			<div class="guy_top">
+				<li class="guy_headimg">
+					<img src="{php echo tomedia($guy['headimgurl'])}">
+				</li>
+				{if $guy['isauth'] == 2}
+					<li>
+						<span class="nickname authname">
+							{$guy['nickname']} 
+							<font class="authicon authicon_b"></font>
+						</span>
+						<font class="userid useridpl02">({$guy['id']})</font>
+					</li>
+				{else}
+					<li><span class="nickname">{$guy['nickname']} <font class="userid">({$guy['id']})</font></span></li>
+				{/if}
+				<li class="guy_desc">{$guy['guydesc']}</li>
+			</div>
+			
+			<div class="guy_center">
+			
+				<li class="guy_credit">		
+					{if $_GPC['op'] == 'puber'}
+						发布:{$guy['pubnumber']} 采纳:{$guy['acceptnumber']}
+					{elseif $_GPC['op'] == 'accer'}
+						回复:{$guy['replynumber']} 被采纳:{$guy['acceptednumber']}
+					{/if}
+					<font class="font_13px_999">保证金:<font>
+					<font class="font_ff5f27">{$guy['deposit']}</font>
+					<font class="font_13px_999">{$_W['cper']}<font>
+				</li>
+				{if ($guy['conweixin'] || $guy['conmobile']) && $_W['set']['guytel'] == 0 }
+					<li class="guy_contact oh">联系他 
+						<p class="fr">
+						{if $guy['conmobile']}
+							<a href="tel:{$guy['mobile']}" class="guy_contact_tel"></a>
+						{/if}
+						{if $guy['conweixin']}
+							<span data-src="{php echo tomedia($guy['qrcode'])}" class="guy_contact_wx"></span>
+						{/if}
+						</p>
+					</li>
+				{/if}
+			</div>
+			
+			<div class="guy_givetask">
+				<li>
+					<span class="givetask_btn" type="{$_GPC['op']}">{if $_GPC['op'] == 'accer'}给他发个私包任务{elseif $_GPC['op'] == 'puber'}索要私包任务{/if}</span>
+				</li>
+				<span class="guy_notice font_13px_999">
+				
+					{if $_GPC['op'] == 'accer'}
+						提示:给他发一个私包任务后，对方会接到通知，执行完任务后提交确认，您确认后才会将钱支付到对方的{$_W['cname']}中。
+						对方在指定时间内没有处理，钱会自动退回您的账户。
+
+					{elseif $_GPC['op'] == 'puber'}
+						提示:向对方索要私包任务后，对方会接到通知，对方会进行支付或者取消，
+						对方支付后您就可以执行任务了，您执行完后提交，对方确认后，收益会支付到您的账户中。
+					{/if}
+					
+				</span>		
+			</div>
+
+		</div>
+		<div class="atom-dialog-wrap" id="contact_me">
+			<div class="mask"></div>
+			<div class="atom-dialog share-dialog">
+				<div class="atom-dialog-title">联系我</div>
+				<div class="atom-dialog-content" style="text-align: center;">
+					<img src="{php echo  tomedia( $guy['qrcode'] )}">
+					<p class="sub_str">长按二维码图片，识别二维码联系对方</p>		
+				</div>
+				<span class="close_line"></span>
+				<li class="close_token"></li>
+			</div>
+		</div>
+	</div>
+	
+{template 'common/myfooter'}

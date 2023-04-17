@@ -1,0 +1,280 @@
+{template 'common/myheader'}
+
+    <div id="page_level" class="page page-current page_level">
+		<div class="content infinite-scroll" style="min-height: 100vh;">
+			{if empty( $_GPC['op'] )}
+				<div class="level_top">
+					<div class="level_type">
+
+						<div class="item_cell_box">
+							<div class="level_item {if empty($userinfo['level']) || $userinfo['utime'] <= TIMESTAMP}level_item_act{/if}">
+								<span>普通会员</span>
+							</div>
+							<div class="level_item {if $userinfo['level'] == 1 && $userinfo['utime'] > TIMESTAMP}level_item_act{/if}">
+								<span>{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}</span>
+							</div>
+							<div class="level_item {if $userinfo['level'] == 2 && $userinfo['utime'] > TIMESTAMP}level_item_act{/if}">
+								<span>{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}</span>
+							</div>
+						</div>
+						{if $userinfo['level'] > 0}
+							<div class="level_pass">
+								{if $userinfo['utime'] > TIMESTAMP}
+									会员剩余时间{php echo Util::lastTime($userinfo['utime'],false,true)}
+								{else}
+									你的会员等级已过期
+								{/if}
+							</div>
+						{else}
+							<div class="level_pass">你还是普通会员</div>
+						{/if}
+						<a href="{php echo $this->createMobileUrl('level',array('op'=>'info'))}">
+							<div class="item_cell_box level_info">
+								<div class="item_cell_flex">升级会员将获得哪些权限</div>
+								<div class="user_link_r"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="level_pay">
+					{if $userinfo['level'] == 0}
+						{if $_W['set']['upricea'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']} ， 1个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upricea']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="1">升级</div>
+						</div>
+						{/if}
+						{if $_W['set']['upriceb'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']} ， 6个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upriceb']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="2">升级</div>
+						</div>
+						{/if}
+						{if $_W['set']['upricec'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']} ， 12个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upricec']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="3">升级</div>
+						</div>
+						{/if}
+						{if $_W['set']['upriceba'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 1个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upriceba']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="4">升级</div>
+						</div>
+						{/if}
+						{if $_W['set']['upricebb'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 6个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upricebb']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="5">升级</div>
+						</div>
+						{/if}
+						{if $_W['set']['upricebc'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 12个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upricebc']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="6">升级</div>
+						</div>
+						{/if}
+					{elseif $userinfo['level'] == 1}
+						{if $userinfo['utime'] < TIMESTAMP}
+							{if $_W['set']['upricea'] > 0}
+							<div class="item_cell_box level_btn">
+								<div class="item_cell_flex">
+									<div class="level_btnname">续期{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']} ， 1个月</div>
+									<div class="level_btnp">
+										¥ <span class="level_price">{$_W['set']['upricea']}</span>
+									</div>
+								</div>
+								<div class="level_paybtn" type="1">续期</div>
+							</div>
+							{/if}
+							{if $_W['set']['upriceb'] > 0}
+							<div class="item_cell_box level_btn">
+								<div class="item_cell_flex">
+									<div class="level_btnname">续期{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']} ， 6个月</div>
+									<div class="level_btnp">
+										¥ <span class="level_price">{$_W['set']['upriceb']}</span>
+									</div>
+								</div>
+								<div class="level_paybtn" type="2">续期</div>
+							</div>
+							{/if}
+							{if $_W['set']['upricec'] > 0}
+							<div class="item_cell_box level_btn">
+								<div class="item_cell_flex">
+									<div class="level_btnname">续期{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']} ， 12个月</div>
+									<div class="level_btnp">
+										¥ <span class="level_price">{$_W['set']['upricec']}</span>
+									</div>
+								</div>
+								<div class="level_paybtn" type="3">续期</div>
+							</div>
+							{/if}
+						{/if}
+
+						{if $_W['set']['upriceba'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 1个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upriceba']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="4">升级</div>
+						</div>
+						{/if}
+						{if $_W['set']['upricebb'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 6个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upricebb']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="5">升级</div>
+						</div>
+						{/if}
+						{if $_W['set']['upricebc'] > 0}
+						<div class="item_cell_box level_btn">
+							<div class="item_cell_flex">
+								<div class="level_btnname">升级{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 12个月</div>
+								<div class="level_btnp">
+									¥ <span class="level_price">{$_W['set']['upricebc']}</span>
+								</div>
+							</div>
+							<div class="level_paybtn" type="6">升级</div>
+						</div>
+						{/if}
+					{elseif $userinfo['level'] == 2}
+						{if $userinfo['utime'] < TIMESTAMP}
+
+							{if $_W['set']['upriceba'] > 0}
+							<div class="item_cell_box level_btn">
+								<div class="item_cell_flex">
+									<div class="level_btnname">续期{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 1个月</div>
+									<div class="level_btnp">
+										¥ <span class="level_price">{$_W['set']['upriceba']}</span>
+									</div>
+								</div>
+								<div class="level_paybtn" type="4">续期</div>
+							</div>
+							{/if}
+							{if $_W['set']['upricebb'] > 0}
+							<div class="item_cell_box level_btn">
+								<div class="item_cell_flex">
+									<div class="level_btnname">续期{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 6个月</div>
+									<div class="level_btnp">
+										¥ <span class="level_price">{$_W['set']['upricebb']}</span>
+									</div>
+								</div>
+								<div class="level_paybtn" type="5">续期</div>
+							</div>
+							{/if}
+							{if $_W['set']['upricebc'] > 0}
+							<div class="item_cell_box level_btn">
+								<div class="item_cell_flex">
+									<div class="level_btnname">续期{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']} ， 12个月</div>
+									<div class="level_btnp">
+										¥ <span class="level_price">{$_W['set']['upricebc']}</span>
+									</div>
+								</div>
+								<div class="level_paybtn" type="6">续期</div>
+							</div>
+							{/if}
+						{else}
+							<div class="tc">你已是最高等级会员</div>
+						{/if}
+					{/if}
+				</div>
+
+				{if $_W['dev'] == 'wx' && $_W['set']['upaytype'] == 0}
+				<form action="{php echo url('mc/cash/wechat');}" method="post" style="display: none" id="weixin">
+					<input type="hidden" name="params" value="{php echo base64_encode(json_encode($params));}" />
+					<input type="hidden" name="encrypt_code" value="" />
+				</form>
+				{elseif $_W['dev'] == 'wap' || $_W['set']['upaytype'] == 1}
+					<form action="{php echo url('mc/cash/alipay');}" method="post" style="display: none" id="weixin">
+						<input type="hidden" name="params" value="{php echo base64_encode(json_encode($params));}" />
+						<input type="hidden" name="code" value="" />
+						<input type="hidden" name="coupon_id" value="" />
+					</form>
+				{/if}
+
+			{else}
+				<div class="level_content">
+					{if !empty( $instruct['level'] )}
+						{php echo htmlspecialchars_decode( $instruct['level'] )}
+					{else}
+						<div class="level_contentitem">
+							<div class="level_t">会员价格</div>
+							<div class="level_in">
+								<div class="level_initem">
+									{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}，1个月  /  ¥ {$_W['set']['upricea']}
+								</div>
+								<div class="level_initem">
+									{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}，6个月  /   ¥ {$_W['set']['upriceb']}
+								</div>
+								<div class="level_initem">
+									{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}，12个月 /  ¥ {$_W['set']['upricec']}
+								</div>
+								<div class="level_initem">
+									{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}，1个月  /   ¥ {$_W['set']['upriceba']}
+								</div>
+								<div class="level_initem">
+									{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}，6个月  /   ¥ {$_W['set']['upricebb']}
+								</div>
+								<div class="level_initem">
+									{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}，12个月 /  ¥ {$_W['set']['upricebc']}
+								</div>
+							</div>
+						</div>
+						
+						<div class="level_contentitem">
+							<div class="level_t">会员福利</div>
+							<div class="level_in">
+								<div class="level_initem">
+									等级越高的会员，得到的下级任务提成越高。
+								</div>
+
+							</div>
+						</div>
+						
+					{/if}
+				</div>
+			{/if}
+		</div>
+	</div>
+
+{template 'common/nav'}	
+{template 'common/myfooter'}
+

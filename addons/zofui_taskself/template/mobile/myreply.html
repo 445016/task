@@ -1,0 +1,42 @@
+{template 'common/myheader'}
+
+    <div id="page_mypub" class="page page-current page_mypub">
+		<header class="bar bar-nav">
+		  	<div class="buttons-row">
+		    	<a href="{php echo $this->createMobileUrl('myreply',array('op'=>'1'))}" class="{if $_GPC['op'] == '1'}active{/if} button">待提交</a>
+		    	<a href="{php echo $this->createMobileUrl('myreply',array('op'=>'2'))}" class="{if $_GPC['op'] == '2'}active{/if} button">待审核</a>
+		    	<a href="{php echo $this->createMobileUrl('myreply',array('op'=>'3'))}" class="{if $_GPC['op'] == '3'}active{/if} button">已审核</a>
+		    	<a href="{php echo $this->createMobileUrl('myreply',array('op'=>'4'))}" class="{if $_GPC['op'] == '4'}active{/if} button">未通过</a>
+		  	</div>
+		</header>
+		<div class="content infinite-scroll" data-distance="50">
+			<div class="list_container drop_class {if $_W['agent'] == 'iphone'}router{/if}">
+				<!-- <a href="">
+					<div class="myreply_item">
+						<div class="myreply_item_in">
+							<div class="myreply_item_title">
+								无法改完全放弃我发起发起发起
+							</div>
+							<div class="myreply_item_body font_mini">
+								无法改完全放弃我发起发起发起
+							</div>
+							<div class="myreply_item_bot item_cell_box">
+								<li class="item_cell_flex font_13px_999">
+									<span class="font_ff5f27">已采纳</span> 
+									<span class="font_ff5f27 money_icon">0.55</span> 
+								</li>
+								<li class="font_13px_999">5分钟前</li>
+							</div>						
+						</div>
+					</div>
+				</a> -->
+				
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}
+

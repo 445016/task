@@ -1,0 +1,24 @@
+{template 'common/myheader'}
+
+    <div id="page_mypub" class="page page-current page_mypub">
+		<header class="bar bar-nav">
+		  	<div class="buttons-row">
+		    	<a href="{php echo $this->createMobileUrl('myuse',array('status'=>'1'))}" class="{if $_GPC['status'] == '1'}active{/if} button">待审核</a>	    	
+		    	<a href="{php echo $this->createMobileUrl('myuse',array('status'=>'2'))}" class="{if $_GPC['status'] == '2'}active{/if} button">待下单</a>
+		    	<a href="{php echo $this->createMobileUrl('myuse',array('status'=>'3'))}" class="{if $_GPC['status'] == '3'}active{/if} button">待完成</a>
+		    	<a href="{php echo $this->createMobileUrl('myuse',array('status'=>'4'))}" class="{if $_GPC['status'] == '4'}active{/if} button">已完成</a>
+		    	<a href="{php echo $this->createMobileUrl('myuse',array('status'=>'5'))}" class="{if $_GPC['status'] == '5'}active{/if} button">已失败</a>
+		  	</div>
+		</header>
+		<div class="content infinite-scroll" data-distance="50">
+			<div class="list_container drop_class {if $_W['agent'] == 'iphone'}router{/if}">
+				
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}
+

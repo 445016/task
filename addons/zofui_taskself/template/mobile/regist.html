@@ -1,0 +1,38 @@
+{template 'common/myheader'}
+	
+    <div id="page_regist" class="page page_regist page-current">
+		<div class="content ">
+			{template 'common/top'}
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						手机号
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="tel" class="form_input form_into" value="" placeholder="输入您的手机号">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						验证码
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="code" class="form_input form_into" value="" placeholder="">
+						</li>
+						<li class="form_per get_code"><span id="getvertify">获取验证码</span></li>
+					</div>
+				</div>
+			</div>
+
+		  	<div class="popup_bot pd05">
+		  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_regist">保存</a>
+		  	</div>
+		</div>
+	</div>
+	
+{template 'common/myfooter'}

@@ -1,0 +1,145 @@
+{template 'common/myheader'}
+
+    <div id="page_set" class="page page-current page_set">
+		
+		<div class="content" >
+			{template 'common/top'}
+			<form>
+			
+			<div class="form_list">
+				<p class="form_tips">普通任务(发布者)</p>
+				<div class="bordbot pb05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						任务被回复通知
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="taked" {if $set['taked'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>
+				<div class="bordbot pt05 pb05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						被留言提问通知
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="messaged" {if $set['messaged'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>
+				<div class="pt05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						任务被结算通知
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="count" {if $set['count'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>					
+			</div>
+			<div class="form_list">
+				<p class="form_tips">普通任务(回复者)</p>
+				<div class="pb05 bordbot form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						回复被处理通知
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="reply" {if $set['reply'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>
+				<div class="pt05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						留言被回复通知
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="getmessage" {if $set['getmessage'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>		
+			</div>
+
+			<div class="form_list">
+				<p class="form_tips">私包任务</p>
+				<div class="pb05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						收到私包任务提醒
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="getpri" {if $set['getpri'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>		
+			</div>
+			{if $_W['set']['isusetask'] == 1}
+			<div class="form_list">
+				<p class="form_tips">试用任务(发布者)</p>
+				<div class="pb05 bordbot form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						提交订单内容
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="usesuborder" {if $set['usesuborder'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>
+				<div class="pt05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						补充任务内容
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="useaddcontent" {if $set['useaddcontent'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>						
+			</div>
+			{/if}
+			<div class="form_list">
+				<p class="form_tips">系统</p>				
+				<div class="pb05 bordbot form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						新增合伙人通知
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="newdown" {if $set['newdown'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>	
+				<div class="pb05 pt05 form_group item_cell_box">
+					<div class="form_title item_cell_flex pl0">
+						获得合伙人提成通知
+					</div>
+		            <div class="item-input needsclick">
+		              <label class="label-switch needsclick">
+		                <input type="checkbox" class="messinput" name="downmoney" {if $set['downmoney'] == 0}checked="checked"{/if} value="1">
+		                <div class="checkbox needsclick" ></div>
+		              </label>
+		            </div>
+				</div>	
+
+			</div>	
+
+			<p class="form_tips tr">提示：亮起红色是接收通知状态</p>
+			</form>
+
+		</div>
+	</div>
+{template 'common/myfooter'}
+

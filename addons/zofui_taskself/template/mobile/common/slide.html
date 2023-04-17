@@ -1,0 +1,10 @@
+			<div class="swiper-container" data-space-between='10' data-autoplay="3000" >
+			  <div class="swiper-wrapper">
+				{loop $slide $item}
+				
+					<div class="swiper-slide"><a href="{$item['url']}"><img src="{php echo tomedia($item['img'])}" alt="" style='width: 100%'></a></div>
+				
+				{/loop}
+			  </div>
+			  <div class="swiper-pagination"></div>
+			</div>	

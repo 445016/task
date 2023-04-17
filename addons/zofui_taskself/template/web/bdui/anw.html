@@ -1,0 +1,447 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+
+	{if $_GPC['op'] == 'readlog'}
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>              	
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">任务</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">会员</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">花费</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">资金分配</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">状态</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+                        	<a href="{php echo $this->createWebUrl('comtask',array('op'=>'list','taskid'=>$item['taskid']))}">
+                        		{$item['task']['title']}
+                        	</a>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{$item['user']['nickname']}({$item['user']['id']})
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{$item['cost']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		<p>任务发布:{$item['puberfee']}</p>
+				    		<p>平台利润:{$item['lrfee']}</p>
+				    		<p>宝箱金额:{$item['boxfee']}</p>
+				    		<p>系统成本:{$item['sysfee']}</p>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{if $item['isshared'] == 0}
+				     			未分配宝箱
+				     		{elseif $item['isshared'] == 1}
+				     			已分配宝箱
+				     		{/if}
+                        </div>
+                    </td>                              
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	<a href="{php echo $this->createWebUrl('anw',array('op'=>'delreadlog','id'=>$item['id']))}" onclick="return confirm('删除此数据会对计算分润数据有变动，确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="delreadlogall" value="批量删除" onclick="return confirm('删除此数据会对计算分润数据有变动，确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+		<div style="color: red !important;">&#x597D;&#x6E90;&#x7801;&#x7F51;&#x5206;&#x4EAB;</div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>
+	{elseif  $_GPC['op'] == 'box'}
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>              	
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">任务</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">会员</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">金额</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">时间</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">状态</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+                        	<a href="{php echo $this->createWebUrl('comtask',array('op'=>'list','taskid'=>$item['taskid']))}">
+                        		{$item['task']['title']}
+                        	</a>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{$item['user']['nickname']}({$item['user']['id']})
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{$item['money']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		<p>发放时间:{php echo date('Y-m-d H:i:s',$item['createtime'])}</p>
+				    		<p>过期时间:{php echo date('Y-m-d H:i:s',$item['endtime'])}</p>
+				    		{if $item['gettime'] > 0}
+				    			<p>领取时间:{php echo date('Y-m-d H:i:s',$item['gettime'])}</p>
+				    		{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{if $item['status'] == 0}
+				     			未领取
+				     		{elseif $item['status'] == 1}
+				     			已领取
+				     		{/if}
+                        </div>
+                    </td>                              
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	<a href="{php echo $this->createWebUrl('anw',array('op'=>'delbox','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="delboxall" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>
+	{elseif  $_GPC['op'] == 'back'}
+
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>              	
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">会员</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">金额</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">时间</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{$item['user']['nickname']}({$item['user']['id']})
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{$item['money']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		<p>{php echo date('Y-m-d H:i:s',$item['createtime'])}</p>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	<a href="{php echo $this->createWebUrl('anw',array('op'=>'delback','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="delbackall" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>
+		
+	{elseif $_GPC['op'] == 'data'}
+	<style type="text/css">
+		.main_bd {
+		    padding: 0px!important;
+		}
+		.siteinfo_chart .index_tap.added .index_tap_item {
+		    width: 25%;
+		}
+	</style>
+ <div class="table-wrap" >	
+	<div class="panel-body siteinfo_chart" id="scroll" style="padding: 0">
+		<div class="index_tap added">
+			<ul class="inner">
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($totalread) ? 0 : $totalread}</em>
+							<strong class="title">总计查看答案金额</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item rights_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner no_extra">
+							<em class="number">{php echo empty($totalrun) ? 0 : $totalrun}</em>
+							<strong class="title">总计利润</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($totalsys) ? 0 : $totalsys}</em>
+							<strong class="title">总计系统成本</strong>
+						</span>
+					</a>
+				</li>
+			</ul>
+			<ul class="inner" style="margin-top: 10px;">
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($totalbox) ? 0 : $totalbox}</em>
+							<strong class="title">总计宝箱金额</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item rights_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner no_extra">
+							<em class="number">{php echo empty($totalboxed) ? 0 : $totalboxed}</em>
+							<strong class="title">已经领取宝箱</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($totalgeted) ? 0 : $totalgeted}</em>
+							<strong class="title">已经发放回馈</strong>
+						</span>
+					</a>
+				</li>				
+			</ul>
+		</div>
+		
+<!-- 		<div class="info_box">
+			<div class="inner">
+				<div class="info_hd">
+					<h4>今日指标<span class="" id="dataDesc"></span></h4>
+				</div>
+				<div class="info_bd">
+					<div class="basic_data-wrapper" id="js_yesterdayStat">
+						<ul class="basic_data-list" id="dataList">
+						<li class="basic_data-item first_data-item">
+							<p class="basic_data-key">新增会员</p>
+							<p class="basic_data-val totalVal">
+								<a href="javascript:;" title="查看订单管理">{$todayuser}</a>
+							</p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">发布普通任务</p>
+						<p class="basic_data-val totalVal"><a href="javascript:;" title="查看团数据">{$todaypub}</a></p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">回复普通任务</p>
+							<p class="basic_data-val totalVal">
+								<a href="javascript:;" title="">{$todaytaked}</a>
+							</p>
+						</li>
+						<li class="basic_data-item">
+							<p class="basic_data-key">发起私包任务</p>
+							<p class="basic_data-val totalVal"><a href="javascript:;" title="">{$todaypri}</a></p>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="info_box">
+			<div class="inner">
+				<div class="info_hd">
+					<h4>昨日指标<span class="" id="dataDesc"></span></h4>
+				</div>
+				<div class="info_bd">
+					<div class="basic_data-wrapper" id="js_yesterdayStat">
+						<ul class="basic_data-list" id="dataList">
+						<li class="basic_data-item first_data-item">
+							<p class="basic_data-key">新增会员</p>
+							<p class="basic_data-val totalVal">{$yesuser}</p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">发布普通任务</p>
+						<p class="basic_data-val totalVal">{$yespub}</p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">回复普通任务</p>
+						<p class="basic_data-val totalVal">{$yestaked}</p>
+						</li>
+						<li class="basic_data-item">
+							<p class="basic_data-key">发起私包任务</p>
+							<p class="basic_data-val totalVal">{$yespri}</p>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>	 -->	
+
+	</div>	
+	
+</div>
+</div>
+
+	{/if}
+{template 'common/footer'}

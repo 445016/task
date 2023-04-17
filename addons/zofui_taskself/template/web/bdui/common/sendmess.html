@@ -1,0 +1,31 @@
+
+<div class="no_sendmess" {if empty( $sendinfo )}style="display:block"{/if}>目前没有正在群发的消息</div>
+
+
+<div class="sendmess_ing" {if !empty( $sendinfo )}style="display:block"{/if}>
+	<div class="item_cell_box sendmess_item">
+		<div class="sendmess_item_l">群发中的消息</div>
+		<div class="item_cell_flex sendmess_item_r">
+			<li class="sendmess_messinfo sendmess_topstr">顶部：{$sendinfo['topstr']}</li>
+			<li class="sendmess_messinfo">名称：{$sendinfo['task']['title']}</li>
+			<li class="sendmess_messinfo">赏金：{$sendinfo['fee']}</li>
+			<li class="sendmess_messinfo">底部：{$sendinfo['botstr']}</li>
+		</div>
+
+	</div>
+	<div class="item_cell_box sendmess_item">
+		<div class="sendmess_item_l">群发进度</div>
+		<div class="item_cell_flex item_cell_box sendmess_item_r">
+			<li class="sendmess_proitem"> <span class="sendmess_proper ">{php echo $sendinfo['total'] > 0 ? sprintf('%.2f', $pronum/$sendinfo['total'] )*100 : 0}</span>% </li>
+			<li class="item_cell_flex sendmess_proitem"> <span class="sendmess_pronum">{$pronum}</span>/ <span class="sendmess_total">{$sendinfo['total']}</span> </li>
+		</div>
+	</div>
+	<div class="item_cell_box sendmess_item">
+		<div class="sendmess_item_l"></div>
+		<div class="item_cell_flex sendmess_item_r">
+			<li> <input type="button" name="create" class="btn btn_primary" value="停止群发" id="stop_send" > </li>
+			<p class="frm_tips">提示：清理缓存也会停止群发。所以，在群发处理过程中不要点击参数设置内的清理缓存，否则群发停止。</p>
+		</div>
+	</div>	
+</div>
+

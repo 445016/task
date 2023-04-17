@@ -1,0 +1,24 @@
+{template 'common/myheader'}
+
+    <div id="page_mypub" class="page page-current page_mypub">
+			<header class="bar bar-nav mypub_nav item_cell_box">
+				<div class="buttons-row item_cell_flex">
+					<div class="nav_buttons_row">
+					    <a href="{php echo $this->createMobileUrl('mypubtb',array('op'=>'1'))}" class="{if $_GPC['op'] == '1'}active{/if} button mybutton">未开始</a>
+					    <a href="{php echo $this->createMobileUrl('mypubtb',array('op'=>'2'))}" class="{if $_GPC['op'] == '2'}active{/if} button mybutton">进行中</a>
+					    <a href="{php echo $this->createMobileUrl('mypubtb',array('op'=>'3'))}" class="{if $_GPC['op'] == '3'}active{/if} button mybutton">已结束</a>
+				    </div>
+				</div>
+			</header>
+		<div class="content infinite-scroll " data-distance="50">
+			<div class="list_container mt025">
+				
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}
+

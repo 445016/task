@@ -1,0 +1,42 @@
+{template 'common/myheader'}
+    <div id="page_find" class="page page_find page-current">
+		<div class="content infinite-scroll " data-distance="50">
+			<header class="bar bar-nav mypub_nav item_cell_box">
+				<div class="bar_nav_l bar_nav_item" id="find_top">
+					<a href="javascript:;"></a>
+				</div>
+				<div class="buttons-row item_cell_flex">
+					<div class="nav_buttons_row">
+					    <a href="{php echo $this->createMobileUrl('find',array('op'=>'puber'))}" class="{if $_GPC['op'] == 'puber'}active{/if} button mybutton">发任务的</a>
+					    <a href="{php echo $this->createMobileUrl('find',array('op'=>'accer'))}" class="{if $_GPC['op'] == 'accer'}active{/if} button mybutton">接任务的</a>
+				    </div>
+				    <!-- <a href="javascript:;" class="button" id="find_search">搜索</a> -->
+				</div>
+				<div class="bar_nav_r bar_nav_item" id="find_search">
+					<a href="javascript:;"></a>
+				</div>
+			</header>
+			{template 'common/slide'}
+			{template 'common/findbanner'}
+			<div class="list_container drop_class {if $_W['agent'] == 'iphone'}router{/if}">
+				<!-- <a href="{php echo $this->createMobileUrl('guy')}">
+					<div class="find_list_item item_cell_box">
+						<div class="find_item_left">
+							<img src="../addons/zofui_tasktb/public/images/1.jpg">
+						</div>	
+						<div class="find_item_mid item_cell_flex">
+							<p class="find_item_nick">粉丝昵称</p>
+							<p class="find_item_desc">描述，描述，描述描述，描述，描述</p>
+						</div>
+					</div>
+				</a> -->
+								
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+		
+	</div>
+{template 'common/nav'}	
+{template 'common/myfooter'}

@@ -1,0 +1,541 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+
+	{if $_GPC['op'] == 'ds'}
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>              	
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">任务</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">回复内容</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">打赏者</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">打赏银票</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">宝石分配</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">时间</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+                        	<a href="{php echo $this->createWebUrl('comtask',array('op'=>'list','taskid'=>$item['taskid']))}">
+                        		{$item['task']['title']}
+                        	</a>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {$item['taked']['content']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{$item['user']['nickname']}({$item['user']['id']})
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{$item['yinp']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		<p>打赏者:{$item['givedser']}</p>
+				    		<p>被打赏:{$item['givedsed']}</p>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{php echo date('Y-m-d H:i:s',$item['createtime'])}
+                        </div>
+                    </td>                              
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	<a href="{php echo $this->createWebUrl('group',array('op'=>'delds','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="deldsall" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>
+{elseif  $_GPC['op'] == 'gr'}
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>              	
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">创建时间</div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">完成时间</div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">状态</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+                        	{php echo date('Y-m-d H:i:s',$item['createtime'])}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{php echo $item['endtime'] > 0 ? date('Y-m-d H:i:s',$item['endtime']) : ''}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{if $item['status'] == 0}
+				     			未完成
+				     		{elseif $item['status'] == 1}
+				     			已完成
+				     		{/if}
+                        </div>
+                    </td>                              
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	<a href="{php echo $this->createWebUrl('group',array('op'=>'delgr','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');">删除</a>
+                            <a href="{php echo $this->createWebUrl('group',array('op'=>'join','gid'=>$item['id']))}" >查看参团记录</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="delgrall" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>
+{elseif  $_GPC['op'] == 'join'}
+
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>              	
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">会员</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">花费银票</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">时间</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">获得宝石</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">状态</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{$item['user']['nickname']}({$item['user']['id']})
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				     		{$item['cost']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		<p>参与：{php echo date('Y-m-d H:i:s',$item['createtime'])}</p>
+                            {if $item['endtime'] > 0}<p>结算：{php echo date('Y-m-d H:i:s',$item['endtime'])}</p>{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {php echo $item['geted'] > 0 ? $item['geted'] : ''}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {if $item['status'] == 0}未结算{else}已结算{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	<a href="{php echo $this->createWebUrl('group',array('op'=>'delgrlog','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="delgrlogall" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>
+    </div>
+
+{elseif  $_GPC['op'] == 'duih'}
+
+    <div class="table-full-wrap" >
+    <form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>                
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">会员</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">花费宝石</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">获得余额</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">时间</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+                            {$item['user']['nickname']}({$item['user']['id']})
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {$item['baoshi']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {$item['money']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {php echo date('Y-m-d H:i:s',$item['createtime'])}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+                            <a href="{php echo $this->createWebUrl('group',array('op'=>'delduih','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="delduihall" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+		<div style="color: red !important;">&#x597D;&#x6E90;&#x7801;&#x7F51;&#x5206;&#x4EAB;</div>
+    </form>
+    </div>
+
+{elseif $_GPC['op'] == 'data'}
+
+    <style type="text/css">
+        .main_bd {
+            padding: 0px!important;
+        }
+        .siteinfo_chart .index_tap.added .index_tap_item {
+            width: 25%;
+        }
+    </style>
+ <div class="table-wrap" >  
+    <div class="panel-body siteinfo_chart" id="scroll" style="padding: 0">
+        <div class="index_tap added">
+            <ul class="inner">
+                <li class="index_tap_item send_goods_num" style="width: 33.3%">
+                    <a target="_blank" href="javascript:;" >
+                        <span class="tap_inner">
+                            <em class="number">{php echo empty($totalbaoshi) ? 0 : $totalbaoshi}</em>
+                            <strong class="title">总计宝石</strong>
+                        </span>
+                    </a>
+                </li>
+                <li class="index_tap_item rights_num" style="width: 33.3%">
+                    <a target="_blank" href="javascript:;" >
+                        <span class="tap_inner no_extra">
+                            <em class="number">{php echo empty($totalactin) ? 0 : $totalactin}</em>
+                            <strong class="title">总计购买活跃度收入</strong>
+                        </span>
+                    </a>
+                </li>
+                <li class="index_tap_item send_goods_num" style="width: 33.3%">
+                    <a target="_blank" href="javascript:;" >
+                        <span class="tap_inner">
+                            <em class="number">{php echo empty($totalpayed) ? 0 : $totalpayed}</em>
+                            <strong class="title">已分配活跃度收入</strong>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="inner" style="margin-top: 10px;">
+                <li class="index_tap_item send_goods_num" style="width: 33.3%">
+                    <a target="_blank" href="javascript:;" >
+                        <span class="tap_inner">
+                            <em class="number">{php echo empty($last) ? 0 : $last}</em>
+                            <strong class="title">可分配活跃度收入</strong>
+                        </span>
+                    </a>
+                </li>
+                <li class="index_tap_item rights_num" style="width: 33.3%">
+                    <a target="_blank" href="javascript:;" >
+                        <span class="tap_inner no_extra">
+                            <em class="number">1:{php echo empty($per) ? 0 : $per}</em>
+                            <strong class="title">宝石:余额兑换比</strong>
+                        </span>
+                    </a>
+                </li>
+                <li class="index_tap_item send_goods_num" style="width: 33.3%">
+                    <a target="_blank" href="javascript:;" >
+                        <span class="tap_inner">
+                            <em class="number"></em>
+                            <strong class="title"></strong>
+                        </span>
+                    </a>
+                </li>               
+            </ul>
+        </div>
+        
+<!--        <div class="info_box">
+            <div class="inner">
+                <div class="info_hd">
+                    <h4>今日指标<span class="" id="dataDesc"></span></h4>
+                </div>
+                <div class="info_bd">
+                    <div class="basic_data-wrapper" id="js_yesterdayStat">
+                        <ul class="basic_data-list" id="dataList">
+                        <li class="basic_data-item first_data-item">
+                            <p class="basic_data-key">新增会员</p>
+                            <p class="basic_data-val totalVal">
+                                <a href="javascript:;" title="查看订单管理">{$todayuser}</a>
+                            </p>
+                        </li>
+                        <li class="basic_data-item">
+                        <p class="basic_data-key">发布普通任务</p>
+                        <p class="basic_data-val totalVal"><a href="javascript:;" title="查看团数据">{$todaypub}</a></p>
+                        </li>
+                        <li class="basic_data-item">
+                        <p class="basic_data-key">回复普通任务</p>
+                            <p class="basic_data-val totalVal">
+                                <a href="javascript:;" title="">{$todaytaked}</a>
+                            </p>
+                        </li>
+                        <li class="basic_data-item">
+                            <p class="basic_data-key">发起私包任务</p>
+                            <p class="basic_data-val totalVal"><a href="javascript:;" title="">{$todaypri}</a></p>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info_box">
+            <div class="inner">
+                <div class="info_hd">
+                    <h4>昨日指标<span class="" id="dataDesc"></span></h4>
+                </div>
+                <div class="info_bd">
+                    <div class="basic_data-wrapper" id="js_yesterdayStat">
+                        <ul class="basic_data-list" id="dataList">
+                        <li class="basic_data-item first_data-item">
+                            <p class="basic_data-key">新增会员</p>
+                            <p class="basic_data-val totalVal">{$yesuser}</p>
+                        </li>
+                        <li class="basic_data-item">
+                        <p class="basic_data-key">发布普通任务</p>
+                        <p class="basic_data-val totalVal">{$yespub}</p>
+                        </li>
+                        <li class="basic_data-item">
+                        <p class="basic_data-key">回复普通任务</p>
+                        <p class="basic_data-val totalVal">{$yestaked}</p>
+                        </li>
+                        <li class="basic_data-item">
+                            <p class="basic_data-key">发起私包任务</p>
+                            <p class="basic_data-val totalVal">{$yespri}</p>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>   -->    
+
+    </div>  
+    
+</div>
+</div>
+
+	{/if}
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}      
+{template 'common/footer'}

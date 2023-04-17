@@ -1,0 +1,216 @@
+<div class="list-content">
+    
+<div class="table-full-wrap" >
+
+    <div class="operation-wrap" data-follow-thead="table">
+        <div class="buttons-wrap">
+            {php echo $html['tophtml']}
+            {if empty($sintype)}
+                <a href="{php echo WebCommon::logUrl('sintype',1)}" class="tosintype ml10 ui-button">魔方显示</a>
+            {else}
+                <a href="{php echo WebCommon::logUrl('sintype',2)}" class="tosintype ml10 ui-button">列表模式</a>
+            {/if}
+        </div>
+    </div>
+
+    <form action="" method="post">
+
+        {if empty($sintype)}
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+
+            {php echo $html['tdhtml']}
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+                            {$item['task']['title']}
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+                            {$item['content']}
+
+                            {if !empty( $item['subform'] )}
+                                <div class="task_addcontent">
+                                    {loop $item['subform'] $in}
+                                        {if $in['type'] == 'img'}
+                                            <div class="item_cell_box">
+                                                <div style="width: 80px">{$in['name']}:</div>
+                                                <div class="item_cell_flex">
+                                                    <li>
+                                                        {loop $in['value'] $inn}
+                                                            <span class="good_qrcode_box">
+                                                                <a target="_blank" href="{php echo tomedia($inn)}" class="">
+                                                                    <img class="media-object" src="{php echo tomedia($inn)}" style="width: 33px; height: 33px;">
+                                                                </a>
+                                                            </span>
+                                                        {/loop}
+                                                    </li>
+                                                </div>
+                                            </div>
+                                        {else}
+                                            <div class="item_cell_box">
+                                                <div style="width: 80px">{$in['name']}:</div>
+                                                <div class="item_cell_flex">
+                                                    <li>{$in['value']}</li>
+                                                </div>
+                                            </div>
+                                        {/if}
+                                    {/loop}
+                                </div>
+                            {/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+                            {$item['money']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {if $item['status'] == 1 }
+                                <p class="font_ff5f27">待采纳</p>
+                            {elseif $item['status'] == 2 }
+                                已采纳
+                            {elseif $item['status'] == 3 }
+                                <p class="font_ff5f27">被拒绝</p>
+                                <p class="font_mini">{$item['reason']}</p>              
+                            {/if}
+                        </div>
+                    </td>                                  
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+                            <a target="_blank" href="{php echo $this->createWebUrl('comtask',array('op'=>'editreply','id'=>$item['id']))}">编辑</a>
+                            <a target="_blank" href="{php echo $this->createWebUrl('comtask',array('op'=>'info','id'=>$item['taskid']))}">查看任务</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+        {else}
+            <div class="ui-table">
+            <div>
+            {loop $list $item} 
+            <div  style="width: 180px;box-shadow: 1px 1px 11px rgba(0,0,0,0.2);padding: 5px;float: left;margin:10px;">
+                <div style="height: 200px;">
+                {if empty($item['thumbimg'])}
+                    <div class="media-heading" style="max-height:100px;overflow:hidden;">
+                        {$item['content']}
+                    </div>
+                    <div class="task_images ">
+                        {loop $item['images'] $img}
+                            <span class="good_qrcode_box">
+                                <a target="_blank" href="javascript:;" class="show_good_qrcode">
+                                    <img class="media-object" src="{php echo tomedia($img)}" style="width: 54px; height: 54px;">
+                                </a>
+                                <img class="actimg" src="{php echo tomedia($img)}" style="right:initial;left: 0;width: 300px;height: auto;">
+                            </span>
+                        {/loop}
+                        <div class="fc"></div>
+                    </div>
+
+                    {if !empty( $item['subform'] )}
+                        <div class="task_addcontent">
+                            {loop $item['subform'] $in}
+                                {if $in['type'] == 'img'}
+                                    {loop $in['value'] $inn}
+                                        <span class="good_qrcode_box">
+                                            <a target="_blank" href="javascript:;" class="show_good_qrcode">
+                                                <img class="media-object" src="{php echo tomedia($inn)}" style="width: 54px; height: 54px;">
+                                            </a>
+                                            <img class="actimg" src="{php echo tomedia($inn)}" style="width: 300px;height: auto;right:initial;left: 0;">
+                                        </span>
+                                    {/loop}
+                                {else}
+                                    <li>{$in['value']}</li>
+                                {/if}
+                            {/loop}
+                        </div>
+                    {/if}
+                {else}
+                    <div class="good_qrcode_box" style="height: 200px;width:100%;">
+                        <a target="_blank" href="javascript:;" class="show_good_qrcode">
+                            <div style="width: 100%; height: 100%;margin-left:0px;margin-top:0;background-image:url({php echo tomedia($item['thumbimg'])});background-repeat:no-repeat;background-size: 100%;"></div>
+                        </a>
+                        <img class="actimg" src="{php echo tomedia($item['thumbimg'])}" style="width: 300px;height: auto;right:initial;left: 0;">
+                    </div>
+                {/if}
+                </div>
+
+
+                <div style="">
+                    <div class="">
+                        <div class="">{$item['user']['nickname']}(id:{$item['user']['id']})</div>
+                        <div class="">
+                            ip:{$item['ip']}
+                        </div>
+                    </div>
+                    <div class="item_cell_box" style="padding:5px 0">
+                        <div class="item_cell_flex">
+                            {php echo Util::formatTime($item['createtime'])}
+                        </div>
+                        <div>
+                            {if $item['isscan'] == 0}
+                                {if $item['status'] == 1}等待采纳{elseif $item['status'] == 2}已采纳{elseif $item['status'] == 3}被拒绝{/if}
+                            {elseif $item['isscan'] == 1}
+                                已禁止浏览，
+                            {/if}
+                            {if $item['status'] >= 1}
+                                <span>{$item['money']} {if $item['ewai'] > 0}+{$item['ewai']}{/if}</span>                                  
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+                <div class="reply_bottom text-right task_status_acceptrefuse" data-replyid="{$item['id']}" data-taskid="{$item['taskid']}">
+                    <div class=" inlineblock" style="height: 15px;float: left;"> 
+                        <input type="checkbox" name="checkall[]" class="ui-table-multi-select" value="{$item['id']}" /> 
+                    </div>
+                    <a target="_blank" href="{php echo $this->createWebUrl('comtask',array('op'=>'editreply','id'=>$item['id']))}">编辑</a>
+                    <a target="_blank" href="{php echo $this->createWebUrl('comtask',array('op'=>'info','id'=>$item['taskid']))}">查看任务</a>
+                </div>
+            </div>
+            {/loop}
+                <div style="clear: both;"></div>
+            </div>
+
+            {if $sintype == 1}
+                <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel" style="padding-left:20px">
+                    <input type="checkbox" class="ui-table-select-all" for="selectAll" />全选
+                </div>
+            {/if}
+
+            </div>
+
+        {/if}
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+
+            <input name="deleteallreply" class="ui-button ui-dialog-ok-btn" value="删除" onclick="return confirm('谨慎删除已采纳的，如果删除已采纳的任务会导致结算任务的时候多退回资金给发布者。确定要删除选择的吗？');" type="submit">
+            <input name="agreeall" class="ui-button ui-dialog-ok-btn" value="采纳" onclick="return confirm('确定要将选择的采纳吗？');" type="submit">
+            {php echo $html['pagenum']}
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+    </form> 
+
+</div>

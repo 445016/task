@@ -1,0 +1,45 @@
+{template 'common/myheader'}
+    <div id="page_tblist" class="page page_tblist page-current">
+		<div class="content infinite-scroll " data-distance="50">
+			
+			{template 'common/slide'}
+			<div class="list_container drop_class ">
+				<!-- <a href="{php echo $this->createMobileUrl('guy')}">
+					<div class="find_list_item item_cell_box">
+						<div class="find_item_left">
+							<img src="../addons/zofui_tasktb/public/images/1.jpg">
+						</div>	
+						<div class="find_item_mid item_cell_flex">
+							<p class="find_item_nick">粉丝昵称</p>
+							<p class="find_item_desc">描述，描述，描述描述，描述，描述</p>
+						</div>
+					</div>
+				</a> -->
+								
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+		
+		<div class="index_navtwo">
+			<a href="{php echo $this->createMobileUrl('pubtb')}" >
+				<li>发布任务</li>
+			</a>
+			<a href="javascript:;" id="gettbtasktotop">
+				<li>置顶任务</li>
+			</a>
+			<!-- <a href="javascript:;" id="find_search">
+				<li>搜索用户</li>
+			</a> -->
+			<a href="{php echo $this->createMobileUrl('mytbtask',array('op'=>2))}">
+				<li>接的任务</li>
+			</a>
+			<a href="{php echo $this->createMobileUrl('tblist')}" style="border-bottom: 0">
+				<li>刷新任务</li>
+			</a>				
+		</div>
+
+	</div>
+{template 'common/nav'}	
+{template 'common/myfooter'}

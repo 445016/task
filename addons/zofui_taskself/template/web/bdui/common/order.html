@@ -1,0 +1,109 @@
+
+    <div class="table-full-wrap" >
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            {php echo $html['tdhtml']}
+
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+			     			{if !empty( $item['uorderid'] )}
+			     			<p>
+			     				<a href="javascript:;" class="copy_url" data-href="{$item['uorderid']}" >{$item['uorderid']}</a>
+			     			</p>
+			     			{else}
+			     				还未支付
+			     			{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >{$item['fee']}</div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+			     			{if $item['type'] == 2}
+				     			充值{$_W['cname']}
+			     			{elseif $item['type'] == 1}
+			     				充值保证金
+                            {elseif $item['type'] == 3}
+                                升级会员
+                                <p>
+                                    {if $item['utype'] == 1}
+                                        {php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']},1个月
+                                    {/if}
+                                    {if $item['utype'] == 2}
+                                        {php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']},6个月
+                                    {/if}
+                                    {if $item['utype'] == 3}
+                                        {php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']},12个月
+                                    {/if}
+                                    {if $item['utype'] == 4}
+                                        {php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']},1个月
+                                    {/if}
+                                    {if $item['utype'] == 5}
+                                        {php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']},6个月
+                                    {/if}
+                                    {if $item['utype'] == 6}
+                                        {php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']},12个月
+                                    {/if}
+                                </p>
+			     			{/if}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {php echo date('Y-m-d H:i',$item['time'])}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            <img src="{$item['user']['headimgurl']}" width="30px" height="30px">{$item['user']['nickname']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {if $item['status'] == 0}
+                            	未支付
+                            {elseif $item['status'] == 1}
+                            	已支付
+                            {/if}
+                        </div>
+                    </td>                                   
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+                            <a href="{php echo $this->createWebUrl('data',array('op'=>'deleteorder','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？');" onclick="return confirm('确定删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input type="submit" name="deleteallorder" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+            {php echo $html['pagenum']}
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>

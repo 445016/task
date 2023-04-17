@@ -1,0 +1,137 @@
+
+<div class="table-full-wrap" >
+<form method="post" action="{php echo $this->createWebUrl('privatetask')}">
+    <div class="ui-ctrl ui-table ui-table-filter"> 
+        <div class="ui-table-head" style=" top: 0px; left: 0px;">
+        <div class="ui-ctrl ui-panel">
+        <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <th class="ui-table-hcell" >
+                    <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                        <input type="checkbox" class="ui-table-select-all" />编号
+                    </div>
+                </th>
+                <th class="ui-table-hcell ui-table-hcell-sort" >
+                    <div class="ui-table-hcell-text">内容</div>
+                </th>
+                <th class="ui-table-hcell hcell-filter" >
+                    <div class="ui-table-hcell-text">任务金额</div>
+                </th>
+                <th class="ui-table-hcell hcell-filter" >
+                    <div class="ui-table-hcell-text">时间</div>
+                </th>
+                <th class="ui-table-hcell hcell-filter" >
+                    <div class="ui-table-hcell-text">状态
+                        <div class="ui-table-filter-panel">
+                            <label class="ui-table-filter-head iconfont icon-downarrow"></label>
+                            <div class="ui-table-filter-select">
+                                <ul>
+                                	{loop $topbar['status'] $in}
+                                    <li class="table_filter" >
+                                        <a href="{$in['url']}">{$in['name']}</a>
+                                    </li>
+                                    {/loop}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th class="ui-table-hcell"  >
+                    <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                </th>
+            </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <div class="ui-table-body">
+        <div class="ui-ctrl ui-panel">
+        {loop $list $item}    
+        <div class="ui-table-row ui-table-row-even" >  
+        <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+        <tbody>
+            <tr>
+                <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                    <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                        <span>
+                            <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                        </span>
+                    </div>
+                </td>
+                <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                    <div class="ui-table-cell-text">
+		     			{$item['tasktitle']}
+                    </div>
+                </td>
+                <td class="ui-table-cell" >
+                    <div class="ui-table-cell-text" >
+		     			{$item['taskmoney']}
+                    </div>
+                </td>
+                <td class="ui-table-cell"  >
+                    <div class="ui-table-cell-text">
+		    			<p>发起:{php echo date('m-d H:i',$item['createtime'])}</p>
+		    			<p>时限:{$item['limittime']}小时</p>
+                    </div>
+                </td>
+                <td class="ui-table-cell"  >
+                    <div class="ui-table-cell-text">
+					{if $item['status']==0}
+					<p class='label label-success'>待接受者确认</p>
+					{elseif $item['status']==1}
+					<p class='label label-danger'>任务已取消</p>
+					{elseif $item['status']==2}
+					<p class='label label-success'>执行中</p>	
+					{elseif $item['status']==3}
+					<p class='label label-danger'>待雇主确认</p>
+					{elseif $item['status']==4}
+					<p class='label label-success'>任务已取消</p>
+					{elseif $item['status']==5}
+					<p class='label label-danger'>任务已取消</p>
+					{elseif $item['status']==6}
+					<p class='label label-success'>任务已完成</p>								
+					{elseif $item['status']==7}
+					<p class='label label-danger'>雇主拒绝结果</p>
+					{elseif $item['status']==8}
+					<p class='label label-success'>已取消</p>
+					{elseif $item['status']==9}
+					<p class='label label-danger'>雇员投诉中</p>
+					{elseif $item['status']==10}
+					<p class='label label-success'>任务已完成</p>
+					{elseif $item['status']==11}
+					<p class='label label-danger'>任务已完成</p>
+					{elseif $item['status']==12}
+					<p class='label label-success'>已取消</p>
+					{elseif $item['status']==13}
+					<p class='label label-danger'>任务已完成</p>
+					{elseif $item['status']==14}
+					<p class='label label-success'>已取消</p>								
+					{/if}
+                    </div>
+                </td>                                  
+                <td class="ui-table-cell"  >
+                    <div class="ui-table-cell-text-last">
+			    		<a target="_blank" href="{php echo $this->createWebUrl('privatetask',array('op'=>'info','id'=>$item['id']))}">详情</a>
+			    		<a href="{php echo $this->createWebUrl('privatetask',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('删除不能恢复，确定要删除吗？');">删除</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        </div>
+        {/loop}
+        </div>
+        </div>
+    </div>
+</div>
+<div class="ui-row">
+    <div class="bot_btnlist fl">
+        <input type="submit" name="deleteall" value="批量删除" onclick="return confirm('确定删除所选吗？');" class="ui-button ui-dialog-ok-btn">
+        <input type="hidden" name="token" value="{$_W['token']}">
+    </div>
+    <div class="ui-pager">
+        {$pager}
+    </div>
+</form>       
+</div>   

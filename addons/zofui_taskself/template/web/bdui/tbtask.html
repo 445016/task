@@ -1,0 +1,706 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+
+{if $_GPC['op'] == 'edit' || $_GPC['op'] == 'create'}
+<div class="list-content">
+	<div class="table-wrap" >
+	<form method="post" >
+		<div class="form-row">
+            <label>任务标题</label>
+            <div class="form-value">
+                <esui-text-box class="ui-ctrl ui-textbox">
+                    <textarea  name="title" class="frm_textarea" rows="6" placeholder="">{$info['title']}</textarea>
+                </esui-text-box>
+            </div>
+        </div>
+
+		<div class="form-row single_img_upload">
+            <label>任务图片</label>
+            <div class="form-value">
+                {php echo WebCommon::tpl_form_field_multi_image('images', $info['images'],'');}
+                <p class="note">可拖拽图片排序</p>
+            </div>
+        </div>
+		<div class="form-row single_img_upload">
+            <label>隐藏图片</label>
+            <div class="form-value">
+                {php echo WebCommon::tpl_form_field_multi_image('hideimages', $info['hideimages'],'');}
+                <p class="note">可拖拽图片排序</p>
+            </div>
+        </div>
+		<div class="form-row">
+            <label>结束时间</label>
+            <div class="form-value">
+                {php echo tpl_form_field_date('end', $info['end'], true)}
+            </div>
+        </div>
+        <div class="form-row  " >
+            <label>任务总量</label>
+            <div class="form-value">
+                <esui-text-box class="ui-ctrl ui-textbox">
+                    <input type="text" class="input_300"  name="num" value="{$info['num']}">
+                </esui-text-box>
+                <p class="note input_500">填入数字,总共能被抢的次数</p>
+            </div>
+        </div>
+        <div class="form-row  " >
+            <label>任务赏金</label>
+            <div class="form-value">
+                <esui-text-box class="ui-ctrl ui-textbox">
+                    <input type="text" class="input_300"  name="money" value="{$info['money']}">
+                </esui-text-box>
+                <p class="note input_500">填入金额数值,没个是执行者得到的赏金</p>
+            </div>
+        </div>
+		<div class="form-row  " >
+            <label>担保金额</label>
+            <div class="form-value">
+                <esui-text-box class="ui-ctrl ui-textbox">
+                    <input type="text" class="input_300"  name="tbmoney" value="{$info['tbmoney']}">
+                </esui-text-box>
+                <p class="note input_500">填入金额数值,没个是执行者得到的赏金</p>
+            </div>
+        </div>
+		<div class="form-row  " >
+            <label>限制回复</label>
+            <div class="form-value">
+                <esui-text-box class="ui-ctrl ui-textbox">
+                    <input type="text" class="input_300"  name="limitnum" value="{$info['limitnum']}">
+                </esui-text-box>
+                <p class="note input_500">填入正整数,这是限制每个人最多能抢的次数</p>
+            </div>
+        </div>
+		<div class="form-row">
+            <label>性别限制</label>
+            <div class="form-value">
+                <div class="ui-boxgroup ui-boxgroup-horizontal">
+                    <label  class="ui-boxgroup-radio " hideitem=".isauth">
+                        <input type="radio" name="sex" value="0" class="frm_radio" {if $info['sex'] == 0}checked="checked"{/if} />
+                        <span>不限制</span>
+                    </label>
+                    <label class="ui-boxgroup-radio " showitem=".isauth">
+                        <input type="radio" name="sex" value="1" class="frm_radio" {if $info['sex'] == 1}checked="checked"{/if} /> 
+                        <span>仅男性可接</span>
+                    </label>
+                    <label class="ui-boxgroup-radio " showitem=".isauth">
+                        <input type="radio" name="sex" value="2" class="frm_radio" {if $info['sex'] == 2}checked="checked"{/if} />
+                        <span>仅女性可接</span>
+                    </label>  
+                </div>
+            </div>
+        </div>
+		<div class="form-row">
+            <label>卡首屏</label>
+            <div class="form-value">
+                <div class="ui-boxgroup ui-boxgroup-horizontal">
+                    <label  class="ui-boxgroup-radio hide_item" hideitem=".kakey">
+                        <input type="radio" name="iska" value="0" class="frm_radio" {if $info['iska'] == 0}checked="checked"{/if} />
+                        <span>不设置</span>
+                    </label>
+                    <label class="ui-boxgroup-radio show_item" showitem=".kakey">
+                        <input type="radio" name="iska" value="1" class="frm_radio" {if $info['iska'] == 1}checked="checked"{/if} /> 
+                        <span>设置</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+		<div class="form-row hideitem kakey" {if $info['iska'] == 1}style="display: block"{/if}>
+            <label>跳转方式</label>
+            <div class="form-value">
+                <div class="ui-boxgroup ui-boxgroup-horizontal">
+                    <label  class="ui-boxgroup-radio" hideitem>
+                        <input type="radio" name="skiptype" value="0" class="frm_radio" {if $info['skiptype'] == 0}checked="checked"{/if} />
+                        <span>链接</span>
+                    </label>
+                    <label class="ui-boxgroup-radio" showitem>
+                        <input type="radio" name="skiptype" value="1" class="frm_radio" {if $info['skiptype'] == 1}checked="checked"{/if} /> 
+                        <span>淘口令</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+		<div class="form-row hideitem kakey " {if $info['iska'] == 1}style="display: block"{/if}>
+            <label>宝贝id</label>
+            <div class="form-value">
+                <esui-text-box class="ui-ctrl ui-textbox">
+                    <input type="text" class="frm_input"  name="kagoodid" value="{$info['kagoodid']}">
+                </esui-text-box>
+            </div>
+        </div>
+		<div class="form-row hideitem kakey " {if $info['iska'] == 1}style="display: block"{/if}>
+            <label>关键字</label>
+            <div class="form-value">
+                <div class="edit_right_list width_550 group_icon_box">
+					<span id="add_icon" class="btn btn_primary btn_small edit_right_btn">添加关键词</span>
+					<div class="edit_right_item">
+					{if $_GPC['op'] == 'create'}
+						<span class="frm_input_box frm_input_box_100" >
+							<font class="delete_c delete_icon">x</font>
+							<input type="text" class="frm_input"  name="kakey[]" value="">
+						</span>
+					{else}
+						{loop $info['kakey'] $item}
+							{if is_array( $item )}
+								<span class="frm_input_box frm_input_box_100" >
+									<font class="delete_c delete_icon">x</font>
+									<input type="text" class="frm_input"  name="kakey[]" value="{$item['key']}">
+								</span>	
+							{else}
+							<span class="frm_input_box frm_input_box_100" >
+								<font class="delete_c delete_icon">x</font>
+								<input type="text" class="frm_input"  name="kakey[]" value="{$item}">
+							</span>	
+							{/if}
+						{/loop}
+					{/if}
+					</div>
+				</div>
+            </div>
+        </div>
+        <div class="form-row ">
+            <label>任务步骤</label>
+            <div class="form-value">
+				<div class="edit_right_list edit_right_item width_550 group_icon_box">
+					{if in_array(1,$step)}
+						{loop $info['step'] $item}
+							{if $item['step'] == 1}
+							<span class="frm_input_box frm_input_box_150" >
+								<font class="delete_c ">1</font>
+								<input type="text" class="frm_input"  name="step[]" value="{$item['name']}">
+							</span>
+							{/if}
+						{/loop}
+					{else}
+						<span class="frm_input_box frm_input_box_150" >
+							<font class="delete_c ">1</font>
+							<input type="text" class="frm_input"  name="step[]" value="">
+						</span>
+					{/if}
+					{if in_array(2,$step)}
+						{loop $info['step'] $item}
+							{if $item['step'] == 2}
+							<span class="frm_input_box frm_input_box_150" >
+								<font class="delete_c ">2</font>
+								<input type="text" class="frm_input"  name="step[]" value="{$item['name']}">
+							</span>
+							{/if}
+						{/loop}
+					{else}
+						<span class="frm_input_box frm_input_box_150" >
+							<font class="delete_c ">2</font>
+							<input type="text" class="frm_input"  name="step[]" value="">
+						</span>
+					{/if}
+					{if in_array(3,$step)}
+						{loop $info['step'] $item}
+							{if $item['step'] == 3}
+							<span class="frm_input_box frm_input_box_150" >
+								<font class="delete_c ">3</font>
+								<input type="text" class="frm_input"  name="step[]" value="{$item['name']}">
+							</span>
+							{/if}
+						{/loop}
+					{else}
+						<span class="frm_input_box frm_input_box_150" >
+							<font class="delete_c ">3</font>
+							<input type="text" class="frm_input"  name="step[]" value="">
+						</span>
+					{/if}
+					{if in_array(4,$step)}
+						{loop $info['step'] $item}
+							{if $item['step'] == 4}
+							<span class="frm_input_box frm_input_box_150" >
+								<font class="delete_c ">4</font>
+								<input type="text" class="frm_input"  name="step[]" value="{$item['name']}">
+							</span>
+							{/if}
+						{/loop}
+					{else}
+						<span class="frm_input_box frm_input_box_150" >
+							<font class="delete_c ">4</font>
+							<input type="text" class="frm_input"  name="step[]" value="">
+						</span>
+					{/if}
+					{if in_array(5,$step)}
+						{loop $info['step'] $item}
+							{if $item['step'] == 5}
+							<span class="frm_input_box frm_input_box_150" >
+								<font class="delete_c ">5</font>
+								<input type="text" class="frm_input"  name="step[]" value="{$item['name']}">
+							</span>
+							{/if}
+						{/loop}
+					{else}
+						<span class="frm_input_box frm_input_box_150" >
+							<font class="delete_c ">5</font>
+							<input type="text" class="frm_input"  name="step[]" value="">
+						</span>
+					{/if}
+					
+				</div>
+				<p class="note">不填内容即没有此步骤</p>
+            </div>
+        </div>  
+		
+		<div class="form-row textarea_item ">
+            <label>任务内容</label>
+            <div class="form-value input_500">
+                {php echo tpl_ueditor('content', htmlspecialchars_decode($info['content']));}
+            </div>
+        </div>
+		<div class="form-row textarea_item ">
+            <label>隐藏内容</label>
+            <div class="form-value input_500">
+                {php echo tpl_ueditor('hidecontent', htmlspecialchars_decode($info['hidecontent']));}
+            </div>
+        </div>
+			
+        <div class="form-row">
+            <label></label>
+            <div class="form-value">
+                <input name="addtbtask" type="button" value="保存" class="ui-button skin-ok-button" />
+                <input name="taskid" type="hidden" value="{$_GPC['id']}" />
+            </div>
+        </div>
+
+	</form>
+
+{elseif $_GPC['op'] == 'list'}
+<div class="list-content">	
+	{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/tbtask'}
+
+{elseif $_GPC['op'] == 'info' }
+	
+
+<div class="create-content left taskinfo_l" style="width: 75%; float: left;margin-bottom: 100px;padding-bottom: 100px;">
+	<div class="create-main" style="padding: 20px;">
+        <h4 class="borderl">任务详情</h4>
+
+			<div class="info_item">
+				{$info['title']}
+			</div>
+			<div class="info_item">
+				{php echo htmlspecialchars_decode( $info['content'] )}
+			</div>
+			{if !empty( $info['link'] )}
+				<div class="info_item tbtask_info_link tbtask_info_topitem">
+					{loop $info['link'] $item}
+					<a href="{$item['text']}" target="_blank">{php echo urldecode($item['url'])}</a>
+					{/loop}
+				</div>
+			{/if}
+			{if !empty( $info['hidecontent'] )}
+				<div class="info_item tbtask_info_hide tbtask_info_topitem">
+					<div class="tbtask_info_hidein">
+						{php echo htmlspecialchars_decode( $info['hidecontent'] )}
+					</div>
+				</div>
+			{/if}
+			{if !empty( $info['images'] )}
+				<div class="info_item tbtask_info_images tbtask_info_topitem">
+					{loop $info['images'] $item}
+						<a target="_blank" href="{php echo tomedia( $item )}">
+							<img src="{php echo tomedia( $item )}">
+						</a>
+					{/loop}
+				</div>
+			{/if}
+			{if !empty( $info['hideimages'] )}
+				<div class="info_item tbtask_info_images tbtask_info_topitem">
+					{loop $info['hideimages'] $item}
+						<a target="_blank" href="{php echo tomedia( $item )}">
+							<img src="{php echo tomedia( $item )}">
+						</a>
+					{/loop}
+				</div>
+			{/if}	
+			{if !empty( $info['kakey'] )}
+				<div class="info_item tbtask_info_images tbtask_info_topitem">
+					卡首屏：
+					{loop $info['kakey'] $item}
+						<a href="javascript:;">{$item['key']}</a>
+					{/loop}
+				</div>
+			{/if}
+			<div class="info_item tbtask_info_data tbtask_info_topitem">
+				<span>数量<font class="font_ff5f27">{$info['num']}</font>，</span>
+				<span>赏金<font class="font_ff5f27">{$info['money']}</font>，</span>
+				<span>担保金<font class="font_ff5f27">{$info['tbmoney']}</font>，</span>
+				<span>服务费<font class="font_ff5f27">{$info['costserver']}</font>，</span>
+				<span>卡首屏费用<font class="font_ff5f27">{$info['costka']}</font>，</span>
+				<span>置顶费用<font class="font_ff5f27">{$info['costtop']}</font>，</span>
+				<span>限抢<font class="font_ff5f27">每人{$info['limitnum']}份</font></span>
+			</div>
+			<div class="info_item tbtask_info_status tbtask_info_topitem ">
+				<span class="font_ff5f27">
+					{if $info['status'] == 0}
+						{if $info['isstart'] == 1}
+							未开始
+						{elseif $info['iscount'] == 1}
+							已结算
+						{elseif $info['end'] < TIMESTAMP}
+							已进入结算期待结算
+						{else}
+							正常
+						{/if}
+					{elseif $info['status'] == 1}
+						审核中
+					{elseif $info['status'] == 2}
+						已下架
+					{/if}
+				</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>已抢<font class="font_ff5f27">{$totaltaked}</font>份，完成<font class="font_ff5f27">{$comed}</font>份，失败<font class="font_ff5f27">{$failed}</font>份，申诉中<font class="font_ff5f27">{$complained}</font>份</span>
+			</div>
+			
+			<h4 class="borderl">操作任务</h4>
+				<div class="info_item">
+					
+		            <div class="ui-table-cell-text-last edit_table_item fl" style="margin-right: 10px">
+		                <a href="javascript:;" class="edit_bot ui-button " >提醒雇主</a>
+		                <div class="ui-table-editor dropdown_menu_box dropdown_data_list" style="left: 0;right: initial;">
+		                    <div class="ui-table-editor-opt">
+		                    	提醒内容
+		                        <div>
+		                            <esui-text-box class="ui-ctrl ui-textbox">
+		                                <textarea class="drop_down_textarea" name="remind">请及时处理您的担保任务</textarea>
+		                            </esui-text-box>
+		                        </div>
+		                        <div class="ui-button skin-ok skin-ok-button confirm_remind" type="1" id="{$info['id']}">确定</div>
+		                        <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+		                    </div>
+		                </div>
+		            </div>
+			        <div class="input_150 fl" style="margin-right: 10px">
+			            <div class="ui-select-out input_150">
+			                <div class="ui-select input_150">
+			                    <span class="ui-select-text">
+				    				{if !isset( $_GPC['status'] )}状态筛选
+				    				{elseif $_GPC['status'] == 0}待审核
+				    				{elseif $_GPC['status'] == 1}未通过审核
+				    				{elseif $_GPC['status'] == 2}进行中
+				    				{elseif $_GPC['status'] == 3}已完成
+				    				{elseif $_GPC['status'] == 4}雇主认定失败
+				    				{elseif $_GPC['status'] == 5}任务失败
+				    				{elseif $_GPC['status'] == 6}待初判
+				    				{elseif $_GPC['status'] == 7}待终判{/if}
+			                    </span>
+			                </div>
+			                <ol class="ui-select-layer ui-layer" >
+			                    <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',6)}">
+			                    		<span title="">待初判</span>
+			                    	</a>
+			                    </li>
+				                <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',7)}">
+			                    		<span title="">待终判</span>
+			                    	</a>
+			                    </li>
+			                    <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',0)}">
+			                    		<span title="">待审核</span>
+			                    	</a>
+			                    </li>
+			                    <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',1)}">
+			                    		<span title="">未通过审核</span>
+			                    	</a>
+			                    </li>
+			                    <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',2)}">
+			                    		<span title="">进行中</span>
+			                    	</a>
+			                    </li>
+			                    <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',3)}">
+			                    		<span title="">已完成</span>
+			                    	</a>
+			                    </li>
+			                    <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',4)}">
+			                    		<span title="">雇主认定失败</span>
+			                    	</a>
+			                    </li>
+			                    <li class="ui-select-item" >
+			                    	<a href="{php echo WebCommon::logUrl('status',5)}">
+			                    		<span title="">任务失败</span>
+			                    	</a>
+			                    </li>
+			                </ol>
+			            </div>
+			        </div>
+			        <div class="fl" style="margin-right: 10px">
+						<span class=" frm_input_box search append  frm_input_box_200px">
+					        <form action="./index.php" method="get" class="topbar_online">
+								<input type="hidden" name="c" value="site" />
+								<input type="hidden" name="a" value="entry" />
+								<input type="hidden" name="m" value="{php echo MODULE}" />
+								<input type="hidden" name="do" value="{$item['do']}" />
+								<input type="hidden" name="op" value="{$item['op']}" />
+								<input type="hidden" name="id" value="{$_GPC['id']}" />
+					            <span class="ui-group ui-search-group">
+					                <esui-text-box class="search-box ui-ctrl ui-textbox">
+					                    <input class="search-box input_150" name="takedid" placeholder="输入执行编号" >
+					                </esui-text-box>
+					                <button class="ui-ctrl ui-button"></button>
+					            </span>
+					        </form>
+						</span>
+			        </div>
+			        <div style="clear: both;"></div>
+				</div>
+					
+
+<form action="" method="post" class="ui-table">
+		<h4 class="borderl">提交内容</h4>
+
+		<div class="taskinfo_sub">
+			
+				{if empty( $alltaked )}
+					<div class="no_data">还没有数据</div>
+				{else}
+					<div class="tbtask_list_box">
+					
+						{loop $alltaked $item}
+							<div class="tbtask_list_item">
+								<div class="tbtask_list_item_in item_cell_box">
+									<div class="tbtask_list_user">
+										<a target="_blank" href="{php echo $this->createWebUrl('user',array('op'=>'info','id'=>$item['user']['id']))}">
+											<li>
+												<img src="{$item['user']['headimgurl']}" style="width: 60px ;height: 60px;">
+											</li>
+											<li style="overflow: hidden;">{$item['user']['nickname']}</li>
+										</a>
+									</div>
+									<div class="item_cell_flex tbtask_list_content">
+										<div class="font_ff5f27">执行编号：{$item['id']}</div>
+										{loop $item['tasklog'] $in}
+											<div class="tbtask_step_item item_cell_box">
+												<div class="tbtask_step_time">{$in['time']}</div>
+												<div class="tbtask_step_content item_cell_flex {if $in['isboss'] == 1}imboxx{/if}">
+													<div>{$in['str']}</div>
+													{if !empty( $in['content']['content'] )}
+														<div>{$in['content']['content']}</div>
+													{/if}
+													{if !empty( $in['content']['images'] )}
+														<div class="tbtask_step_images">
+															{loop $in['content']['images'] $i}
+														    	<span class="good_qrcode_box">
+														    		<a target="_blank" href="javascript:;" class="show_good_qrcode">
+														    			<img class="media-object" src="{php echo tomedia($i)}" style="width: 64px; height: 64px;">
+														    		</a>
+														    		<img class="actimg" src="{php echo tomedia($i)}" style="width: 400px;height: auto;">
+														    	</span>
+															{/loop}
+														</div>
+													{/if}
+												</div>	
+											</div>
+										{/loop}
+										<div>
+											<span class="font_ff5f27">
+												{if $item['status'] == 0}待审核
+												{elseif $item['status'] == 1}审核未通过
+												{elseif $item['status'] == 2}执行中
+												{elseif $item['status'] == 3}任务完成
+												{elseif $item['status'] == 4}雇主认定失败
+												{elseif $item['status'] == 5}任务失败
+												{elseif $item['status'] == 6}申诉中待初判
+												{elseif $item['status'] == 7}申诉中待终判
+												{elseif $item['status'] == 8}任务失败
+												{elseif $item['status'] == 9}任务完成
+												{/if}
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="tbtask_list_bot tr">
+									<input type="checkbox" name="checkall[]" class="frm_checkbox" value="{$item['id']}" /> 
+									{if $item['status'] == 0 && empty( $info['userid'] )}
+										<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'passtask','id'=>$item['id']))}">通过</a>
+				                        <div class="ui-table-cell-text-last edit_table_item inlineblock">
+				                            <a href="javascript:;" class="edit_bot" >不通过</a>
+				                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+				                                <div class="ui-table-editor-opt">
+				                                	原因
+				                                    <div>
+				                                        <esui-text-box class="ui-ctrl ui-textbox">
+				                                            <textarea class="drop_down_textarea" name="reason"></textarea>
+				                                        </esui-text-box>
+				                                    </div>
+				                                    <div class="ui-button skin-ok skin-ok-button confirm_nopass" id="{$item['id']}">确定</div>
+				                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+				                                </div>
+				                            </div>
+				                        </div>
+									{/if}
+									{if  in_array( $item['status'],array(0,2,4,6,7) )}
+								    	
+				                        <div class="ui-table-cell-text-last edit_table_item inlineblock">
+				                            <a href="javascript:;" class="edit_bot" >提醒</a>
+				                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+				                                <div class="ui-table-editor-opt">
+				                                	提醒内容
+				                                    <div>
+				                                        <esui-text-box class="ui-ctrl ui-textbox">
+				                                            <textarea class="drop_down_textarea" name="reason"></textarea>
+				                                        </esui-text-box>
+				                                    </div>
+				                                    <div class="ui-button skin-ok skin-ok-button confirm_remind" id="{$item['id']}" type="2">发送</div>
+				                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+				                                </div>
+				                            </div>
+				                        </div>
+
+									{/if}
+									{if $item['status'] == 6 && !empty( $info['userid'] )}
+										<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'giveworker','id'=>$item['id']))}" onclick="return confirm('确定操作吗？');">初判给雇员</a>
+										<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'giveboss','id'=>$item['id']))}" onclick="return confirm('确定操作吗？');">初判给雇主</a>
+									{/if}
+									{if $item['status'] == 7}
+										<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'endgiveworker','id'=>$item['id']))}" onclick="return confirm('确定操作吗？');">终判给雇员</a>
+										<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'endgiveboss','id'=>$item['id']))}" onclick="return confirm('确定操作吗？');">终判给雇主</a>
+									{/if}
+									<a href="{php echo $this->createWebUrl('tbtask',array('op'=>'deletetaked','id'=>$item['id']))}" onclick="return confirm('确定要删除吗？')">删除</a>
+								</div>
+							</div>
+						{/loop}
+					</div>
+
+				{/if}
+			
+		</div>
+        <div class="inlineblock fl" style="line-height: 30px;margin-right: 10px;">
+            <input type="checkbox" class="ui-table-select-all" id="selectAll" />全选
+        </div>
+
+    	<div class="ui-select-out input_100 fl">
+			<div class="ui-select">
+				<span class="ui-select-text">
+					批量操作
+				</span>
+			</div>
+			<ol class="ui-select-layer ui-layer" style="top: initial;bottom:30px;">
+				<li class="ui-select-item ">
+					<span title="">
+						<input name="deletealltaked" class="alldeal_btn" value="批量删除" onclick="return confirm('确定要删除选择的吗？');" type="submit">
+					</span>
+				</li>
+				<li class="ui-select-item ">
+					<span id="count_tbtask" taskid="{$info['id']}" class="tc">结算任务</span>
+				</li>
+			</ol>
+    	</div>
+    	
+    	<div class="ui-select-out input_100 fl" style="margin-left: 10px;">
+			<div class="ui-select">
+				<span class="ui-select-text">
+					每页{php echo empty( $_GPC['pnum'] ) ? 10 : $_GPC['pnum'] }项
+				</span>
+			</div>
+			<ol class="ui-select-layer ui-layer" style="top: initial;bottom:30px;">
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',10)}">
+                		<span title="">10项</span>
+                	</a>
+				</li>
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',20)}">
+                		<span title="">20项</span>
+                	</a>
+				</li>
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',50)}">
+                		<span title="">50项</span>
+                	</a>
+				</li>
+				<li class="ui-select-item ">
+                	<a href="{php echo WebCommon::logUrl('pnum',100)}">
+                		<span title="">100项</span>
+                	</a>
+				</li>
+			</ol>
+    	</div>
+    	
+        <input type="hidden" name="token" value="{$_W['token']}">
+
+	</div>
+
+    <div class="ui-pager" style="display: block;margin-top: 30px;padding-left: 10px;">
+        {$pager}
+    </div>
+
+</div>
+
+<div class="create-content right taskinfo_r" style="width: calc(25% - 20px);float: left;margin-left: 20px;height: 100%;">
+    <div class="create-main" style="padding: 20px;">
+		{if !empty( $puber )}
+			<div class="task_author_head tc">
+				<a target="_blank" href="{php echo $this->createWebUrl('user',array('op'=>'info','id'=>$puber['id']))}">
+					<div class="info_item">
+						<img class="media-object img-rounded" src="{$puber['headimgurl']}" style="width: 50px; height: 50px;">
+					</div>
+					
+					<div class="info_item">{$puber['nickname']}</div>
+					<div class="info_item">会员ID：{$puber['id']}</div>
+				</a>
+			</div>
+			<div class="task_author_info ">
+				<div class="info_item">发布：{$puber['pubnumber']} </div>
+				<div class="info_item">采纳：{$puber['acceptnumber']} </div>
+				<div class="info_item">余额：{$credit['credit2']} 元</div>
+				<div class="info_item">保证金：{$puber['deposit']} 元</div>					
+			</div>
+		{else}
+			<div class="task_author_head tc">
+				管理员
+			</div>
+		{/if}
+    </div>
+</div>
+
+</form>
+
+{elseif $_GPC['op'] == 'take'}
+<div class="list-content">
+	{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/tbtake'}
+
+{elseif $_GPC['op'] == 'temp'}
+<div class="list-content">
+	{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/tbtemp'}	
+	
+{elseif $_GPC['op'] == 'editreply' }
+<div class="list-content">
+	<form method="post" >
+		<div class="frm_control_group">
+			<label for="" class="frm_label"></label>
+			<div class="frm_controls">
+			</div>
+		</div>
+		<div class="frm_control_group">
+			<label for="" class="frm_label">回复内容</label>
+			<div class="frm_controls msg">
+				<span class="frm_textarea_box textarea_60px">
+					<textarea  name="content" class="frm_textarea" rows="6" placeholder="">{$info['content']}</textarea>
+				</span>
+			</div>
+		</div>
+		<div class="frm_control_group single_img_upload">
+			<label for="" class="frm_label">回复图片</label>
+			<div class="frm_controls good_images">
+				{php echo WebCommon::tpl_form_field_multi_image('images', $info['images'],'');}
+				<p class="frm_tips">可拖拽图片排序</p>
+			</div>
+		</div>
+		<div class="tool_bar">
+			<input type="submit" name="editreply" class="btn btn_primary" value="保存" >
+			<input name="token" type="hidden" value="{$_W['token']}" />
+		</div>
+	</form>
+
+{/if}
+
+</div>
+</div>
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}		
+{template 'common/footer'}

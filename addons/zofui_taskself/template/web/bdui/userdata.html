@@ -1,0 +1,20 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+	{if  $_GPC['op'] == 'list'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/user'}
+	
+	{elseif $_GPC['op'] == 'authform'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/authform'}
+
+	{elseif $_GPC['op'] == 'useric'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/useric'}
+
+	{elseif $_GPC['op'] == 'verify' }
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/verifylist'}
+		
+	{/if}
+
+</div>
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}	
+{template 'common/footer'}

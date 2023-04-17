@@ -1,0 +1,130 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+
+{if $op == 'create' || $op == 'edit'}
+	
+{php echo $html}
+
+<script type="text/javascript">
+    
+    $('#confirm_addform').click(function(){
+        var postdata = {
+            name : $('input[name=name]').val(),
+        };
+        if( postdata.name == '' ){
+            webAlert('还没填写名称');return false;
+        }
+
+    });
+
+</script>
+
+{elseif $op == 'list'}
+
+
+    <div class="table-full-wrap" >
+
+        <div class="operation-wrap" data-follow-thead="table">
+            <div class="buttons-wrap" style="height: 30px;">
+            </div>
+            <div class="buttons-quick-wrap">
+                <a href="{php echo $this->createWebUrl('tasksort',array('op'=>'create'))}" class="ui-ctrl ui-button skin-ok-button topbar_jsbtn" js="addtasksort" >添加任务分类</a>
+            </div>
+        </div>
+
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>
+                    <th class="ui-table-hcell" >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                            <input type="checkbox" class="ui-table-select-all" />id
+                        </div>
+                    </th>
+                    <th class="ui-table-hcell ui-table-hcell-sort" >
+                        <div class="ui-table-hcell-text">分类名称</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">排序序号</div>
+                    </th>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">状态</div>
+                    </th>
+                    <th class="ui-table-hcell"  >
+                        <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+			     			<input type="text" id="{$item['id']}" inputname="tasksortname" inputtype="text" value="{$item['name']}" class="edit_number_input tl">
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+			    			<input type="text" id="{$item['id']}" inputname="tasksortnumber" inputtype="text" value="{$item['number']}" class="edit_number_input tl">
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+							<span class="edit_number">
+				    			{if $item['status'] == 0}
+				    				正常
+				    			{elseif $item['status'] == 1}
+				    				<span class="font_ff5f27">下架</span>
+				    			{/if}
+	    					</span>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+			    			<a  href="{php echo $this->createWebUrl('tasksort',array('op'=>'edit','id'=>$item['id']))}" class="edit_listitem" id="{$item['id']}">编辑</a>
+			    			<a href="{php echo $this->createWebUrl('tasksort',array('op'=>'delete','id'=>$item['id']))}" onclick="return confirm('删除不能恢复，确定要删除吗？');">删除</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            <input name="deleteall" class="ui-button ui-dialog-ok-btn" value="删除所选" onclick="return confirm('确定要删除选择的吗？');" type="submit">
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+		<div style="color: red !important;">&#x597D;&#x6E90;&#x7801;&#x7F51;&#x5206;&#x4EAB;</div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+	</form>       
+    </div>
+
+
+{/if}
+</div>
+	
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}  	
+{template 'common/footer'}

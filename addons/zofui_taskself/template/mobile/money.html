@@ -1,0 +1,295 @@
+{template 'common/myheader'}
+{if $_W['dev'] == 'wx'}	
+    <div id="page_money" class="page page_money page-current">
+		<div class="content {if $_GPC['op'] == 'log'}infinite-scroll{/if} " data-distance="50">
+			{template 'common/top'}
+			{if $_GPC['op'] == 'in'}
+				{if empty( $_W['set']['addmtype'] ) || $_W['set']['addmtype'] == 2}
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title">
+								充值{if $_W['set']['moneytype'] == 0}金额{elseif $_W['set']['moneytype'] == 1}数量{/if}
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="number" name="money" class="form_input form_into" value="" placeholder="请输入数值">
+								</li>
+								<li class="form_per">{$_W['cper']}</li>
+							</div>
+						</div>
+					</div>
+					{if $_W['set']['moneytype'] == 1}
+						<p class="form_tips pd05">提示：1元等于{php echo empty( $_W['set']['creditper'] ) ? 1 : $_W['set']['creditper']*100/100}积分</p>
+					{/if}
+
+					<div class="popup_bot page_money_inbtn">
+						<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_addmoney">充值</a>
+					</div>
+					{if $_W['dev'] == 'wx' && $_W['set']['addmtype'] == 0}
+					<form action="{php echo url('mc/cash/wechat');}" method="post" style="display: none" id="weixin">
+						<input type="hidden" name="params" value="{php echo base64_encode(json_encode($params));}" />
+						<input type="hidden" name="encrypt_code" value="" />
+					</form>
+					{elseif $_W['dev'] == 'wap' || $_W['set']['addmtype'] == 2}
+						<form action="{php echo url('mc/cash/alipay');}" method="post" style="display: none" id="weixin">
+							<input type="hidden" name="params" value="{php echo base64_encode(json_encode($params));}" />
+							<input type="hidden" name="code" value="" />
+							<input type="hidden" name="coupon_id" value="" />
+						</form>
+					{/if}
+				{elseif $_W['set']['addmtype'] == 1}
+
+					<div class="addmtype_box">
+						<div class="addmtype_title">
+							{php echo empty( $_W['set']['addmstr'] ) ? '请长按下方客服二维码联系客服充值' : $_W['set']['addmstr']}
+						</div>
+						<div class="addmtype_kefu">
+							<img src="{php echo tomedia( $_W['set']['kefuqr'] )}">
+						</div>
+					</div>
+				{/if}
+			{elseif $_GPC['op'] == 'out'}
+				{if $_W['set']['paytype'] == 2 && ( empty( $userinfo['alipay'] ) || empty( $userinfo['alipayname'] ) )  }
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								支付宝姓名
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="text" name="name" class="form_input form_into" value="" placeholder="输入到账的支付宝账户姓名">
+								</li>
+								<li class="form_per"></li>
+							</div>
+						</div>
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								支付宝账户
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="text" name="alipay" class="form_input form_into" value="" placeholder="输入到账的支付宝账户">
+								</li>
+								<li class="form_per"></li>
+							</div>
+						</div>
+					</div>
+					<div class="popup_bot page_money_inbtn">
+					  	<a href="javascript:;" class="popup_btn popup_confirm" id="save_alipay" type="1">保存</a>
+					</div>
+					<p class="form_tips pd05">提示：设置到账账户后才能提现，请设置能到账的支付宝账户</p>
+
+				{elseif $_W['set']['paytype'] == 3 && empty( $userinfo['payqr'] )  }	
+					<div class="form_list">
+						<div class="form_list">
+							<div class="pub_content">
+								<div class="pub_content_title">微信收款二维码</div>
+								<div class="pub_images_list">
+									<div class="upload_images_views"></div>
+									<div class="uploader_input uploader_input_qrcode"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="popup_bot page_money_inbtn">
+					  	<a href="javascript:;" class="popup_btn popup_confirm" id="save_alipay" type="2">保存</a>
+					</div>
+					<p class="form_tips pd05">提示：设置上传微信收款码后才能提现，请上传你自己的收款码，否则会造成提现不到账</p>
+				{else}
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title">
+								提现{if $_W['set']['moneytype'] == 0}金额{elseif $_W['set']['moneytype'] == 1}数量{/if}
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="number" name="money" class="form_input form_into" value="" placeholder="请输入数值">
+								</li>
+								<li class="form_per">{$_W['cper']}</li>
+							</div>
+						</div>
+						{if $_W['set']['drawvm'] == 1 && !empty( $user['mobile'] )}
+						<div class="form_group item_cell_box">
+							<div class="form_title">
+								验证码
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="tel" name="code" class="form_input form_into" value="" placeholder="">
+									<input type="hidden" name="tel" value="{$user['mobile']}" >
+								</li>
+								<li class="form_per get_code"><span id="getvertify">获取验证码</span></li>
+							</div>
+						</div>
+						<p class="font_mini font_999">验证码将发生到你的手机号{$user['mobile']}</p>
+						{/if}
+					</div>
+					<p class="form_tips tr ">
+						您的{$_W['cname']}<font class="font_ff5f27">{$money['credit2']}</font>,最低提现{php echo $settings['leastdraw']*100/100}
+					</p>
+					{if $settings['server'] > 0}
+						<p class="form_tips tr ">{if $_W['set']['moneytype'] == 1}1元等于{php echo empty( $_W['set']['creditper'] ) ? 1 : $_W['set']['creditper']*100/100}积分,{/if}需额外支付<span class="font_ff5f27">{php echo $settings['server']*100/100}%</span>手续费</p>
+					{/if}
+					{if  $_W['set']['paytype'] == 2}
+						<p class="form_tips tr ">到账支付宝：{$userinfo['alipayname']},{$userinfo['alipay']}</p>
+					{/if}
+					<div class="popup_bot page_money_inbtn">
+					  	<a href="javascript:;" class="popup_btn popup_confirm" id="money_getout">提现</a>
+					</div>
+				{/if}
+			{elseif $_GPC['op'] == 'log'}
+				<div class="list_container money_log_box mt05"></div>
+				<div class="infinite-scroll-preloader">
+					<div class="preloader"></div>
+				</div>
+			{/if}
+		</div>
+		
+	</div>
+{elseif $_W['dev'] == 'wap'}
+    <div id="page_money" class="page page_money page-current">
+		<div class="content {if $_GPC['op'] == 'log'}infinite-scroll{/if} " data-distance="50">
+			{template 'common/top'}
+			{if $_GPC['op'] == 'in'}
+				{if empty( $_W['set']['wapaddmtype'] )}
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title">
+								充值{if $_W['set']['moneytype'] == 0}金额{elseif $_W['set']['moneytype'] == 1}数量{/if}
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="number" name="money" class="form_input form_into" value="" placeholder="请输入数值">
+								</li>
+								<li class="form_per">{$_W['cper']}</li>
+							</div>
+						</div>
+					</div>
+					{if $_W['set']['moneytype'] == 1}
+						<p class="form_tips pd05">提示：1元等于{php echo empty( $_W['set']['creditper'] ) ? 1 : $_W['set']['creditper']*100/100}积分</p>
+					{/if}
+
+					<div class="popup_bot page_money_inbtn">
+						<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_addmoney">充值</a>
+					</div>
+					
+					
+					<form action="{php echo url('mc/cash/alipay');}" method="post" style="display: none" id="weixin">
+						<input type="hidden" name="params" value="{php echo base64_encode(json_encode($params));}" />
+						<input type="hidden" name="code" value="" />
+						<input type="hidden" name="coupon_id" value="" />
+					</form>
+					
+				{elseif $_W['set']['wapaddmtype'] == 1}
+
+					<div class="addmtype_box">
+						<div class="addmtype_title">
+							{php echo empty( $_W['set']['addmstr'] ) ? '请长按下方客服二维码联系客服充值' : $_W['set']['addmstr']}
+						</div>
+						<div class="addmtype_kefu">
+							<img src="{php echo tomedia( $_W['set']['kefuqr'] )}">
+						</div>
+					</div>
+				{/if}
+			{elseif $_GPC['op'] == 'out'}
+				
+				{if $_W['set']['wappaytype'] == 0 && ( empty( $userinfo['alipay'] ) || empty( $userinfo['alipayname'] ) )  }
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								支付宝姓名
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="text" name="name" class="form_input form_into" value="" placeholder="输入到账的支付宝账户姓名">
+								</li>
+								<li class="form_per"></li>
+							</div>
+						</div>
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title" style="width: 4rem;">
+								支付宝账户
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="text" name="alipay" class="form_input form_into" value="" placeholder="输入到账的支付宝账户">
+								</li>
+								<li class="form_per"></li>
+							</div>
+						</div>
+					</div>
+					<div class="popup_bot page_money_inbtn">
+					  	<a href="javascript:;" class="popup_btn popup_confirm" id="save_alipay" type="1">保存</a>
+					</div>
+					<p class="form_tips pd05">提示：设置到账账户后才能提现，请设置能到账的支付宝账户</p>
+
+				{elseif $_W['set']['wappaytype'] == 1 && empty( $userinfo['payqr'] )  }	
+					<div class="form_list">
+						<div class="form_list">
+							<div class="pub_content">
+								<div class="pub_content_title">微信收款二维码</div>
+								<div class="pub_images_list">
+									<div class="upload_images_views"></div>
+									<div class="uploader_input uploader_input_qrcode"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="popup_bot page_money_inbtn">
+					  	<a href="javascript:;" class="popup_btn popup_confirm" id="save_alipay" type="2">保存</a>
+					</div>
+					<p class="form_tips pd05">提示：设置上传微信收款码后才能提现，请上传你自己的收款码，否则会造成提现不到账</p>
+				{else}
+					<div class="form_list">
+						<div class="mb05 form_group item_cell_box">
+							<div class="form_title">
+								提现{if $_W['set']['moneytype'] == 0}金额{elseif $_W['set']['moneytype'] == 1}数量{/if}
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="number" name="money" class="form_input form_into" value="" placeholder="请输入数值">
+								</li>
+								<li class="form_per">{$_W['cper']}</li>
+							</div>
+						</div>
+						{if $_W['set']['drawvm'] == 1 && !empty( $user['mobile'] )}
+						<div class="form_group item_cell_box">
+							<div class="form_title">
+								验证码
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="tel" name="code" class="form_input form_into" value="" placeholder="">
+									<input type="hidden" name="tel" value="{$user['mobile']}" >
+								</li>
+								<li class="form_per get_code"><span id="getvertify">获取验证码</span></li>
+							</div>
+						</div>
+						<p class="font_mini font_999">验证码将发生到你的手机号{$user['mobile']}</p>
+						{/if}
+					</div>
+					<p class="form_tips tr ">
+						您的{$_W['cname']}<font class="font_ff5f27">{$money['credit2']}</font>,最低提现{php echo $settings['leastdraw']*100/100}
+					</p>
+					{if $settings['server'] > 0}
+						<p class="form_tips tr ">{if $_W['set']['moneytype'] == 1}1元等于{php echo empty( $_W['set']['creditper'] ) ? 1 : $_W['set']['creditper']*100/100}积分,{/if}需额外支付<span class="font_ff5f27">{php echo $settings['server']*100/100}%</span>手续费</p>
+					{/if}
+					{if  $_W['set']['paytype'] == 0}
+						<p class="form_tips tr ">到账支付宝：{$userinfo['alipayname']},{$userinfo['alipay']}</p>
+					{/if}
+					<div class="popup_bot page_money_inbtn">
+					  	<a href="javascript:;" class="popup_btn popup_confirm" id="money_getout">提现</a>
+					</div>
+				{/if}
+			{elseif $_GPC['op'] == 'log'}
+				<div class="list_container money_log_box mt05"></div>
+				<div class="infinite-scroll-preloader">
+					<div class="preloader"></div>
+				</div>
+			{/if}
+		</div>
+		
+	</div>
+{/if}
+{template 'common/nav'}
+{template 'common/myfooter'}

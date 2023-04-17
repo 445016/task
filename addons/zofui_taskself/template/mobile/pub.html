@@ -1,0 +1,682 @@
+
+{template 'common/myheader'}
+
+    <div id="page_pub" class="page page_pub page-current">
+		<div class="content">
+			{template 'common/top'}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务标题
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="title" class="form_input form_into" value="{$sort['title']}" placeholder="请输入文字">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+			</div>
+			{if $_W['set']['pubsethd'] == 1}
+			<div class="form_list pb0">
+				<div class="pub_content pb0">
+					<div class="pub_content_title">任务头像</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views">
+							{if !empty($sort['other']['headimg'])}
+								<li fid="WU_FILE_{$key}" class="fl upload_image_item">
+									<img src="{php echo tomedia($sort['other']['headimg'])}">
+									<input value="{$sort['other']['headimg']}" type="hidden" name="head[]">
+								</li>
+							{/if}
+						</div>				
+						<div class="uploader_input uploader_input_head"></div>	
+					</div>
+				</div>
+			</div>
+			{/if}
+			{if empty($_W['set']['tkct'])}
+			<div class="form_list ">
+				<div class="pub_content ">
+					<div class="pub_content_title">任务内容</div>
+					<!-- <textarea name="content" class="pub_task_content" placeholder="在此输入任务内容"></textarea> -->
+					<div class="weui_textarea pub_task_content " contenteditable="true" >
+					{if empty( $sort['content'] )}
+						<span class="form_tips">请在此输入任务内容</span>
+					{else}
+						{php echo htmlspecialchars_decode( $sort['content'] )}
+					{/if}
+					</div>
+					<div class="hide_box mt05">{if !empty($sort['other']['hcontent'])}{php echo '<div class="hide_box_in">'.htmlspecialchars_decode( $sort['other']['hcontent'] ).'</div>'}{/if}</div>
+					<div class="link_box mt05">
+						{if !empty($sort['other']['urlarr'])}
+							{loop $sort['other']['urlarr'] $item}
+								<span class="link_item">
+									<font>{$item['text']}</font>
+									<input type="hidden" name="linktext[]" value="{$item['text']}">
+									<input type="hidden" name="linkurl[]" value="{$item['url']}"></span>
+							{/loop}
+						{/if}
+					</div>
+					<div class="pub_tool">
+						<span id="add_hide">添加隐藏内容</span>
+						<span id="into_link">超链接</span>
+						<span id="remove_all">清空</span>
+					</div>
+				</div>
+			</div>
+			{/if}
+			{if empty($_W['set']['tkimg'])}
+			<div class="form_list">
+				<div class="pub_content">
+					<div class="pub_content_title">任务配图</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views">
+							{if !empty($sort['other']['showtaskimg'])}
+								{loop $sort['other']['showtaskimg'] $key $item}
+									<li fid="WU_FILE_{$key}" class="fl upload_image_item">
+										<img src="{$item['v']}">
+										<input value="{$item['t']}" type="hidden" name="images[]">
+									</li>
+								{/loop}
+							{/if}
+						</div>				
+						<div class="uploader_input uploader_input_images"></div>	
+					</div>
+				</div>
+			</div>
+			{/if}
+			{if $_W['set']['tkstep'] == 1}
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						任务提示步骤
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick " for="step1" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isstep" id="step1" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不设置</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " for="step2" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isstep" value="1" id="step2" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">选择模板</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " for="step3" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isstep" value="2" id="step3" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">添加步骤</span>
+							</div>
+						</label>					
+					</div>
+				</div>
+				
+				
+				<div class="hideitem" id="steptemp" >
+					<div class="mt05 form_group item_cell_box">
+						<div class="form_title">
+							已选模板
+						</div>
+						<div class="item_cell_flex needsclick " id="steptemp_view">
+							<!-- <span>{$item['name']}</span><input name="stepid" type="hidden" value=""> -->
+						</div>
+					</div>
+				</div>
+				
+
+				<div class="hide taskstep" >
+					
+					<div class="taskstep_item">
+						<a href="jacascript:;" class="delstep">删除</a>
+						<div class="item_cell_box step_itemin">
+							<div class="step_name">步骤内容</div>
+							<div class="step_input item_cell_flex step_list">
+								<!-- <input type="text" name="stepname" value="" > -->
+								<textarea name="stepname" class="" placeholder="填写步骤详细内容"></textarea>
+							</div>
+						</div>
+						<div class="item_cell_box step_itemin">
+							<div class="step_name">跳转链接</div>
+							<div class="item_cell_flex step_list">
+								
+							</div>
+							<a class="step_btn addtourl" href="jacascript:;">添加</a>
+						</div>
+						<div class="item_cell_box step_itemin">
+							<div class="step_name">一键复制</div>
+							<div class="item_cell_flex step_list">
+								
+							</div>
+							<a href="jacascript:;" class="addcopy">添加</a>
+						</div>
+						<div class="item_cell_box step_itemin">
+							<div class="step_name">提示图片</div>
+							<div class="item_cell_flex step_list">
+								<div class="upload_images_views miniup">
+									
+								</div>
+								<div class="uploader_input miniup uploader_input_step"></div>	
+							</div>
+						</div>
+					</div>
+					
+					<a href="jacascript:;" class="addastep">添加步骤</a>
+
+				</div>
+			</div>
+			{/if}		
+
+			{if !empty($allic)}
+			<div class="form_list">
+				<div class="pub_content_title">用户标签</div>
+				<div class="pub_images_list">
+					{loop $allic $key $item}
+						<div class="ic_item ">
+							{$item['name']}
+							<input type="checkbox" style="display: none;" name="ic[]" value="{$item['id']}">
+						</div>
+					{/loop}
+					<div class="form_tips mt05">有选择的标签的用户才可接任务</div>			
+				</div>
+			</div>
+			{/if}
+
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						任务总量
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="num" class="form_input form_into" value="{php echo $sort['other']['num'] <= 0 ? '' : $sort['other']['num']}" placeholder="请填正整数">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						任务赏金
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="number" name="money" class="form_input form_into" value="{php echo $sort['dmoney']*1 > 0 ? $sort['dmoney']*100/100 : ($this->module['config']['defmoney']*1 > 0 ? $this->module['config']['defmoney']*100/100 : '')}" placeholder="每个回复的赏金">
+						</li>
+						<li class="form_per">{$_W['cper']}/回复</li>
+					</div>
+				</div>
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						等待时间
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="replytime" class="form_input form_into" value="{$sort['other']['wait']}" placeholder="接后超过此时间才能回复">
+						</li>
+						<li class="form_per">分钟</li>
+					</div>
+				</div>
+				{if $_W['set']['addr'] == 1}
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务地址
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="address" class="form_input form_into" value="" placeholder="请填任务详细地址">
+						</li>
+					</div>
+				</div>
+				{/if}
+			</div>
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						可接次数
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="limitnum" class="form_input form_into" value="{php echo empty($sort['other']['canget']) ? 1 : $sort['other']['canget']}" placeholder="每人能回复的数量">
+						</li>
+						<li class="form_per">次/人</li>
+					</div>
+				</div>
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						性别限制
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick " for="id1" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="sex" id="id1" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不限制</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " for="id2" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="sex" value="1" id="id2" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">男可接</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " for="id3" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="sex" value="2" id="id3" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">女可接</span>
+							</div>
+						</label>						
+					</div>
+				</div>
+				{if $_W['set']['ulevel'] == 1}		
+				<div class="form_group item_cell_box mt05">
+					<div class="form_title">
+						会员限制
+					</div>
+					<div class="item_cell_flex weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick form_cityitem mb05" for="notlevellimita" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="levellim" value="0" checked="checked" id="notlevellimita">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不限制</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="levellimita" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="levellim" value="1"  id="levellimita">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}可接</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="levellimitb" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="levellim" value="2"  id="levellimitb">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}可接</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="levellimitc" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="levellim" value="3"  id="levellimitc">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">{php echo empty($_W['set']['uonename']) ? '一级' : $_W['set']['uonename']},{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}可接</span>
+							</div>
+						</label>
+					</div>
+				</div>
+				{/if}	
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						隐藏回复
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick" for="pub_isshow">
+							<div class="weui_cell_hd needsclick">
+								<input type="checkbox" class="weui_check needsclick" name="ishide" {if empty($sort) || (!empty($sort) && $sort['other']['hide'] == 0 )}checked="checked"{/if} value="1" id="pub_isshow">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">(勾选后隐藏)</span>
+							</div>
+						</label>
+					</div>
+				</div>
+				{if $_W['set']['isanw'] == 1 && empty($_W['set']['anwtype'])}
+				<div class="mb05 form_group item_cell_box" id="readprice" {if !empty($sort) && $sort['other']['hide'] == 1 }style="display:none"{/if}>
+					<div class="form_title">
+						查看答案价格
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="readprice" class="form_input form_into" value="" placeholder="查看回复内容的价格">
+						</li>
+						<li class="form_per">
+							<span class="quest quest_btn" content="查看答案价格设置区间为：任务悬赏单价的100%-500%">?</span>
+						</li>
+					</div>
+				</div>
+				{/if}
+			</div>	
+			{if !empty( $form )}
+				<div class="form_list">
+					<div class="form_group item_cell_box">
+						<div class="form_title">
+							回复模板
+						</div>
+						<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+							<label class="weui_cell weui_check_label needsclick" id="no_form" for="isform1">
+								<div class="weui_cell_hd needsclick">
+									<input type="radio" class="weui_check needsclick" name="isform" id="isform1" value="0" {if empty($sort['other']['formid'])}checked="checked"{/if} >
+									<i class="weui_icon_checked needsclick"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">不设置</span>
+								</div>
+							</label>
+							<label class="ml05 weui_cell weui_check_label needsclick" id="pub_form" for="isform2">
+								<div class="weui_cell_hd needsclick">
+									<input type="radio" class="weui_check needsclick" name="isform" value="1" id="isform2" {if !empty($sort['other']['formid'])}checked="checked"{/if} >
+									<i class="weui_icon_checked needsclick"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick" >选择模板</span>
+								</div>
+							</label>
+						</div>
+					</div>
+					<div id="isformlimit" style="{if empty($sort['other']['formid'])}display: none;{else}display: block;{/if}">
+						<div class="mt05 form_group item_cell_box">
+							<div class="form_title">
+								已选模板
+							</div>
+							<div class="item_cell_flex needsclick " id="isform_view">
+								{if !empty($sort['other']['formid'])}
+									{loop $form $item}
+										{if $item['id'] == $sort['other']['formid']}
+											<span>{$item['name']}</span><input name="formid" type="hidden" value="{$item['id']}">
+										{/if}
+									{/loop}
+								{/if}
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						区域限制
+					</div>
+					<div class="item_cell_flex weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick form_cityitem mb05" for="notarealimit" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="0" checked="checked" id="notarealimit">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不限制</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="arealimita" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="1" id="arealimita">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">限到区县</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="arealimitb" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="2" id="arealimitb">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">限到市</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="arealimitc" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="3" id="arealimitc">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">限到省</span>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div id="isarealimit" style="display: none;">
+					<div class="mt05 form_group item_cell_box">
+						<div class="form_title">
+							可接区域
+						</div>
+						<div class="item_cell_flex needsclick">
+							<input type="text" name="area" placeholder="请点击选择区域" id="city-picker" readonly="" value="" style="width: 100%;">
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						置顶任务
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick " for="istop1" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" id="istop1" name="istop" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不置顶</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " for="istop2" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="istop" id="istop2" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">置顶{if $settings['topserver'] > 0}({$settings['topserver']}{$_W['cper']}/次){/if}</span>
+							</div>
+						</label>						
+					</div>
+				</div>
+			</div>
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						连续发布
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick" id="no_continue" for="continue1">
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="continue" id="continue1" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不设置</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick" id="pub_continue" for="continue2">
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="continue" value="1" id="continue2" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick" id="continue_show">设置连续发布</span>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+			{if model_user::isKa() || $_W['set']['iska'] == 1}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						卡首屏
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick" for="pub_isshow1" id="pub_noka">
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="iska" value="0" checked="checked" id="pub_isshow1">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不设置</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick" for="pub_isshow2" id="pub_setka">
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="iska" value="1" id="pub_isshow2">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">设置{if $settings['kaserver'] > 0}({$settings['kaserver']}{$_W['cper']}/次){/if}</span>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="form_group ka_show_list ">
+
+				</div>
+			</div>
+			{/if}
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务目标id
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="gid" class="form_input form_into" value="" placeholder="输入任务的id">
+						</li>
+						<li class="form_per">
+							<span class="quest quest_btn" content="发布的所有任务中，相同的任务目标id，每个人只能接一次。若不设置则不做限制">?</span>
+						</li>
+					</div>
+				</div>
+			</div>
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						标记备注
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="mark" class="form_input form_into" value="" placeholder="可不填">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+			</div>
+
+
+			<p class="form_tips font_mini pt05 tr">
+				（任务费<font class="font_ff5f27" id="taskmoney">0</font> +
+				服务费<font class="font_ff5f27" id="servermoney">0</font> +
+				{if model_user::isKa() || $_W['set']['iska'] == 1}
+				卡首屏<font class="font_ff5f27" id="kamoney">0</font> +
+				{/if}
+				置顶费<font class="font_ff5f27" id="servertop">0</font>）
+			</p>
+			<p class="form_tips font_mini tr">
+				连续发布<font class="font_ff5f27" id="continueday">x0</font> +
+				额外奖励<font class="font_ff5f27" id="continuemoney">0</font>&nbsp;
+			</p>
+		</div>
+	</div>
+	<div class="max640_box">
+		<div class="pub_bot" >
+
+			{if $_W['set']['rdrule'] == 1}
+				<div class="pubrule">
+					<div class="weui_cells_checkbox" style="padding-left: 0">
+						<label class="weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="checkbox" class="weui_check needsclick" name="readit" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd needsclick">
+								我已阅读、理解并同意<a href="jacascript:;" id="showrule">《发布规则》</a>的全部内容
+							</div>
+						</label>
+					</div>
+				</div>
+			{/if}
+			<span id="pub_btn" class="pub_btn">确认发布 <font id="total_money" class="font_mini"></font> </span>
+		</div>	
+	</div>
+
+	{if $_W['set']['isdeposit'] >= 0}
+		{if $_W['set']['isdeposit'] == 0}
+
+			{if $userinfo['deposit']*1 <  $_W['set']['warndeposit']*1}
+				<div class="max640_box">
+					<div class="item_cell_box sub_item pub_warn">
+						<div class="item_cell_flex pub_warn_l">您的保证金不足，无法发布高佣金任务</div>	
+						<div class="sub_btn">
+							<span class="toadd_click">去充值</span>
+							<span class="close_sub">×</span>
+						</div>
+					</div>
+				</div>
+			{/if}
+
+		{elseif $_W['set']['isdeposit'] > 0 && $userinfo['deposit']*1 < $_W['set']['isdeposit']}
+			<div class="max640_box">
+				<div class="item_cell_box sub_item pub_warn">
+						<div class="item_cell_flex pub_warn_l">发布此任务需要缴纳{php echo $_W['set']['isdeposit']*1}保证金</div>	
+					<div class="sub_btn">
+						<span class="toadd_click">去充值</span>
+						<span class="close_sub">×</span>
+					</div>
+				</div>
+			</div>
+		{/if}
+	{/if}
+	<!-- {if $userinfo['deposit']*1 <  $_W['set']['warndeposit']*1 && $_W['set']['isdeposit']*1 == 0}
+		<div class="max640_box">
+			<div class="item_cell_box sub_item pub_warn">
+				{if $userinfo['deposit'] <= 0}
+					<div class="item_cell_flex pub_warn_l">您的保证金不足，不能发布任务</div>
+				{elseif $_W['set']['isdeposit'] == 0}
+					<div class="item_cell_flex pub_warn_l">您发布任务支出不能超过您的保证金({$userinfo['deposit']})</div>
+				{elseif $_W['set']['isdeposit'] > 0}
+					<div class="item_cell_flex pub_warn_l">您的保证金不足{php echo $_W['set']['isdeposit']*1}元</div>					
+				{/if}
+				<div class="sub_btn">
+					<span class="toadd_click">去充值</span>
+					<span class="close_sub">×</span>
+				</div>
+			</div>
+		</div>
+	{/if}
+	{if $userinfo['deposit']*1 <  $_W['set']['warndeposit']*1 && $_W['set']['isdeposit']*1 > 0 && $userinfo['deposit']*1 < $_W['set']['isdeposit']*1}
+		<div class="max640_box">
+			<div class="item_cell_box sub_item pub_warn">
+				<div class="item_cell_flex pub_warn_l">您的保证金不足{php echo $_W['set']['isdeposit']*1}元，不能发任务</div>	
+				<div class="sub_btn">
+					<span class="toadd_click">去充值</span>
+					<span class="close_sub">×</span>
+				</div>
+			</div>
+		</div>
+	{/if} -->
+
+	
+	{template 'common/setnick'}
+
+{template 'common/myfooter'}

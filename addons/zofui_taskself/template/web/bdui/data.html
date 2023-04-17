@@ -1,0 +1,300 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+
+	{if $_GPC['op'] == 'complain'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/complain'}
+
+	{elseif  $_GPC['op'] == 'order'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/order'}
+		
+	{elseif  $_GPC['op'] == 'user'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/user'}
+
+	{elseif  $_GPC['op'] == 'message'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/message'}
+		
+	{elseif  $_GPC['op'] == 'sendmess'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/sendmess'}
+	
+	{elseif $_GPC['op'] == 'authform'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/authform'}
+		
+	{elseif $_GPC['op'] == 'site'}
+	<script type="text/javascript" src="{php echo TSTB_URL}public/js/lib/chart.min.js"></script>
+	<style type="text/css">
+		.main_bd {
+		    padding: 0px!important;
+		}
+		.siteinfo_chart .index_tap.added .index_tap_item {
+		    width: 25%;
+		}
+	</style>
+ <div class="table-wrap" >	
+	<div class="panel-body siteinfo_chart" id="scroll" style="padding: 0">
+		<div class="index_tap added">
+
+			<ul class="inner">
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($todayin) ? 0 : $todayin}</em>
+							<strong class="title">今日已充值余额</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item rights_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner no_extra">
+							<em class="number">{php echo empty($todaydrawmoney) ? 0 : $todaydrawmoney}</em>
+							<strong class="title">今日已提现申请</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($todaydrawmoneyed) ? 0 : $todaydrawmoneyed}</em>
+							<strong class="title">今日已支付提现</strong>
+						</span>
+					</a>
+				</li>
+			</ul>
+			<ul class="inner" style="margin-top: 10px;">
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($todaydeposit) ? 0 : $todaydeposit}</em>
+							<strong class="title">今日已充值保证金</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item rights_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner no_extra">
+							<em class="number">{php echo empty($todaydrawdeposit) ? 0 : $todaydrawdeposit}</em>
+							<strong class="title">今日已提保证金申请</strong>
+						</span>
+					</a>
+				</li>
+				<li class="index_tap_item send_goods_num" style="width: 33.3%">
+					<a target="_blank" href="javascript:;" >
+						<span class="tap_inner">
+							<em class="number">{php echo empty($todaydrawdeposited) ? 0 : $todaydrawdeposited}</em>
+							<strong class="title">今日已支付提保证金</strong>
+						</span>
+					</a>
+				</li>				
+			</ul>
+		</div>
+		
+		<div class="info_box">
+			<div class="inner">
+				<div class="info_hd">
+					<h4>今日指标<span class="" id="dataDesc"></span></h4>
+				</div>
+				<div class="info_bd">
+					<div class="basic_data-wrapper" id="js_yesterdayStat">
+						<ul class="basic_data-list" id="dataList">
+						<li class="basic_data-item first_data-item">
+							<p class="basic_data-key">新增会员</p>
+							<p class="basic_data-val totalVal">
+								<a href="javascript:;" title="查看订单管理">{$todayuser}</a>
+							</p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">发布普通任务</p>
+						<p class="basic_data-val totalVal"><a href="javascript:;" title="查看团数据">{$todaypub}</a></p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">回复普通任务</p>
+							<p class="basic_data-val totalVal">
+								<a href="javascript:;" title="">{$todaytaked}</a>
+							</p>
+						</li>
+						<li class="basic_data-item">
+							<p class="basic_data-key">发起私包任务</p>
+							<p class="basic_data-val totalVal"><a href="javascript:;" title="">{$todaypri}</a></p>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="info_box">
+			<div class="inner">
+				<div class="info_hd">
+					<h4>昨日指标<span class="" id="dataDesc"></span></h4>
+				</div>
+				<div class="info_bd">
+					<div class="basic_data-wrapper" id="js_yesterdayStat">
+						<ul class="basic_data-list" id="dataList">
+						<li class="basic_data-item first_data-item">
+							<p class="basic_data-key">新增会员</p>
+							<p class="basic_data-val totalVal">{$yesuser}</p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">发布普通任务</p>
+						<p class="basic_data-val totalVal">{$yespub}</p>
+						</li>
+						<li class="basic_data-item">
+						<p class="basic_data-key">回复普通任务</p>
+						<p class="basic_data-val totalVal">{$yestaked}</p>
+						</li>
+						<li class="basic_data-item">
+							<p class="basic_data-key">发起私包任务</p>
+							<p class="basic_data-val totalVal">{$yespri}</p>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>		
+		<div class="pull-left">
+			<form action="" id="form1">
+				<input name="c" value="site" type="hidden" />
+				<input name="a" value="entry" type="hidden" />
+				<input name="uniacid" value="{$_W['uniacid']}" type="hidden" />
+				<input name="m" value="zofui_taskself" type="hidden" />
+				<input name="do" value="data" type="hidden" />			
+				{php echo tpl_form_field_daterange('datelimit', array('start' => date('Y-m-d', $starttime),'end' => date('Y-m-d', $endtime)), '')}
+				<input type="hidden" value="" name="scroll">
+			</form>
+		</div>
+		<div class="pull-right">
+			<div class="checkbox">
+				<label style="color:#57B9E6;"><input checked type="checkbox"> 充值收入</label>&nbsp;
+				<label style="color:#FF00D4;"><input checked type="checkbox"> 提现支出</label>&nbsp;
+				<label style="color:rgba(203,48,48,1)"><input checked type="checkbox"> 发布普通任务</label>&nbsp;
+				<label style="color:rgba(149,192,0,1);"><input checked type="checkbox"> 回复普通任务</label>&nbsp;
+				<label style="color: rgba(255, 0, 0,1);"><input checked type="checkbox"> 发起私包任务</label>&nbsp;
+			</div>
+		</div>
+
+		<div style="margin-top:20px;">
+			<canvas id="myChart" width="1000px" height="300"></canvas>
+		</div>
+
+	</div>	
+	
+</div>
+</div>
+	<script>
+		require(['daterangepicker'], function() {
+			$('.daterange').on('apply.daterangepicker', function(ev, picker) {
+				$('input[name="scroll"]').val($(document).scrollTop());
+				$('#form1')[0].submit();
+			});
+			{if $scroll} 
+				var scroll = "{$scroll}";
+				$("html,body").animate({scrollTop: scroll}, 300);
+			{/if}
+			var chart = null;
+			var chartDatasets = null;
+			var templates = {
+				flow1: {
+					label: '充值收入',
+					fillColor : "rgba(87, 185, 230, 0.1)",
+					strokeColor : "rgba(87, 185, 230, 1)",
+					pointColor : "#57B9E6",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "#57B9E6",
+				},
+				flow2: {
+					label: '提现支出',
+					fillColor : "rgba(255, 0, 212, 0.1)",
+					strokeColor : "#FF00D4",
+					pointColor : "#FF00D4",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "#FF00D4",
+				},
+				flow3: {
+					label: '发布普通任务',
+					fillColor : "rgba(203,48,48,0.1)",
+					strokeColor : "rgba(203,48,48,1)",
+					pointColor : "rgba(203,48,48,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(203,48,48,1)",
+				},
+				flow4: {
+					label: '回复普通任务',
+					fillColor : "rgba(149,192,0,0.1)",
+					strokeColor : "rgba(149,192,0,1)",
+					pointColor : "rgba(149,192,0,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(149,192,0,1)",
+				},	
+				flow5: {
+					label: '发起私包任务',
+					fillColor : "rgba(255, 0, 0,0.1)",
+					strokeColor : "rgba(255, 0, 0,1)",
+					pointColor : "rgba(255, 0, 0,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(255, 0, 0,1)",
+				},								
+			};
+
+			function refreshData() {
+				if(!chart || !chartDatasets) {
+					return;
+				}
+				var visables = [];
+				var i = 0;
+				$('.checkbox input[type="checkbox"]').each(function(){
+					if($(this).attr('checked')) {
+						visables.push(i);
+					}
+					i++;
+				});
+				var ds = [];
+				$.each(visables, function(){
+					var o = chartDatasets[this];
+					ds.push(o);
+				});
+				chart.datasets = ds;
+				chart.update();
+			}
+			
+			var url = location.href + '&#aaaa';
+			$.post(url, function(data){
+				var data = $.parseJSON(data)
+				var datasets = data.datasets;
+
+				if(!chart) {
+					var label = data.label;
+					var ds = $.extend(true, {}, templates);
+					ds.flow1.data = datasets.flow1;
+					ds.flow2.data = datasets.flow2;
+					ds.flow3.data = datasets.flow3;
+					ds.flow4.data = datasets.flow4;
+					ds.flow5.data = datasets.flow5;
+					var lineChartData = {
+						labels : label,
+						datasets : [ds.flow1, ds.flow2, ds.flow3,ds.flow4,ds.flow5]
+					};
+
+					var ctx = document.getElementById("myChart").getContext("2d");
+					chart = new Chart(ctx).Line(lineChartData, {
+						responsive: true
+					});
+					chartDatasets = $.extend(true, {}, chart.datasets);
+				}
+				refreshData();
+			});
+
+			$('.checkbox input[type="checkbox"]').on('click', function(){
+				$(this).attr('checked', !$(this).attr('checked'))
+				refreshData();
+			});
+ 		});
+	</script>
+
+	{/if}
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}		
+{template 'common/footer'}

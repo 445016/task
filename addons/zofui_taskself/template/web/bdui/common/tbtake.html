@@ -1,0 +1,87 @@
+
+    <div class="table-full-wrap" >
+
+        <div class="operation-wrap" data-follow-thead="table">
+            <div class="buttons-wrap">
+                {php echo $html['tophtml']}
+            </div>
+            <div class="buttons-quick-wrap">
+            </div>
+        </div>
+
+	<form action="" method="post">
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            {php echo $html['tdhtml']}
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}    
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            {$item['id']}
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                        <div class="ui-table-cell-text">
+			     			{$item['task']['title']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell" >
+                        <div class="ui-table-cell-text" >
+				     		{$item['money']}
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+				    		{if $item['status'] == 0 }
+				    			<p class="">待审核</p>
+				    		{elseif $item['status'] == 1 }
+				    			未通过审核
+				    			<p class="font_mini">{$item['reason']}</p> 
+				    		{elseif $item['status'] == 2 }
+				    			<p class="font_ff5f27">进行中</p>
+				    		{elseif $item['status'] == 3 }
+				    			<p class="font_green">已完成</p>
+				    		{elseif $item['status'] == 4 }
+				    			<p class="">雇主认定失败</p>
+				    		{elseif $item['status'] == 5 }
+				    			<p class="">已失败</p>
+				    		{elseif $item['status'] == 6 }
+				    			<p class="font_ff5f27">申诉中</p>
+				    		{elseif $item['status'] == 7 }
+				    			<p class="font_ff5f27">待终判</p>
+				    		{elseif $item['status'] == 8 }
+				    			<p class="">已失败</p>
+				    		{elseif $item['status'] == 9 }
+				    			<p class="font_green">已完成</p>		
+				    		{/if}
+                        </div>
+                    </td>                                  
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+					    	<a target="_blank" href="{php echo $this->createWebUrl('tbtask',array('op'=>'info','id'=>$item['taskid'],'takedid'=>$item['id']))}">查看任务</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+            {php echo $html['pagenum']}
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+    </div>
+	</form>       
+    </div>

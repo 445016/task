@@ -1,0 +1,471 @@
+
+{template 'common/myheader'}
+
+    <div id="page_task" class="page page_task page-current">
+		<div class="content infinite-scroll" data-distance="50">
+		{template 'common/top'}
+		<div class="task_top item_cell_box">
+			{if !empty( $task['userid'] )}
+				<div class="task_top_l">
+					<img class="head_img" src="{$puber['headimgurl']}">
+				</div>
+				<div class="task_top_name item_cell_flex">
+					<div>
+						{if $puber['isauth'] == 2}
+							<span class="font_bold_name task_nickname authname ">
+								{$puber['nickname']}
+								<font class="authicon authicon_b"></font>
+							</span>
+							<font class="userid useridpl02">({$puber['id']})</font>
+						{else}
+							<span class="font_bold_name task_nickname">{$puber['nickname']} <font class="userid">({$puber['id']})</font></span>
+						{/if}
+						<span class=" font_13px_999 fr">保证金:{$puber['deposit']}元</span>
+						<p>
+							<span class="font_13px_999">发布:{$puber['pubnumber']}</span>
+							<span class="font_13px_999">采纳:{$puber['acceptnumber']}</span>
+							{if $puber['pubnumber'] >0 }
+								<span class="font_13px_999">采纳率:{php echo intval( $puber['acceptnumber']/$puber['pubnumber']*100 ) }%</span>
+							{/if}
+						</p>
+					</div>
+					{if ($puber['conweixin'] || $puber['conmobile']) && $_W['set']['stel'] == 1 && ( (!empty($istaked) && in_array($istaked['status'],array(0,1))) || $task['userid'] == $userinfo['uid'] ) }
+					<div class="guy_contacta oh">联系他 
+						<p class="fr">
+						{if $puber['conmobile']}
+							<a href="tel:{$puber['mobile']}" class="guy_contact_tel"></a>
+						{/if}
+						{if $puber['conweixin']}
+							<span data-src="{php echo tomedia($puber['qrcode'])}" class="guy_contact_wx"></span>
+						{/if}
+						</p>
+					</div>
+					{/if}
+				</div>
+			{elseif !empty($falsepuber)}
+				<li class="task_top_l">
+					<img class="head_img" src="{php echo tomedia($falsepuber['headimg'])}">
+				</li>
+				<li class="task_top_name item_cell_flex oh">
+					<span class="font_bold_name task_nickname">{$falsepuber['nickname']}</span>
+					{if $falsepuber['falsedep'] > 0}	
+					<span class=" font_13px_999 fr">保证金:{$falsepuber['falsedep']}元</span>
+					{/if}
+					<p>
+						<span class="font_13px_999">发布:{php echo $falsepuber['pub'] + $falsepuber['falsepub']}</span>
+						<span class="font_13px_999">采纳:{php echo $falsepuber['take'] + $falsepuber['falsetake']}</span>
+						{if $falsepuber['pub'] + $falsepuber['falsepub'] >0 }
+							<span class="font_13px_999">采纳率:{php echo intval( ($falsepuber['take']+$falsepuber['falsetake'])/($falsepuber['pub']+$falsepuber['falsepub'])*100 ) }%</span>
+						{/if}
+					</p>
+				</li>
+			{else}
+				<li class="task_top_l">
+					<img class="head_img" src="{php echo tomedia($_W['set']['logo'])}">
+				</li>
+				<li class="task_top_name item_cell_flex oh">
+					<span class="font_bold_name task_nickname">{$_W['set']['sitename']}</span>
+				</li>
+			{/if}
+		</div>
+		<div class="mb05 task_content {if $warn == 1}warning_bg{/if}">
+			<div class="task_contenthead">
+				<div class="item_cell_box">
+					<div class="font_mini item_cell_flex pl0">任务编号:{php echo empty($_W['set']['tidtype']) || empty($task['idcode']) ? $task['id'] : $task['idcode']}</div>
+					{if $task['isread'] == 1}<div class="font_mini">{$allread}人查看答案，累计收益：{$allfee}</div>{/if}
+				</div>
+				<div class="item_cell_box">
+					<div class="item_cell_flex pl0">
+						<p>已接<span>{$task['taked']}</span>/{$task['num']}份，<span>{$task['money']}</span>/份</p>	
+						{if $warn == 1}<p class="font_13px_999 font_ff5f27">此任务被超过{php echo $_W['set']['warn']*100/100}%的回复者投诉</p>{/if}
+					</div>
+					{if $task['isread'] == 1 && $task['readprice'] > 0}
+					<div class="" id="readanswer">
+						<span class="btn">查看答案</span>
+					</div>
+					{/if}
+				</div>
+				<P class="font_mini"></P>
+
+			</div>
+			
+			<div class="task_content_in">
+
+				{if !empty($task['content'])}
+				<div class="task_content_content">
+					{php echo htmlspecialchars_decode( $task['content'] )}
+				</div>
+				{/if}
+
+				{if !empty($step['step'])}
+					<div class="infostep_t">任务步骤</div>
+					{loop $step['step'] $k $item}
+						<div class="infostep_item">
+							<div class="infostep_line"></div>
+							<div class="infostep_l item_cell_box">
+								<div class="infostep_no pri-bg">{php echo $k+1}</div>
+								<div class="item_cell_flex">{$item['name']}</div>
+							</div>
+							{if !empty($item['copy'])}
+							<div class="infostep_in">
+								{loop $item['copy'] $in}
+									<a href="javascript:;" data-clipboard-text="{$in}" class="infostep_copy copythis pri-bg">{$in}</a>
+								{/loop}
+							</div>
+							{/if}
+							{if !empty($item['url'])}
+							<div class="infostep_in">
+								{loop $item['url'] $in}
+									<a href="{$in['url']}" class="infostep_url">{$in['text']}</a>
+								{/loop}
+							</div>
+							{/if}
+							{if !empty($item['img'])}
+							<div class="infostep_in">
+								<div class="need_show_images oh">
+									{loop $item['img'] $in}
+										<li class="need_show_images_item fl {if count($item['img']) == 1}showauto{/if}" >
+											<img src="{php echo tomedia($in)}" >
+										</li>
+									{/loop}
+								</div>
+							</div>
+							{/if}
+						</div>
+					{/loop}
+				{/if}
+
+				{if !empty( $task['kakey'] ) || !empty( $task['images'] ) || !empty( $task['link'] ) || !empty( $task['hidecontent'] ) }
+					{if !empty($istaked) || $task['userid'] == $userinfo['uid'] || $canverify == 1 || $isadmin }
+						
+						{if !empty( $task['hidecontent'] ) }
+							{php echo htmlspecialchars_decode( $task['hidecontent'] )}
+							</a></a></a></a>
+						{/if}
+						
+						{if !empty( $task['link'] ) }
+							<div class="task_content_link oh">
+								{loop $task['link'] $k $item}
+									<a href="javascript:;" key="{$k}" data-clipboard-text="{php echo urldecode($item['text'])}" url="{php echo urldecode($item['text'])}" class="tourl tourl{$k} task_link_item">
+										{php echo urldecode($item['url'])}
+									</a>
+								{/loop}
+							</div>
+						{/if}					
+						{if !empty( $task['kakey'][0] ) && $task['iska'] == 1 }
+							<div class="ka_notice">请点击下方任意关键字按提示操作:</div>
+							<div class="task_content_ka oh">
+								{if is_array( $task['kakey'][0] )}
+									{loop $task['kakey'] $item}
+										<a href="{php echo  $task['skiptype'] == 0 ? $this->createMobileUrl('taob',array('key'=>$item['key'],'gid'=>$task['kagoodid'])) : 'javascript:;' }" class="task_ka_item {if $task['skiptype']}pub_show_tao{/if}" tao="{$item['tao']}" >
+											{$item['key']}
+										</a>
+									{/loop}
+								{else}
+									{loop $task['kakey'] $item}
+										<a href="{php echo $this->createMobileUrl('taob',array('key'=>$item,'gid'=>$task['kagoodid']))}" class="task_ka_item">
+											{$item}
+										</a>
+									{/loop}	
+								{/if}
+							</div>
+						{/if}
+						{if !empty( $task['images'] )}
+							<div class="need_show_images oh">
+								{loop $task['images'] $item}
+									<li class="need_show_images_item fl" >
+										<img src="{php echo tomedia($item)}" >
+									</li>
+								{/loop}
+							</div>
+						{/if}
+					{/if}
+				{/if}
+
+				{if empty($istaked) && $task['userid'] != $userinfo['uid'] && $canverify != 1 && ( !empty( $task['images'] ) || !empty( $task['kakey'] ) || !empty( $task['link'] ) ) }
+					<div class="taked_detail">接到任务后查看明细</div>
+				{/if}
+
+				{if $task['status'] == 0}
+					{if ($task['start'] > TIMESTAMP || $task['end'] > TIMESTAMP) && $task['iscount'] == 0 }
+					<div class="task_bot item_cell_box">
+						<div class="task_desc_time item_cell_flex">
+							{if $task['end'] < TIMESTAMP || $task['iscount'] == 1}
+								已结束
+							{elseif $task['ispause'] == 1}
+								已关闭
+							{else}
+								进行中
+							{/if}
+						</div>
+						<div class="task_desc_time tr">
+							<span class="font_13px_999 lasttime" data-time="{$autotime}">{if $task['start'] > TIMESTAMP}距开始{elseif $task['end'] > TIMESTAMP}距结束{/if}:
+								<font class="day font_ff5f27">0</font>天
+								<font class="hour font_ff5f27">0</font>时
+								<font class="minite font_ff5f27">0</font>分
+								<font class="second font_ff5f27">0</font>秒
+							</span>
+						</div>
+					</div>
+					{/if}
+				{elseif $task['status'] == 1}
+					<div class="task_bot">
+						<div class="task_desc_time">审核中</div>
+					</div>
+				{elseif $task['status'] == 2}	
+					<div class="task_bot item_cell_box">
+						<div class="task_desc_time">已下架</div>
+						{if $task['iscount'] == 0}
+						<div class="tr item_cell_flex">
+							<span class="font_13px_999 lasttime" data-time="{$task['end']}">距自动结算:
+								<font class="day font_ff5f27">0</font>天
+								<font class="hour font_ff5f27">0</font>时
+								<font class="minite font_ff5f27">0</font>分
+								<font class="second font_ff5f27">0</font>秒
+							</span>
+						</div>
+						{/if}
+					</div>
+				{/if}
+				{if !empty($task['address']) && ($mystatus['status'] != 2 || $userinfo['uid'] == $task['userid'])}
+					<div style="border-top: 1px dashed #eee;padding: 0.25rem 0;">
+						地址：{$task['address']}
+					</div>
+				{/if}
+				{if !empty($task['mark']) && $userinfo['uid'] == $task['userid']}
+					<div class="form_tips" style="border-top: 1px dashed #eee;padding: 0.25rem 0;">
+						备注：{$task['mark']}
+					</div>
+				{/if}
+				<div class="task_message item_cell_box" id="task_message">
+					<li class="item_cell_flex"><span class="font_ff5f27">{$messagenum}</span> 条留言提问</li>
+					<li class="task_message_icon right_icon"></li>
+				</div>
+				{if $task['continue'] == 1}
+				<div class="task_message item_cell_box" id="task_continue">
+					<li class="item_cell_flex"><span class="font_ff5f27">{$continuenum}</span> 项连续任务</li>
+					<li class="task_message_icon right_icon"></li>
+				</div>
+				{/if}
+				{if $task['isarealimit'] > 0 && $userinfo['uid'] == $task['userid'] }
+				<div class="task_message item_cell_box">
+					<li class="item_cell_flex font_13px_999">任务限制 {$task['province']}{if $task['isarealimit'] == 1 || $task['isarealimit'] == 2},{$task['city']}{/if}{if $task['isarealimit'] == 1},{$task['country']}{/if} 区域可接</li>
+				</div>
+				{/if}
+			</div>
+		</div>
+
+		<div class="task_reply_box">
+			<div class="task_reply_top ">
+				<div class="task_reply_top_in item_cell_box">
+					<li class="item_cell_flex task_reply_topl">
+					{if $_W['set']['tlshow'] == 1 || $task['userid'] == $userinfo['uid']}
+						我回复的
+					{else}
+						{if empty( $settings['pagetype'] )}
+							全部回复
+						{elseif $settings['pagetype'] == 1}
+							我回复的
+						{/if}
+					{/if}
+					</li>
+					<li class="task_reply_topr">筛选</li>
+				</div>
+			</div>
+			<div class="task_reply_list list_container">
+<!-- 				<div class="task_reply_item">
+					<div class="task_reply_in">
+						<div class="item_cell_box">
+							<div class="task_reply_headimg">
+								<img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLAPva82jMO4kVIu4slMWMw8yxtho0icdarZwXV5R8WNKjLiaUVBjCnVUYicNib9TwzChb1IKZYlOia2Vnw/0" >
+							</div>
+							<div class="item_cell_flex task_content_body">
+								<div class="oh">
+									<span class="font_bold_name task_content_nick">333333</span> 
+									<span class="font_13px_999 fr">3天前</span>
+								</div>
+								<div>
+									<div class="task_reply_title">32131</div>
+									<div class="task_reply_images oh">
+										<li class="fl">
+											<img src="http://wx.qlogo.cn/mmopen/wjVtTPhRGG9fZenhTfOXibjkpVmNsibEdArvR4ZS51erSX6AmhibrMEztkCoib1DYO0Yem16BPwaiaSGNZrTB4cG3ic3k1K9oicv9vr/0">
+										</li>
+										<li class="fl">
+											<img src="http://wx.qlogo.cn/mmopen/wjVtTPhRGG9fZenhTfOXibjkpVmNsibEdArvR4ZS51erSX6AmhibrMEztkCoib1DYO0Yem16BPwaiaSGNZrTB4cG3ic3k1K9oicv9vr/0">
+										</li>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="task_replay_bottom" >
+							<span class="task_replay_in">0.50</span>
+							<span class="task_replay_status">已采纳</span>
+						</div>
+					</div>
+				</div> -->
+				<!-- <div class="task_reply_item">
+					<div class="task_reply_in">
+						<div class="item_cell_box">
+							<div class="task_reply_headimg">
+								<img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLAPva82jMO4kVIu4slMWMw8yxtho0icdarZwXV5R8WNKjLiaUVBjCnVUYicNib9TwzChb1IKZYlOia2Vnw/0" >
+							</div>
+							<div class="item_cell_flex task_content_body">
+								<div class="oh">
+									<span class="font_bold_name task_content_nick">333333</span> 
+									<span class="font_13px_999 fr">3天前</span>
+								</div>
+								<div>
+									<div class="task_reply_title">32131</div>
+									<div class="task_reply_images oh">
+										<li class="fl">
+											<img src="http://wx.qlogo.cn/mmopen/wjVtTPhRGG9fZenhTfOXibjkpVmNsibEdArvR4ZS51erSX6AmhibrMEztkCoib1DYO0Yem16BPwaiaSGNZrTB4cG3ic3k1K9oicv9vr/0">
+										</li>
+										<li class="fl">
+											<img src="http://wx.qlogo.cn/mmopen/wjVtTPhRGG9fZenhTfOXibjkpVmNsibEdArvR4ZS51erSX6AmhibrMEztkCoib1DYO0Yem16BPwaiaSGNZrTB4cG3ic3k1K9oicv9vr/0">
+										</li>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="task_replay_bottom item_cell_box " >
+							<div class="puber_deal_btn item_cell_flex">采纳</div>
+							<div class="puber_deal_btn">拒绝</div>
+							<div class="puber_deal_check weui_cells_checkbox">
+								<label class="weui_cell weui_check_label needsclick " >
+									<div class="weui_cell_hd needsclick">
+										<input type="checkbox" class="weui_check" name="isimage" value="1" >
+										<i class="weui_icon_checked"></i>
+									</div>
+									<div class="weui_cell_bd tl weui_cell_primary needsclick">
+										<span class="form_tips needsclick">选择</span>
+									</div>
+								</label>						
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+			</div>
+		</div>
+		<div class="infinite-scroll-preloader">
+			<div class="preloader"></div>
+		</div>
+		</div>
+		{if $iscomplain == 200 }
+			<div class="task_complain" id="task_complain">诉</div>
+		{/if}
+		{if $canverify == 1}
+			<div class="task_complain" id="task_verify">审</div>
+		{/if}
+		<div class="max640_box">
+		{if $task['userid'] != $userinfo['uid']}
+			{if $task['start'] > TIMESTAMP}
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">任务还未开始</span>
+				</div>
+			{elseif $task['end'] < TIMESTAMP || $task['iscount'] == 1 }
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">任务已结束</span>
+				</div>
+			{elseif $task['ispause'] == 1 }
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">任务已关闭</span>
+				</div>				
+			{elseif $task['sex'] == 1 && !in_array($userinfo['sex'],array('1','3')) }
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">此任务只有男性可接</span>
+				</div>	
+			{elseif $task['sex'] == 2 && !in_array($userinfo['sex'],array('2','4')) }
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">此任务只有女性可接</span>
+				</div>				
+			{elseif $mystatus['status'] == 0}
+				<div class="pub_bot" id="take_btn">
+					<span class="pub_btn">接任务 <font class="font_mini">(您还能接{$mystatus['last']}次)</font> </span>
+				</div>
+			{elseif $mystatus['status'] == 1}
+				<div class="pub_bot">
+					{if $myreply['waittime'] > TIMESTAMP}
+						<p class="pub_btn" >
+							<span class="font_mini lasttime2" data-time="{$myreply['waittime']}"><font class="minite">0</font>分<font class="second">0</font>秒后可回复</span>
+						</p>
+					{elseif $myreply['endtime'] > TIMESTAMP}
+						<p class="pub_btn" id="reply_btn">
+							回复<span class="font_mini lasttime3" data-time="{$myreply['endtime']}">(<font class="hour">0</font>时<font class="minite">0</font>分<font class="second">0</font>秒后任务失败)</span>	
+						</p>
+					{/if}
+				</div>	
+			{elseif $mystatus['status'] == 2}
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">你不能再接了</span>
+				</div>
+			{elseif $mystatus['status'] == 3}
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">你不能再接{$puber['nickname']}的任务 </span>
+				</div>
+			{elseif $mystatus['status'] == 4}
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">已经被接完了</span>
+				</div>
+			{elseif $mystatus['status'] == 5}
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">你所在的区域不能接此任务</span>
+				</div>
+			{elseif $mystatus['status'] == 6}
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">你不符合要求</span>
+				</div>	
+			{/if}
+		{else}
+			{if $task['start'] > TIMESTAMP}
+				<div class="pub_bot">
+					<span class="pub_btn pub_btn_disabled">任务还未开始</span>
+				</div>
+			{elseif $task['end'] < TIMESTAMP || $task['iscount'] == 1 }
+				<div class="pub_bot">
+					{if $task['iscount'] == 1 && $_W['set']['restart'] == 1}
+						<span class="pub_btn pub_btn_disabled" id="restart">恢复任务</span>
+					{else}
+						<span class="pub_btn pub_btn_disabled">任务已结束</span>
+					{/if}
+				</div>
+			{else}
+				<div class="pub_bot puber_bot">
+					<span class=" pub_btn_puber" id="dealtask">操作</span>
+					<span class=" pub_btn_puber" id="agreeall">批量采纳</span>
+					<span class=" pub_btn_puber" id="refuseall">批量拒绝</span>
+					<div class="pub_btn_puber weui_cells_checkbox">
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="checkbox" class="weui_check" name="isall" value="1" >
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd tl weui_cell_primary needsclick">
+								<span class="needsclick">全选</span>
+							</div>
+						</label>						
+					</div>
+
+				</div>
+			{/if}
+		{/if}
+		</div>
+
+		<div class="atom-dialog-wrap" id="contact_me">
+			<div class="mask"></div>
+			<div class="atom-dialog share-dialog">
+				<div class="atom-dialog-title">联系我</div>
+				<div class="atom-dialog-content" style="text-align: center;">
+					<img src="{php echo  tomedia( $puber['qrcode'] )}">
+					<p class="sub_str">长按二维码图片，识别二维码联系对方</p>		
+				</div>
+				<span class="close_line"></span>
+				<li class="close_token"></li>
+			</div>
+		</div>
+
+	</div>
+
+{template 'common/setnick'}
+
+{template 'common/myfooter'}

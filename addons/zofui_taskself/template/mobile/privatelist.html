@@ -1,0 +1,47 @@
+{template 'common/myheader'}
+
+    <div id="page_privatelist" class="page page-current page_privatelist">
+		<header class="bar bar-nav">
+		  	<div class="buttons-row">
+		    	<a href="{php echo $this->createMobileUrl('privatelist',array('op'=>'puber'))}" class="{if $_GPC['op'] == 'puber'}active{/if} button">我发起的</a>
+		    	<a href="{php echo $this->createMobileUrl('privatelist',array('op'=>'accer'))}" class="{if $_GPC['op'] == 'accer'}active{/if} button">我接到的</a>
+		  	</div>
+		</header>
+		<div class="content infinite-scroll" data-distance="50">
+			<div class="list_container drop_class mt05 {if $_W['agent'] == 'iphone'}router{/if}">
+				
+				<!-- <div class="publist_item">
+					<div class="publist_item_in">
+					<a href="./index.php?i=1&amp;c=entry&amp;id=78&amp;do=privatetask&amp;m=zofui_taskself">
+						<div class="publist_item_bottom item_cell_box item_cell_start">		
+							<div class="publist_item_headpic">
+								<img class="lazy" data-original="http://wx.qlogo.cn/mmopen/ajNVdqHZLLAPva82jMO4kVIu4slMWMw8yxtho0icdarZwXV5R8WNKjLiaUVBjCnVUYicNib9TwzChb1IKZYlOia2Vnw/0" src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLAPva82jMO4kVIu4slMWMw8yxtho0icdarZwXV5R8WNKjLiaUVBjCnVUYicNib9TwzChb1IKZYlOia2Vnw/0" style="display: inline;">
+								<img src="http://hangjia.qiniudn.com/FkByoAtvOecYlsQp1xT9IXgA7l4H">
+							</div>
+							<div class="item_cell_flex">
+								<li class="">
+									<span class="nickname">23131</span>
+									<span class="font_13px_999 fr">10月前</span>
+								</li>
+								<li class="publist_item_title">
+									32131 
+								</li>
+								<p class="tr">
+									<span class="font_13px_999">赏金:<font class="font_ff5f27">11.00</font></span>
+									<span class="publist_task_status">已完成</span>
+								</p>
+							</div>
+						</div>
+					</a>
+					</div>
+				</div> -->
+				
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}
+

@@ -1,0 +1,84 @@
+{template 'common/myheader'}
+    <div id="page_index" class="page page_index page-current">
+		<div class="content infinite-scroll " data-distance="50">
+			{if $_W['set']['baksh'] == 1}
+				<div class="bar bar-header-secondary index_search">
+				    <div class="searchbar">
+				      	<a class="searchbar-cancel" id="confirmsearch">搜索</a>
+				      	<div class="search-input">
+				        	<label class="icon icon-search" for="search"></label>
+				        	<input type="search" id="search" value="" placeholder="输入搜索内容">
+				      	</div>
+				    </div>
+				</div>
+			{/if}
+			
+			{if !empty($tasksort)}
+			<div class="tasktab_sort {if $_W['set']['tksshow'] == 1}defaultsort{/if} ">
+				<div class="tasktab_sorti pri-border pri-color" sort="0">全部</div>
+				{loop $tasksort $item}
+					<div class="tasktab_sorti" sort="{$item['id']}">{$item['name']}</div>
+				{/loop}
+			</div>
+			{/if}
+
+			<div class="list_container drop_class {if $_W['agent'] == 'iphone'}router{/if}">
+				<!-- <a href="{php echo $this->createMobileUrl('task')}">
+					<div class="index_task_item">
+						<div class="index_task_item_in item_cell_box">
+							<div class="index_item_left">
+								<img src="../addons/zofui_tasktb/public/images/1.jpg">
+							</div>
+							<div class="index_item_right item_cell_flex">
+								<div class="index_item_top oh">
+									<li class="index_item_nick fl">粉丝昵称</li>
+									<li class="index_item_read fr">11</li>
+								</div>
+								<div class="index_item_title">任务标题,任务标题,任务标题,任务标题</div>
+								<div class="index_item_bot oh">
+									<li class="index_item_money fl">
+										2.22
+									</li>
+									<li class="index_item_status fr status_ing">
+										任务进行中
+									</li>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+				<a href="{php echo $this->createMobileUrl('task')}">
+					<div class="index_task_item">
+						<div class="index_task_item_in item_cell_box">
+							<div class="index_item_left">
+								<img src="../addons/zofui_tasktb/public/images/1.jpg">
+							</div>
+							<div class="index_item_right item_cell_flex">
+								<div class="index_item_top oh">
+									<li class="index_item_nick fl">粉丝昵称</li>
+									<li class="index_item_read fr">11</li>
+								</div>
+								<div class="index_item_title">任务标题,任务标题,任务标题,任务标题</div>
+								<div class="index_item_bot oh">
+									<li class="index_item_money fl">
+										2.22
+									</li>
+									<li class="index_item_status fr status_ing">
+										任务进行中
+									</li>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a> -->
+
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+		
+		
+	</div>
+{template 'common/nav'}	
+{template 'common/myfooter'}

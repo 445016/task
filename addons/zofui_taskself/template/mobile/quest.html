@@ -1,0 +1,37 @@
+{template 'common/myheader'}
+	
+    <div id="page_quest" class="page page_quest page-current">
+		<div class="content" data-distance="50">
+			{template 'common/top'}
+			{if empty( $_GPC['op'] ) }
+
+			<!-- <div class="page_quest_head">平台答疑中心</div> -->
+			<table class="page_quest_table " style="margin-top: 0.5rem">
+				<thead>
+					<th>接单答疑</th>
+					<th>发布答疑</th>
+				</thead>
+				<tbody>
+					{loop $newq $item}
+					<tr>
+						<td><a href="{php echo $this->createMobileUrl('quest',array('op'=>'info','id'=>$item[0]['id']))}">{$item[0]['title']}</a></td>
+						<td><a href="{php echo $this->createMobileUrl('quest',array('op'=>'info','id'=>$item[1]['id']))}">{$item[1]['title']}</a></td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+			{elseif $_GPC['op'] == 'info'}
+				
+				<div class="quest_info_box">
+					<div class="quest_title">
+						{$info['title']}
+					</div>
+					<div class="quest_body">
+						{$info['content']}
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
+
+{template 'common/myfooter'}

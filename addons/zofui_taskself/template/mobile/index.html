@@ -1,0 +1,151 @@
+{template 'common/myheader'}
+    <div id="page_index" class="page page_index page-current">
+		<div class="content infinite-scroll " data-distance="50">
+			{if $_W['set']['issearch'] == 1}
+				<div class="bar bar-header-secondary index_search">
+				    <div class="searchbar">
+				      	<a class="searchbar-cancel" id="confirmsearch">搜索</a>
+				      	<div class="search-input">
+				        	<label class="icon icon-search" for="search"></label>
+				        	<input type="search" id="search" value="" placeholder="输入搜索内容">
+				      	</div>
+				    </div>
+				</div>
+			{/if}
+			{if $_W['set']['indexdata'] == 0 && strpos($_W['set']['sendmessauth'],'huohuo') !== false}
+				<div class="index_head item_cell_box">
+					<div class="item_cell_flex">
+						<li>即时热度</li>
+						<li>{php echo $times['times'] + $_W['set']['falsetimes'] }</li>
+					</div>
+					<div class="">
+						<li>已发布任务数</li>
+						<li>{php echo $times['pubed'] + $_W['set']['falsepubed']}</li>
+					</div>
+					<div class="">
+						<li>已完成任务数</li>
+						<li>{php echo $times['comed'] + $_W['set']['falsecomed']}</li>
+					</div>	
+				</div>
+			{/if}
+			{template 'common/slide'}
+			{if $_W['set']['adtype'] != 2 && !empty( $ad ) }
+			<div class="index_ad item_cell_box">
+				<div class="index_ad_l"></div>
+				{if $_W['set']['adtype'] == 0}
+				<div class="index_ad_r item_cell_flex index_ad_r1">
+					{loop $ad $item}
+						<a class="scitem" href="{php echo $this->createMobileUrl('ad',array('id'=>$item['id']))}">
+							<li class="index_ad_item1">{$item['title']}</li>
+						</a>
+					{/loop}
+				</div>
+				{else}
+				<div class="index_ad_r item_cell_flex index_ad_r2">
+					<div class="index_ad_begin">
+						{loop $ad $item}
+							<li class="index_ad_item2">{$item['title']}</li>
+						{/loop}
+					</div>
+					<div class="index_ad_end"></div>
+				</div>
+				{/if}
+			</div>
+			{/if}
+			{if $_W['set']['indexdata'] == 0 && strpos($_W['set']['sendmessauth'],'huohuo') === false}
+			<div class="index_head item_cell_box">
+				<div class="item_cell_flex">
+					<li>人气</li>
+					<li>{php echo $times['times'] + $_W['set']['falsetimes'] }</li>
+				</div>
+				<div class="">
+					<li>已发布</li>
+					<li>{php echo $times['pubed'] + $_W['set']['falsepubed']}</li>
+				</div>
+				<div class="">
+					<li>已完成</li>
+					<li>{php echo $times['comed'] + $_W['set']['falsecomed']}</li>
+				</div>	
+			</div>
+			{/if}
+
+			{template 'common/sortbanner'}
+
+			{if !empty($banner)}
+				<div class="bannera_box bannera_box{$ixbnnum}" >
+					{loop $banner $item}
+					<a href="{$item['url']}">
+						<div class="bannera_item" >
+							<img src="{php echo tomedia($item['img'])}">
+							<li class="bannera_name">{$item['name']}</li>
+							{if $ixbnnum == 2}
+								<li class="bannera_desc">{$item['desc']}</li>
+							{/if}
+						</div>
+					</a>
+					{/loop}
+				</div>
+			{/if}
+			
+			<div class="list_container drop_class {if $_W['agent'] == 'iphone'}router{/if}">
+				<!-- <a href="{php echo $this->createMobileUrl('task')}">
+					<div class="index_task_item">
+						<div class="index_task_item_in item_cell_box">
+							<div class="index_item_left">
+								<img src="../addons/zofui_tasktb/public/images/1.jpg">
+							</div>
+							<div class="index_item_right item_cell_flex">
+								<div class="index_item_top oh">
+									<li class="index_item_nick fl">粉丝昵称</li>
+									<li class="index_item_read fr">11</li>
+								</div>
+								<div class="index_item_title">任务标题,任务标题,任务标题,任务标题</div>
+								<div class="index_item_bot oh">
+									<li class="index_item_money fl">
+										2.22
+									</li>
+									<li class="index_item_status fr status_ing">
+										任务进行中
+									</li>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+				<a href="{php echo $this->createMobileUrl('task')}">
+					<div class="index_task_item">
+						<div class="index_task_item_in item_cell_box">
+							<div class="index_item_left">
+								<img src="../addons/zofui_tasktb/public/images/1.jpg">
+							</div>
+							<div class="index_item_right item_cell_flex">
+								<div class="index_item_top oh">
+									<li class="index_item_nick fl">粉丝昵称</li>
+									<li class="index_item_read fr">11</li>
+								</div>
+								<div class="index_item_title">任务标题,任务标题,任务标题,任务标题</div>
+								<div class="index_item_bot oh">
+									<li class="index_item_money fl">
+										2.22
+									</li>
+									<li class="index_item_status fr status_ing">
+										任务进行中
+									</li>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a> -->
+
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+		
+		{if $this->module['config']['indexpub'] == 1 && empty($this->module['config']['isclosepub'])}
+		<div class="pubtask index_pubbtn pri-bg">+</div>
+		{/if}
+	</div>
+{template 'common/nav'}	
+{template 'common/myfooter'}

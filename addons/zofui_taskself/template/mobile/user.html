@@ -1,0 +1,373 @@
+{template 'common/myheader'}
+
+    <div id="page_user" class="page page-current  page_user">
+		<div class="content">
+
+            <div class="user_update"></div> 
+            <div class="top pri-bg" style="background-image:url({php echo empty($_W['set']['utop']) ? '' : tomedia($_W['set']['utop'])});">
+                <div class="headmsg">
+                    <img class="avatar" src="{php echo empty($userinfo['headimgurl']) ? '../addons/zofui_taskself/public/images/dhead.png' : tomedia($userinfo['headimgurl'])}">
+                    <div class="namebox">
+                        {if $userinfo['isauth'] == 2}
+                            <div class="name" style="overflow:initial;">
+                                <span class="nickname authname">
+                                    {$userinfo['nickname']} 
+                                    <font class="authicon authicon_b"></font>
+                                </span>
+                                <span class="font_mini">（{$userinfo['id']}）</span>
+                            </div>
+                        {else}
+                            <div class="name">{$userinfo['nickname']} <span class="font_mini">（{$userinfo['id']}）</span></div>
+                        {/if}
+                        
+                        {if $_W['set']['ulevel'] == 1}
+                        {if $userinfo['level'] > 0 && $userinfo['utime'] > TIMESTAMP}
+                            <div class="statu">
+                                <img src="https://ui.fhcloudapi.cn/xcx_urm/img/my-Group22.png">
+                                <text class="card_name">
+                                    {if $userinfo['level'] == 1}
+                                        {php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}
+                                    {else}
+                                        {php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}
+                                    {/if}
+                                </text>
+                            </div>
+                        {else}
+                            <div class="statu">
+                                <a class="card_name" href="{php echo $this->createMobileUrl('level')}">
+                                    快加入{php echo empty($_W['set']['utwoname']) ? '会员' : $_W['set']['utwoname']}
+                                </a>
+                            </div>
+                        {/if}
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            <div class="bot mybot">
+                <div class="card-vip" >
+                	<div class="item_cell_box card-viptop">
+                		<div class="item_cell_flex viptop_item">
+                            <a href="{php echo $this->createMobileUrl('money',array('op'=>'log'))}">
+                                <div class="viptop_num pri-color">{php echo empty($money['credit2']) ? 0 : $money['credit2']}</div>
+                                <div class="viptop_name">{$_W['cname']}</div>
+                            </a>
+                		</div>
+                		<div class="item_cell_flex viptop_item">
+                            <a href="{php echo $this->createMobileUrl('deposit',array('op'=>'in'))}">
+                                <div class="viptop_num pri-color">{$userinfo['deposit']}</div>
+                                <div class="viptop_name">保证金</div>
+                            </a>
+                		</div>
+                		<a class="viptop_item" href="{php echo $_W['set']['actper'] <= 0 ? 'javascript:;' : $this->createMobileUrl('activity',array('op'=>'in'))}">
+                			<div class="viptop_num pri-color">{$userinfo['activity']}</div>
+                			<div class="viptop_name">活跃值</div>
+                		</a>
+                	</div>
+                    {if $this->module['config']['ulevel'] == 1}
+                	<div class="card-vipbot">
+                        <div class="item thin-border_b">
+                            <img src="../addons/zofui_taskself/public/images/vip.png">
+                            <text class="carname">
+                                {if $userinfo['level'] == 1}
+                                    {php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}
+                                {else}
+                                    {php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}
+                                {/if}
+                            </text>
+                        </div>
+                        <div class="item ">
+                            <div class="card_desc" >会员专属权限，获得更多收益</div>
+                        </div>
+                        <a class="card-but pri-bg" href="{php echo $this->createMobileUrl('level')}">
+                            会员专区
+                        </a>
+                	</div>
+                    {/if}
+                </div>
+                {if $_W['set']['isanw'] == 1 && $_W['set']['anwmb'] > 0 && $_W['set']['anwmbday'] > 0}
+                <div class="card-vip mt05 user_anwbox" >
+                    <div class="user_anwtop myorder thin-border_b item_cell_box" style="padding-bottom: 0">
+                    	<div class="left item_cell_flex pl0">我的数据</div>
+                    	<!-- <a class="right" href="{php echo $this->createMobileUrl('anwrule')}">
+                            规则<font class="right_icon"></font>
+                        </a> -->
+                    </div>
+                	<div class="item_cell_box card-viptop">
+                		<!-- <div class="item_cell_flex viptop_item">
+                            <a href="{php echo $this->createMobileUrl('money',array('op'=>'log'))}">
+                                <div class="viptop_num pri-color">{php echo empty($boxarr['allrun']) ? 0 : $boxarr['allrun']}</div>
+                                <div class="viptop_name">当前利润</div>
+                            </a>
+                		</div> -->
+                		<div class="item_cell_flex viptop_item" style="width:50%;">
+                            <a href="{php echo $this->createMobileUrl('deposit',array('op'=>'in'))}">
+                                <div class="viptop_num pri-color">{php echo empty($boxarr['mym']) ? 0 : $boxarr['mym']}</div>
+                                <div class="viptop_name">知识力量值</div>
+                            </a>
+                		</div>
+                		<div class="viptop_item" style="width:50%;">
+                			<div class="viptop_num pri-color">{php echo $boxarr['mymper']*100}%</div>
+                			<div class="viptop_name">知识力量比</div>
+                		</div>
+                	</div>
+                    
+                	<div class="card-vipbot user_anwbot">
+                        <div class="item ">
+                            <div class="card_desc" >
+                            	昨日回馈奖励  
+                            	<span class="pri-color">{php echo $boxarr['yesdayrunmy'] < 0.01 ? 0 : $boxarr['yesdayrunmy']}</span>
+                            	{if !empty($isgeted)}（已领取{php echo $isgeted['money']*100/100}）{/if}
+                            </div>
+                        </div>
+                        <a class="card-but pri-bg" href="javascript:;" style="right:0.25rem" id="getanwback">
+                            领取奖励
+                        </a>
+                	</div>
+                </div>
+                {/if}
+
+                {if $_W['set']['isgroup'] == 1 && $_W['set']['groupnum'] > 1 && $_W['set']['groupin'] > 0}
+                <div class="card-vip mt05 user_anwbox" >
+                    <div class="item_cell_box card-viptop">
+                        <div class="item_cell_flex viptop_item" style="width:33.3%;">
+                            <a href="javascript:;">
+                                <div class="viptop_num pri-color"></div>
+                                <div class="viptop_name">
+                                    银票：<span class="viptop_num pri-color">{php echo $userinfo['yinp']*100/100}</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="viptop_item" style="width:33.3%;">
+                            <div class="viptop_num pri-color"></div>
+                            <div class="viptop_name">
+                                宝石：<span class="viptop_num pri-color">{php echo $userinfo['baoshi']*100/100}</span>
+                            </div>
+                        </div>
+                        <div class="viptop_item" style="width:33.3%;">
+                            <div class="viptop_num pri-color"></div>
+                            <div class="viptop_name getbaoshi_box">
+                                <span class="getbaoshi pri-color pri-border">兑换奖励</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-vipbot user_anwbot">
+                        <div class="item ">
+                            <div class="card_desc" style="display: flex;align-items: center;">
+                                拼团一起抢宝石，当前<span id="groupnum">{php echo $joined > 0 ? $joined: 0}</span>人已报名
+                                <img src="../addons/zofui_taskself/public/images/box1.png" id="showalert" style="width: 1.3rem;height: 1.3rem;">
+                            </div>
+                        </div>
+                        <a class="card-but pri-color pri-border" href="javascript:;" style="right:0.25rem;background-color:#fff;border:1px solid" id="pin">
+                            立即报名
+                        </a>
+                    </div>
+                </div>
+                {/if}
+                {if empty($_W['set']['isupub'])}
+                <div class="order-box">
+                    <div class="myorder thin-border_b" style="padding-bottom:0">
+                    	<div class="left">发的任务</div>
+                    	<a class="right" href="{php echo $this->createMobileUrl('mypub')}">
+                            查看<font class="right_icon"></font>
+                        </a>
+                    </div>
+                    <div class="tyorder thin-border_b">
+                        <a class="item"  href="{php echo $this->createMobileUrl('mypub',array('op'=>'1'))}"  >
+                            <div class="thin-borderic borderic-1" ></div>
+                            <text>未开始</text>
+                            {if $mydata['pubed1'] > 0}<div class="order_mark pri-color pri-border" >{$mydata['pubed1']}</div>{/if}
+                        </a>
+                        <a class="item"  href="{php echo $this->createMobileUrl('mypub',array('op'=>2))}" >
+                            <div class="thin-borderic borderic-2"></div>
+                            <text>进行中</text>
+                            {if $mydata['pubed2'] > 0}<div class="order_mark pri-color pri-border" ">{$mydata['pubed2']}</div>{/if}
+                        </a>
+                        <a class="item" href="{php echo $this->createMobileUrl('mypub',array('op'=>3))}" >
+                            <div class="thin-borderic borderic-3"></div>
+                            <text>已结算</text>
+                            {if $mydata['pubed3'] > 0}<div class="order_mark pri-color pri-border" >{$mydata['pubed3']}</div>{/if}
+                        </a>
+                    </div>
+                </div>
+                {/if}
+                {if $_W['set']['isutak'] == 1}
+                <div class="order-box">
+                    <div class="myorder thin-border_b" style="padding-bottom:0">
+                        <div class="left">接的任务</div>
+                        <a class="right" href="{php echo $this->createMobileUrl('myreply')}">
+                            查看<font class="right_icon"></font>
+                        </a>
+                    </div>
+                    <div class="tyorder thin-border_b">
+                        <a class="item"  href="{php echo $this->createMobileUrl('myreply',array('op'=>'1'))}"  >
+                            <div class="thin-borderic borderic-1" style="background-position: 0;background-image: url(../addons/zofui_taskself/public/images/ua3.png);"></div>
+                            <text>待提交</text>
+                            {if $mydata['takeda'] > 0}<div class="order_mark pri-color pri-border" >{$mydata['takeda']}</div>{/if}
+                        </a>
+                        <a class="item"  href="{php echo $this->createMobileUrl('myreply',array('op'=>2))}" >
+                            <div class="thin-borderic borderic-2" style="background-position: 0;background-image: url(../addons/zofui_taskself/public/images/ua1.png);"></div>
+                            <text>待审核</text>
+                            {if $mydata['takedb'] > 0}<div class="order_mark pri-color pri-border" ">{$mydata['takedb']}</div>{/if}
+                        </a>
+                        <a class="item" href="{php echo $this->createMobileUrl('myreply',array('op'=>3))}" >
+                            <div class="thin-borderic borderic-3" style="background-position: 0;background-image: url(../addons/zofui_taskself/public/images/ua2.png);"></div>
+                            <text>已完成</text>
+                            {if $mydata['takedc'] > 0}<div class="order_mark pri-color pri-border" >{$mydata['takedc']}</div>{/if}
+                        </a>
+                    </div>
+                </div>
+                {/if}
+                <div class="function-box">
+                    <a class="item btn-formid item_task" href="{php echo $this->createMobileUrl('myreply',array('op'=>'1'))}">
+                        <div class="imga"></div>
+                        <text>接的任务</text>
+                    </a>
+                    <a class="item btn-formid item_add" href="{php echo $this->createMobileUrl('money',array('op'=>'in'))}">
+                        <div class="imga"></div>
+                        <text>账户充值</text>
+                    </a>
+                    {if $this->module['config']['isdraw'] == 0 || $this->module['config']['isdraw'] == 1}
+                    <a class="item btn-formid item_draw" href="{php echo $this->createMobileUrl('money',array('op'=>'out'))}">
+                        <div class="imga"></div>
+                        <text>账户提现</text>
+                    </a>
+                    {/if}
+                    {if $this->module['config']['isdown'] != 2}
+                        <a class="item btn-formid item_group" href="{php echo $this->createMobileUrl('down')}">
+                            <div class="imga"></div>
+                            <text>合伙人</text>
+                        </a>
+                    {/if}
+                    {if empty($_W['set']['isusetask']) && $_W['set']['istbtask'] == 1}
+                    <a class="item btn-formid item_tasktb" href="{php echo $this->createMobileUrl('mytbtask')}">
+                        <div class="imga"></div>
+                        <text>我的担保</text>
+                    </a>
+                    <a class="item btn-formid item_tasktb" href="{php echo $this->createMobileUrl('mypubtb')}">
+                        <div class="imga"></div>
+                        <text>发的担保</text>
+                    </a>
+                    {/if}
+                    {if $_W['set']['isusetask'] == 1}
+                    <a class="item btn-formid item_muse" href="{php echo $this->createMobileUrl('myuse',array('status'=>'1'))}">
+                        <div class="imga"></div>
+                        <text>我的试用</text>
+                    </a>
+                    {/if}
+                    {if $_W['set']['isanw'] == 1}
+                    <a class="item btn-formid item_pri" href="{php echo $this->createMobileUrl('anw')}">
+                        <div class="imga"></div>
+                        <text>看的答案</text>
+                    </a>
+                    {/if}
+                    {if $_W['set']['isclosefind'] == 0}
+                    <a class="item btn-formid item_pri" href="{php echo $this->createMobileUrl('privatelist')}">
+                        <div class="imga"></div>
+                        <text>私包任务</text>
+                    </a>
+                    {/if}
+                    {if $_W['set']['ulevel'] == 1}
+                        <a class="item btn-formid item_group" href="{php echo $this->createMobileUrl('level')}">
+                            <div class="imga"></div>
+                            <text>会员等级</text>
+                        </a>
+                    {/if}
+                    <a class="item btn-formid item_set" href="{php echo $this->createMobileUrl('set')}">
+                        <div class="imga"></div>
+                        <text>账户设置</text>
+                    </a>
+                    <a class="item btn-formid item_imess" href="{php echo $this->createMobileUrl('imess')}" style="position: relative">
+                        <div class="imga"></div>
+                        <text>消息通知</text>
+                        {if $imess > 0}
+                            <div class="order_mark pri-color pri-border" style="right: 0.8rem;">{$imess}</div>
+                        {/if}
+                    </a>
+                    {if $_W['dev'] == 'wx'}
+                    <a class="item btn-formid item_mess" href="{php echo $this->createMobileUrl('mess')}">
+                        <div class="imga"></div>
+                        <text>通知设置</text>
+                    </a>
+                    <a class="item btn-formid item_set" href="{php echo $this->createMobileUrl('bindaccount')}">
+                        <div class="imga"></div>
+                        <text>绑定账户</text>
+                    </a>
+                    {/if}
+                    {if empty($this->module['config']['isclosepub'])}
+                        <a class="item btn-formid item_pub pubtask" href="javascript:;">
+                            <div class="imga"></div>
+                            <text>发布任务</text>
+                        </a>
+                    {/if}
+                    {if $_W['dev'] == 'wap'}
+                    <a class="item btn-formid item_out" href="javascript:;" id="loginout">
+                        <div class="imga"></div>
+                        <text>退出登录</text>
+                    </a>
+                    {/if}
+                </div>
+                
+            </div>
+                
+
+		</div>
+	</div>
+
+{if $_W['set']['issign'] == 1}
+    <div class="anwobx signbtn" style="bottom:30%;top: 0.5rem;right: 3rem;width: 2rem;height: 2rem;">
+        <img src="../addons/zofui_taskself/public/images/sign.png" class="ani_swing1">
+    </div>
+    <div class="anw_box sign_box" style="display:none;">
+        <div class="mask" style="z-index:3"></div>
+        <div class="setnick_content" style="z-index:3;top:10%;">
+            <div class="anwbody_in">
+                <div>您已签连续签到<span style="color:#ff5f27">{$signday}</span>天，连续签到3天有豪礼哦！</div>
+                <div class="mt05" style="color:#666;font-size:0.65rem;">活动说明：连续签到1天赠送银票{$_W['set']['signa']}，连续签到2天赠送银票{$_W['set']['signb']}，连续签到3天赠送银票{$_W['set']['signc']}</div>
+            </div>
+            <div class="btn setnick_btn {if !empty($istoday)}signed{/if}" id="todaysign">{if !empty($istoday)}已经签到{else}我要签到{/if}</div>
+        </div>
+    </div>
+{/if}
+{if $_W['set']['isanw'] == 1}
+	<div class="anwobx  anwobxbtn">
+		<img src="../addons/zofui_taskself/public/images/box.png" class="ani_swing1">
+	</div>
+
+    <div class="anw_box anw_boxbb" style="display: none;">
+        <div class="mask" style="z-index:3"></div>
+        <div class="setnick_content" style="z-index:3;top:10%;">
+            <div class="anwbody_in">
+            	<!-- <div class="">
+            		<div class="item_cell_flex">我的宝箱</div>
+            		<div></div>
+            	</div> -->
+            	{if !empty($mybox)}
+            		{loop $mybox $item}
+            			<div class="anwbox_item item_cell_box">
+            				<div class="anwbox_m pri-color">{if $item['endtime'] > TIMESTAMP}?{else}{$item['money']}{/if}</div>
+            				<div class="item_cell_flex anwbox_t">{php echo Util::formatTime($item['createtime'])}</div>
+            				<div>
+            					{if $item['endtime'] > TIMESTAMP}
+            						<span class="anwbox_btn pri-bg getbox" bid="{$item['id']}">领取</span>
+            					{else}
+            						<span class="anwbox_btn disabled">失效</span>	
+            					{/if}
+            				</div>
+            			</div>
+            		{/loop}
+            	{else}
+            		<div class="nobox">你还没有宝箱</div>
+            	{/if}
+            </div>
+            <div class="btn setnick_btn" id="closebi">关闭</div>
+        </div>
+    </div>
+
+{/if}
+
+{template 'common/setnick'}
+	
+{template 'common/nav'}	
+{template 'common/myfooter'}
+

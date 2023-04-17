@@ -1,0 +1,31 @@
+{template 'common/myheader'}
+	<style type="text/css">
+		body,.content{
+			background: #fff;
+		}
+	</style>
+    <div id="page_ad" class="page page_ad page-current">
+		<div class="content" data-distance="50" style="padding:0 0.5rem">
+
+			{if !empty($rule['content'])}
+				{php echo $content}
+			{else}
+				<div class="mb05">当前利润总和：{$boxarr['allrun']}</div>
+				<div class="mb05">所有人查看答案付费：{$boxarr['totalm']}</div>
+				<div class="mb05">你总计查看答案付费：{$boxarr['mym']}(知识力量值)</div>
+				<div class="mb05">你的知识力量比：{$boxarr['mym']}/{$boxarr['totalm']}={php echo sprintf('%.2f',$boxarr['mym']/$boxarr['totalm'])}</div>
+				<div class="mb05">截止今日凌晨所有人查看答案利润：{$boxarr['yesdayrun']}</div>
+				<div class="mb05">截止今日凌晨已经发放的回馈利润：{$boxarr['geted']}</div>
+				<div class="mb05">利润回馈比例：{$_W['set']['anwmb']}%</div>
+				<div class="mb05">每天利润回馈比例：{$_W['set']['anwmbday']}%</div>
+				<div class="mb05">昨日额外利润：{$_W['set']['ewaimb']}</div>
+				<div class="mb05">截止今日凌晨可回馈利润总额：{$boxarr['yesdayrun']}*{$_W['set']['anwmb']}%-{$boxarr['geted']}+{$_W['set']['ewaimb']}={$boxarr['lastrun']}</div>
+				<div class="mb05">昨日可回馈利润总额：{$boxarr['lastrun']}*{$_W['set']['anwmbday']}%={$boxarr['yesdayrunb']}</div>
+
+				<div class="mb05">你今天可领取昨天的回馈利润：{$boxarr['yesdayrunb']}* {$boxarr['mymper']}={$boxarr['yesdayrunmy']}</div>
+			{/if}
+			
+		</div>
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}

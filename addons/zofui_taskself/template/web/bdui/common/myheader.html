@@ -1,0 +1,109 @@
+{template 'common/header-base'}
+    <link rel="stylesheet" href="{php echo MODULE_URL}template/web/{$_W['mtemp']}/css/jquery-ui.css">
+    <script src="{php echo MODULE_URL}template/web/{$_W['mtemp']}/js/jquery-ui.js"></script>
+
+    <script src="../addons/{php echo MODULE}/template/web/{$_W['mtemp']}/js/areatocounty.js"></script>
+    <script type="text/javascript" src="{php echo MODULE_URL}template/web/{$_W['mtemp']}/js/tao.js?t={php echo TIMESTAMP}"></script>
+    <script type="text/javascript" src="{php echo MODULE_URL}template/web/bdui/js/bdui.js?t={php echo TIMESTAMP}"></script>
+
+    <link href="{php echo MODULE_URL}template/web/{$_W['mtemp']}/css/iconfont.css" rel="stylesheet">
+    <link href="{php echo MODULE_URL}template/web/{$_W['mtemp']}/css/main.css" rel="stylesheet">
+
+     <link href="../addons/{php echo MODULE}/template/web/{$_W['mtemp']}/css/tao.css?t={php echo TIMESTAMP}" rel="stylesheet">
+    <link href="{php echo MODULE_URL}template/web/{$_W['mtemp']}/css/biz.css" rel="stylesheet">
+    <link href="{php echo MODULE_URL}template/web/{$_W['mtemp']}/css/my.css?t={php echo TIMESTAMP}" rel="stylesheet"> 
+
+{php $leftmenu = Data::webMenu()}
+
+    <!-- sidebar-collapsed  sidebar-expanded -->
+    <div id="main-sidebar" class="ui-v5   sidebar-expanded">
+        <a class="logo" target="_self" href="{url 'home/welcome/platform'}" ></a>
+
+        {loop $leftmenu $key $item}
+            {if empty($item['hide']) && !empty($item)}
+            <div tip="{$item['title']}" class="sidebar-item {if !empty( $item['list'] )}showlist{/if} loaded tip-disable {if $_GPC['do'] == $key}sidebar-actitem{/if}">
+                <a href="{php echo empty($item['list'][0]['url']) ? $item['url'] : $item['list'][0]['url']}">
+                    <i class="{$item['iconbd']}"></i><span>{$item['name']}</span>
+                </a>
+                <div class="sub-menu service-group-list" style="width: 0px; height:100%;padding-top: 50px;">
+                    <ul class="service_group_list_wrap" style="width: 0px; height: 100%;">
+                        {loop $item['list'] $in}
+                            <li class="sidebar-item service-group-item loaded">
+                                <a href="{$in['url']}">{$in['name']} <i class="iconfont icon-arrow-right"></i></a>
+                            </li>
+                        {/loop}
+                    </ul>
+                </div>
+            </div>
+            {/if}
+        {/loop}
+        
+    </div>
+
+    <div id="bce-content" >
+
+        <div class="header ui-v5 loaded" style="left: 110px;">
+            <div class="header-select user-info">
+                <a href="" class="username" style="background: url({php echo $_W['siteroot'].'attachment/headimg_'.$_W['uniacid'].'.jpg?time='.TIMESTAMP});background-size: 30px 30px;" >&nbsp;</a>
+                <div class="select-items user-nav">
+                    <div class="user-info-brief">
+                        <a href="{url 'user/profile'}" class="username" style="background: url({php echo $_W['siteroot'].'attachment/headimg_'.$_W['uniacid'].'.jpg?time='.TIMESTAMP});background-size: 30px 30px;"></a>
+                        <a href="{url 'user/profile'}" class="username-full">{$_W['account']['name']}</a>
+                    </div>
+                    <ul>
+                        <li class="user-menu">
+                            <a href="{url 'user/profile'}">
+                                <i class="iconfont icon-myaccount"></i>我的账号
+                            </a>
+                        </li>
+                        <li class="user-menu">
+                            <a href="./index.php?c=account&a=display&do=home">
+                                <i class="iconfont icon-di"></i>退出模块
+                            </a>
+                        </li>
+                        <li class="user-menu">
+                            <a href="{url 'home/welcome/platform'}" >
+                                <i class="iconfont icon-di"></i>返回主页
+                            </a>
+                        </li>
+                        <li class="user-menu">
+                            <a href="{url 'user/logout'}" >
+                                <i class="iconfont icon-exit"></i>退出系统
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        {php $isleft = 0}
+        {loop $leftmenu $key $item}
+	        {if $_GPC['do'] == $key || ($key == 'other' && in_array($_GPC['do'],array('poster','quest','guysort','tasksort','slider','ad','tabbar','taskform','vauth','banner','puber')) )}
+	        <div class="main-area ui-v5">
+	            <div class="bcc-sidebar-box new-sidebar-box">
+	                <div class="sidebar-wrap sidebar-wrap-l3">
+	                    <ul class="sidebar topmenu">
+	                        <li class="menu-header " >
+	                            <span class="normal-title">{$item['name']}</span>
+	                            <span class="short-title"></span>
+	                        </li>
+	                        {loop $item['list'] $in}
+                            {php $isleft = 1}
+	                        <li class="menu-item menu-item-common {if ($_GPC['op'] == $in['op'] && $key != 'other' ) || ($_GPC['do'] == $in['do'] && $key == 'other' )}sidebar-current{/if}">
+	                            <a href="{$in['url']}" target="_self">
+	                                <i class="iconfont icon-dcc"></i>
+	                                <span class="normal-title">{$in['name']}</span>
+	                                <span class="short-title"></span>
+	                            </a>
+	                        </li>
+	                        {/loop}
+	                    </ul>
+	                
+	                </div>
+	            </div>
+	        </div>
+            {/if}
+        {/loop}
+        <div id="main" class="ui-v5" {if $isleft == 0}style="left:-20px"{/if}> 
+            <div class="dcc-wrapper main-wrap-new dcc-list"> 
+                <div class="content-wrap ">

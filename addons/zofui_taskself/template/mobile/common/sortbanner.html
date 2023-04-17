@@ -1,0 +1,25 @@
+{if !empty( $sortnav )}
+	<div class="banner_box" style="margin-top: 0">
+		<div class="swiper-container banner_in" data-space-between='10' >
+			<div class="swiper-wrapper" style="z-index: 12;">
+			{loop $sortnav $item}
+				<div class="swiper-slide banner_item">
+					{loop $item $in}
+					<a href="javascript:;">
+						<li class="focus_me" sort="{$in['id']}">
+							{if !empty( $in['img'] )}
+							<img src="{php echo tomedia( $in['img'] )}" alt="">
+							{/if}
+							<p class="sort_name">{$in['name']}</p>
+						</li>
+					</a>
+					{/loop}							
+				</div>
+			{/loop}
+			</div>
+			{if count( $sortnav ) > 1}
+			<div class="swiper-pagination"></div>
+			{/if}
+		</div>
+	</div>
+{/if}

@@ -1,0 +1,128 @@
+<div class="list-content">
+    
+<div class="table-full-wrap" >
+
+    <div class="operation-wrap" data-follow-thead="table">
+        <div class="buttons-wrap">
+
+        </div>
+    </div>
+
+    <form action="" method="post">
+
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+
+            {php echo $html['tdhtml']}
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            {loop $list $item}
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            <span>
+                                <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            <div class="ui-table-cell-text" >
+                            <input type="text" id="{$item['id']}" inputname="stepname" inputtype="text" value="{$item['name']}" placeholder="输入名称" class="edit_number_input tl">
+                        </div>
+                        </div>
+                    </td>
+                    <td id="ctrl-e-table-cell0-5" class="ui-table-cell" style="width:500px;">
+                        <div class="ui-table-cell-text">
+                            
+                                {loop $item['step'] $in}
+                                    <div class="" style="padding:5px 0;border-bottom: 1px solid #eee;">
+                                        <div class="item_cell_box">
+                                            <div>步骤名称：</div>
+                                            <div class="item_cell_flex">
+                                                {$in['name']}
+                                            </div>
+                                        </div>
+                                        <div class="item_cell_box">
+                                            <div>复制内容：</div>
+                                            <div class="item_cell_flex">
+                                                {loop $in['copy'] $inn} {$inn}， {/loop}
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="item_cell_box">
+                                            <div>跳转链接：</div>
+                                            <div class="item_cell_flex">
+                                            {loop $in['url'] $inn} 
+                                                <a target="_blank" href="{$inn['url']} ">{$inn['text']} </a>，
+                                            {/loop}
+                                            </div>
+
+                                        </div>
+                                        <div class="item_cell_box">
+                                            
+                                            <div>步骤图片：</div>
+                                            <divclass="item_cell_flex">
+                                            {loop $in['img'] $inn} 
+                                                <a target="_blank" href="{php echo tomedia($inn)}">
+                                                    <img src="{php echo tomedia($inn)}" style="height:30px;margin:0 10px 10px 0;display: inline-block;">
+                                                </a>
+                                            {/loop}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                {/loop}
+                            
+                        </div>
+                    </td>
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text">
+                            {if $item['istemp'] == 0 }
+                                <p class="">不是模板</p>
+                            {elseif $item['istemp'] == 1 }
+                                <p class="font_ff5f27">模板</p>          
+                            {/if}
+                        </div>
+                    </td>                                  
+                    <td class="ui-table-cell"  >
+                        <div class="ui-table-cell-text-last">
+                            {if $item['istemp'] == 1}
+                            
+                            
+                            {/if}
+                            {if $item['istemp'] == 0}
+                                <a target="_blank" href="javascript:;" class="tosteptemp" id="{$item['id']}" type="1">设为模板</a>
+                            {else}
+                                <a target="_blank" href="javascript:;" class="tosteptemp" id="{$item['id']}" type="2">关闭模板</a>
+                            {/if}
+                            {if $item['istemp'] == 1}
+                            <a target="_blank" href="{php echo $this->createWebUrl('comtask',array('op'=>'delstep','id'=>$item['id']))}">删除</a>
+                            {/if}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            {/loop}
+            </div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="ui-row">
+        <div class="bot_btnlist fl">
+
+            <input name="deleteallstep" class="ui-button ui-dialog-ok-btn" value="删除" onclick="return confirm('只能删除未被任务使用的，确定要删除选择的吗？');" type="submit">
+            {php echo $html['pagenum']}
+            <input type="hidden" name="token" value="{$_W['token']}">
+        </div>
+        <div class="ui-pager">
+            {$pager}
+        </div>
+    </form> 
+
+</div>

@@ -1,0 +1,447 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+		
+<div class="list-content">
+	{if $_GPC['op'] == 'info'}
+	<div class="table-wrap">
+		<table class="table_list">
+            <tbody>
+	            <tr>
+	                <td width="70">头像</td>
+	                <td width="270"> 
+	                	<img src="{$info['headimgurl']}" class="img-circle" width="65px" height="65px" />
+	                </td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">二维码</td>
+	                <td width="270"> 
+	                	<img src="{php echo tomedia($info['qrcode'])}" width="65px" height="65px" />
+	                </td>
+	                <td width="70">
+	                	<a target="_blank" class="verifyInfo" title="点击下载" href="{php echo tomedia($info['qrcode'])}">查看</a>
+	                </td>
+	            </tr>
+	            {if !empty( $info['alipayname'] )}
+	            <tr>
+	                <td width="70">收款支付宝</td>
+	                <td width="270"> 
+	                	{$info['alipayname']}，{$info['alipay']}
+	                </td>
+	                <td width="70">
+                        <div class="ui-table-cell-text-last edit_table_item">
+                            <a href="javascript:;" class="edit_bot" >修改</a>
+                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+                                <div class="ui-table-editor-opt">
+                                    <div>姓名
+                                        <esui-text-box class="ui-ctrl ui-textbox">
+                                            <input type="text" class="frm_input"  name="aliname" value="{$info['alipayname']}">
+                                        </esui-text-box>
+                                    </div>
+                                    <div>账户
+                                        <esui-text-box class="ui-ctrl ui-textbox">
+                                            <input type="text" class="frm_input"  name="alipay" value="{$info['alipay']}">
+                                        </esui-text-box>
+                                    </div>
+                                    <div class="ui-button skin-ok skin-ok-button" id="editali" uid="{$info['id']}">确定</div>
+                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                                </div>
+                            </div>
+                        </div>
+	                </td>
+	            </tr>
+	            {/if}
+	            {if !empty( $member['mobile'] )}
+	            <tr>
+	                <td width="70">登录账户</td>
+	                <td width="270"> 
+	                	{$member['mobile']}
+	                </td>
+	                <td width="70">
+                        <div class="ui-table-cell-text-last edit_table_item">
+                            <a href="javascript:;" class="edit_bot" >修改密码</a>
+                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+                                <div class="ui-table-editor-opt">
+                                    <div>新密码
+                                        <esui-text-box class="ui-ctrl ui-textbox">
+                                            <input type="text" class="drop_down_input" name="pass" value="">
+                                        </esui-text-box>
+                                    </div>
+                                    <div class="ui-button skin-ok skin-ok-button epass_user" uid="{$member['uid']}">确定</div>
+                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                                </div>
+                            </div>
+                        </div>
+	                </td>
+	            </tr>
+	            {/if}
+	            {if $this->module['config']['ulevel'] == 1}
+	            <tr>
+	                <td width="70">会员等级</td>
+	                <td width="270" >
+	                	{if $info['level'] == 0}
+	                		普通会员
+	                	{elseif $info['level'] == 1}
+	                		{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}
+	                		{if $info['utime'] < TIMESTAMP}
+	                			<p class="font_ff5f27">已过期</p>
+	                		{else}
+	                			<p class="font_ff5f27">剩余:{php echo Util::lastTime($info['utime'],false)}</p>
+	                		{/if}
+	                	{elseif $info['level'] == 2}
+	                		{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}
+	                		{if $info['utime'] < TIMESTAMP}
+	                			<p class="font_ff5f27">已过期</p>
+	                		{else}
+	                			<p class="font_ff5f27">剩余:{php echo Util::lastTime($info['utime'],false)}</p>
+	                		{/if}
+	                	{/if}
+	                </td>
+	                <td width="70">
+                        <div class="ui-table-cell-text-last edit_table_item">
+                            <a href="javascript:;" class="edit_bot" >修改</a>
+                            <div class="ui-table-editor dropdown_menu_box dropdown_data_list">
+                                <div class="ui-table-editor-opt">
+
+				                    <div class="ui-select-out">
+				                        <div class="ui-select">
+				                            <span class="ui-select-text">
+				                                会员类型
+				                            </span>
+				                        </div>
+				                        <ol class="ui-select-layer ui-layer" >
+				                            
+				                            <li data-value="1" class="ui-select-item" >
+				                                <span title="">普通会员</span>
+				                            </li>
+				                            <li data-value="2" class="ui-select-item" >
+				                                <span title="">{php echo empty($_W['set']['uonename']) ? '一级会员' : $_W['set']['uonename']}</span>
+				                            </li>
+				                            <li data-value="3" class="ui-select-item" >
+				                                <span title="">{php echo empty($_W['set']['utwoname']) ? '二级会员' : $_W['set']['utwoname']}</span>
+				                            </li>
+				                        </ol>
+				                        <input type="hidden" class="drop_down_select ui-select-input" name="level" value="">
+				                    </div>
+                                    <div style="margin-top: 5px;">会员时限(月)
+                                        <esui-text-box class="ui-ctrl ui-textbox">
+                                            <input type="text" class="drop_down_input" name="time" value="">
+                                        </esui-text-box>
+                                    </div>
+                                    <div class="ui-button skin-ok skin-ok-button elevel_user" uid="{$info['id']}">确定</div>
+                                    <div class="ui-button skin-cancel skin-cancel-button ui-table-editor-cancel">取消</div>
+                                </div>
+                            </div>
+                        </div>
+	                </td>
+	            </tr>
+	            {/if}
+	            {if $this->module['config']['isanw'] == 1}
+	            <tr>
+	                <td width="70">查看答案数据</td>
+	                <td width="270" >
+						<div class="mb05" style="white-space: nowrap;">当前利润总和：{$boxarr['allrun']}</div>
+						<div class="mb05" style="white-space: nowrap;">所有人查看答案付费：{$boxarr['totalm']}</div>
+						<div class="mb05" style="white-space: nowrap;">总计查看答案付费：{$boxarr['mym']}(知识力量值)</div>
+						<div class="mb05" style="white-space: nowrap;">的知识力量比：{$boxarr['mym']}/{$boxarr['totalm']}={php echo sprintf('%.2f',$boxarr['mym']/$boxarr['totalm'])}</div>
+						<div class="mb05" style="white-space: nowrap;">截止今日凌晨所有人查看答案利润：{$boxarr['yesdayrun']}</div>
+						<div class="mb05" style="white-space: nowrap;">截止今日凌晨已经发放的回馈利润：{$boxarr['geted']}</div>
+						<div class="mb05" style="white-space: nowrap;">利润回馈比例：{$_W['set']['anwmb']}%</div>
+						<div class="mb05" style="white-space: nowrap;">每天利润回馈比例：{$_W['set']['anwmbday']}%</div>
+						<div class="mb05" style="white-space: nowrap;">昨日额外利润：{$_W['set']['ewaimb']}</div>
+						<div class="mb05" style="white-space: nowrap;">截止今日凌晨可回馈利润总额：{$boxarr['yesdayrun']}*{$_W['set']['anwmb']}%-{$boxarr['geted']}+{$_W['set']['ewaimb']}={$boxarr['lastrun']}</div>
+						<div class="mb05" style="white-space: nowrap;">昨日可回馈利润总额：{$boxarr['lastrun']}*{$_W['set']['anwmbday']}%={$boxarr['yesdayrunb']}</div>
+
+						<div class="mb05" style="white-space: nowrap;">今天可领取昨天的回馈利润：{$boxarr['yesdayrunb']}* {$boxarr['mymper']}={$boxarr['yesdayrunmy']}</div>
+	                </td>
+	                <td width="70">
+	                	
+	                </td>
+	            </tr>
+
+	            {/if}
+	            <tr>
+	                <td width="70">昵称</td>
+	                <td width="270" >
+	                	{$info['nickname']}
+	                </td>
+	                <td width="70">
+	                	
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">openid</td>
+	                <td width="270">{$info['openid']}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">手机号</td>
+	                <td width="270">{$info['mobile']}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">性别</td>
+	                <td width="270">
+			            {if $info['sex'] > 0}
+			                {php echo in_array($info['sex'],array(1,3)) ? '男' : '女'}
+			            {else}
+			            	未设置
+			            {/if}
+	                </td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">状态</td>
+	                <td width="270">
+                		{php echo $info['status'] == 2 ? '黑名单' : '正常'}
+	                </td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70"> {$_W['cname']}</td>
+	                <td width="270">{$credit['credit2']}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">保证金</td>
+	                <td width="270">{$info['deposit']}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">介绍</td>
+	                <td width="270">{$info['guydesc']}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">任务情况</td>
+	                <td width="270">
+	                	发布{$info['pubnumber']}，采纳{$info['acceptnumber']}，回复{$info['replynumber']}，被采纳{$info['acceptednumber']}
+	                </td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">剩余疲劳度</td>
+	                <td width="270">{$info['activity']}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">上级会员</td>
+	                <td width="270">
+		                <p>
+		                    上级，{php echo empty($info['parent']) ? '无' : $parent['nickname'].'，编号: '.$parent['id']}
+		                </p>
+		                <p>
+		                    上上级，{php echo empty($two) ? '无' : $two['nickname'].'，编号: '.$two['id']}
+		                </p>
+		                <p>
+		                    上上上级，{php echo empty($three) ? '无' : $three['nickname'].'，编号: '.$three['id']}
+		                </p> 
+	                </td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">为上级创造提成</td>
+	                <td width="270">上级 {$info['giveparent']},上上级 {$info['givetwo']},上上上级 {$info['givethree']}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">注册时间</td>
+	                <td width="270">{php echo date('Y-m-d H:i:s',$info['createtime'])}</td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            {if $this->module['config']['isclosefind'] == 0}
+	            <tr>
+	                <td width="70">个人页面</td>
+	                <td width="270">
+	                	<p class="a_hraf">
+	                		发任务：
+	                		<a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('guy',array('op'=>'puber','id'=>$info['id']))}">
+	                			{php echo Util::createModuleUrl('guy',array('op'=>'puber','id'=>$info['id']))}
+	                		</a>
+	                	</p>
+	                	<p>
+	                		接任务：
+	                		<a href="javascript:;" class="copy_url" data-href="{php echo Util::createModuleUrl('guy',array('op'=>'accer','id'=>$info['id']))}">
+	                			{php echo Util::createModuleUrl('guy',array('op'=>'accer','id'=>$info['id']))}
+	                		</a>
+	                	</p>
+	                </td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            {/if}
+	            <tr>
+	                <td width="70">认证状态</td>
+	                <td width="270">
+			            {if $info['verifystatus'] == 0}
+			                未提交认证
+			            {elseif $info['verifystatus'] == 1}
+			                认证审核中
+			            {elseif $info['verifystatus'] == 2}
+			                认证通过
+			            {elseif $info['verifystatus'] == 3}
+			                认证未通过  
+			            {/if}
+	                </td>
+	                <td width="70">
+	                </td>
+	            </tr>
+	            <tr>
+	                <td width="70">用户标签</td>
+	                <td width="270">
+			            {if !empty($useric)}
+			            	{loop $useric $item}
+			            		<div class="ic_item" cid="{$item['id']}" >{$item['ic']['name']}</div>
+			            	{/loop}
+			            {/if}
+	                </td>
+	            </tr>
+		        {if !empty( $info['verifyform'] )}
+		            {loop $info['verifyform'] $item}
+			            <tr>
+			                <td width="70">{$item['name']}</td>
+			                <td width="270">
+		                        {if $item['type'] == 'image'}
+		                            <a target="_blank" class="verifyInfo" title="点击下载" href="{php echo tomedia($item['value'])}">
+		                                <img src="{php echo tomedia($item['value'])}" class="qrcode_pic" width="90" height="90">
+		                            </a>
+		                        {else}
+		                            {$item['value']}
+		                        {/if}
+			                </td>
+			                <td width="70">
+			                </td>
+			            </tr>
+		            {/loop}
+		        {/if}
+        	</tbody>
+    	</table>
+
+	</div>
+	{elseif  $_GPC['op'] == 'money'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/moneylog'}
+		
+	{elseif  $_GPC['op'] == 'deposit'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/depositlog'}
+
+	{elseif $_GPC['op'] == 'pubpri'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/privatetask'}
+
+	{elseif $_GPC['op'] == 'taked'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/privatetask'}
+
+	{elseif $_GPC['op'] == 'pub' }
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/task'}
+	{elseif $_GPC['op'] == 'pubtb'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/tbtask'}
+
+	{elseif $_GPC['op'] == 'dotb'}
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/tbtake'}
+
+	{elseif $_GPC['op'] == 'reply'}	
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/reply'}
+
+	{elseif $_GPC['op'] == 'pay'}	
+		{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/order'}	
+    {elseif $_GPC['op'] == 'down'}   
+
+
+
+
+<div class="table-full-wrap" >
+<form method="post" action="">
+    <div class="ui-ctrl ui-table ui-table-filter"> 
+        <div class="ui-table-head" style=" top: 0px; left: 0px;">
+        <div class="ui-ctrl ui-panel">
+        <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <th class="ui-table-hcell" >
+                    <div class="ui-table-hcell-text ui-table-hcell-text-first ui-table-hcell-sel">
+                        <input type="checkbox" class="ui-table-select-all" />id
+                    </div>
+                </th>
+                <th class="ui-table-hcell ui-table-hcell-sort" >
+                    <div class="ui-table-hcell-text">头像</div>
+                </th>
+                <th class="ui-table-hcell hcell-filter" >
+                    <div class="ui-table-hcell-text">昵称</div>
+                </th>
+                <th class="ui-table-hcell hcell-filter" >
+                    <div class="ui-table-hcell-text">贡献提成</div>
+                </th>
+                <th class="ui-table-hcell"  >
+                    <div class="ui-table-hcell-text ui-table-hcell-text-last">操作</div>
+                </th>
+            </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        <div class="ui-table-body">
+        <div class="ui-ctrl ui-panel">
+        {loop $list $item}    
+        <div class="ui-table-row ui-table-row-even" >  
+        <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+        <tbody>
+            <tr>
+                <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                    <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                        <span>
+                            <input type="checkbox" class="ui-table-multi-select" name="checkall[]" value="{$item['id']}" />{$item['id']}
+                        </span>
+                    </div>
+                </td>
+                <td id="ctrl-e-table-cell0-1" class="ui-table-cell" >
+                    <div class="ui-table-cell-text">
+		     			<img src="{$item['headimgurl']}" width="30px" height="30px">
+                    </div>
+                </td>
+                <td class="ui-table-cell" >
+                    <div class="ui-table-cell-text" >
+		     			{$item['nickname']}
+                    </div>
+                </td>
+                <td class="ui-table-cell"  >
+                    <div class="ui-table-cell-text">
+			    		{$item['giveparent']}
+                    </div>
+                </td>                           
+                <td class="ui-table-cell"  >
+                    <div class="ui-table-cell-text-last">
+				    	<a target="_blank" href="{php echo $this->createWebUrl('user',array('op'=>'info','id'=>$item['id']))}" >查看详情</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        </div>
+        {/loop}
+        </div>
+        </div>
+    </div>
+</div>
+<div class="ui-row">
+    <div class="ui-pager">
+        {$pager}
+    </div>
+</form>       
+</div>   
+
+{/if}
+</div>
+
+
+{template 'common/footer'}

@@ -1,0 +1,37 @@
+{template 'common/myheader'}
+
+    <div id="page_mypub" class="page page-current page_mypub">
+		<header class="bar bar-nav mypub_nav item_cell_box">
+		  	<div class="buttons-row item_cell_flex">
+		  		<div class="nav_buttons_row">
+		  			<a href="{php echo $this->createMobileUrl('mypub',array('op'=>'0'))}" class="{if empty($_GPC['op'])}active{/if} mybutton button">全部</a>	
+			    	<a href="{php echo $this->createMobileUrl('mypub',array('op'=>'1'))}" class="{if $_GPC['op'] == '1'}active{/if} mybutton button">未开始</a>		    	
+			    	<a href="{php echo $this->createMobileUrl('mypub',array('op'=>'2'))}" class="{if $_GPC['op'] == '2'}active{/if} mybutton button">进行中</a>
+			    	<a href="{php echo $this->createMobileUrl('mypub',array('op'=>'3'))}" class="{if $_GPC['op'] == '3'}active{/if} mybutton button">已结算</a>
+		  		</div>		    
+		  	</div>
+			<div class="bar_nav_r " id="filter">
+				<a href="javascript:;">筛选</a>
+			</div>		  	
+		</header>
+				<div class="bar bar-header-secondary index_search">
+				    <div class="searchbar">
+				      	<a class="searchbar-cancel" id="confirmsearch">搜索</a>
+				      	<div class="search-input">
+				        	<label class="icon icon-search" for="search"></label>
+				        	<input type="search" id="search" value="" placeholder="输入搜索内容">
+				      	</div>
+				    </div>
+				</div>
+		<div class="content infinite-scroll" data-distance="50">
+			<div class="list_container drop_class {if $_W['agent'] == 'iphone'}router{/if}">
+				
+			</div>
+			<div class="infinite-scroll-preloader">
+				<div class="preloader"></div>
+			</div>
+		</div>
+	</div>
+{template 'common/nav'}
+{template 'common/myfooter'}
+

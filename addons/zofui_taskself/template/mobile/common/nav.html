@@ -1,0 +1,53 @@
+{if empty($_W['set']['isbotbar']) || ( $_W['dev'] == 'wx' && $_W['set']['isbotbar'] == 2 )}
+{php $tabbar = model_tabbar::getBar($userinfo['uid'])}
+
+<div class="max640_box">
+    <ul class="foot_nav ">
+        {if empty( $tabbar['tabbar'] )}
+            <li class="nav_index">
+                <a href="{php echo $this->createMobileUrl('index')}" class="{if $_GPC['do'] == 'index'}act{/if}">
+                    {php echo empty($_W['set']['inm']) ? '接任务' : $_W['set']['inm']}
+                </a>
+            </li>
+            {if $_W['set']['isusetask'] == 1}
+                <li class="nav_use">
+                    <a href="{php echo $this->createMobileUrl('usetask')}" class="{if $_GPC['do'] == 'usetask'}act{/if}">试用任务</a>
+                </li>
+            {/if}
+            {if empty($_W['set']['isusetask']) && $_W['set']['istbtask'] == 1}
+                <li class="nav_tb">
+                    <a href="{php echo $this->createMobileUrl('tblist')}" class="{if $_GPC['do'] == 'tblist'}act{/if}">担保任务</a>
+                </li>
+            {/if}
+
+            {if $_W['set']['isclosepub'] == 0}
+                <li class="nav_pub">
+                    <a href="javascript:;" class="{if $_GPC['do'] == 'pub'}act{/if}">发任务</a>
+                </li>
+            {/if}
+            {if $_W['set']['isclosefind'] == 0}
+                <li class="nav_find">
+                    <a href="{php echo $this->createMobileUrl('find')}" class="{if $_GPC['do'] == 'find'}act{/if}">找人</a>
+                </li>
+            {/if}
+            <li class="nav_user">
+                <a href="{php echo $this->createMobileUrl('user')}" class="{if $_GPC['do'] == 'user'}act{/if}" style="position: relative;">
+                    {php echo empty($_W['set']['unm']) ? '我的' : $_W['set']['unm']}
+                    {if $tabbar['imess'] > 0}
+                        <div class="order_mark pri-color pri-border" style="right: -0.5rem;">{$tabbar['imess']}</div>
+                    {/if}
+                </a>
+            </li>
+        {else}
+            {loop $tabbar['tabbar'] $in}
+                {php $isact = strpos($_W['siteurl'],$in['url'])}
+                <li class="nav_user">
+                    <a href="{$in['url']}" style="position:relative;color:{php echo $isact === false?$in['color']:$in['actcolor']};background-image: url({php echo $isact === false?tomedia($in['img']):tomedia($in['actimg'])});">
+                        {$in['name']}
+                    </a>
+                </li> 
+            {/loop}
+        {/if}
+    </ul>
+</div>
+{/if}

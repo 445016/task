@@ -1,0 +1,92 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+
+<div class="list-content">
+
+{if $op == 'list'}
+<form action="" method="post">
+    <div class="table-full-wrap" >
+
+        <div class="operation-wrap" data-follow-thead="table">
+            <div class="buttons-wrap" style="height: 30px;">
+            </div>
+            <div class="buttons-quick-wrap">
+                
+            </div>
+        </div>
+
+        <div class="ui-ctrl ui-table ui-table-filter"> 
+            <div class="ui-table-head" style=" top: 0px; left: 0px;">
+            <div class="ui-ctrl ui-panel">
+            <table cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+                <tr>
+                    <th class="ui-table-hcell hcell-filter" >
+                        <div class="ui-table-hcell-text">禁止操作员的权限</div>
+                    </th>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="ui-table-body">
+            <div class="ui-ctrl ui-panel">
+            <div class="ui-table-row ui-table-row-even" >  
+            <table cellpadding="0" cellspacing="0" width="100%" data-control-table="table">
+            <tbody>
+                <tr>
+                    <td id="ctrl-e-table-cell0-0" class="ui-table-cell" >
+                        <div class="ui-table-cell-text ui-table-cell-text-first ui-table-cell-sel">
+                            
+                            <div class="ui-boxgroup ui-boxgroup-horizontal">
+                                {loop $leftmenu $key $item}
+                                    <div style="padding: 10px 0;">
+                                        {loop $item['list'] $in}
+                                        {if $in['do'] != 'vauth'}
+                                            <label  class="ui-boxgroup-radio" >
+                                                 <input type="checkbox" class="frm_checkbox" name="authinput" value="{php echo $key.$in['op']}" {if in_array($key.$in['op'],(array)$params )}checked="checked"{/if} name="kefupo[]" {php echo $key.$in['op']} /> 
+                                                <span>{$in['name']}</span>
+                                            </label>
+                                        {/if}
+                                        {/loop}
+                                    </div>
+                                {/loop}
+
+                                <div class="note">勾选的是禁止操作员进入的</div>        
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+	</form> 
+</div>
+
+<script type="text/javascript">
+	$(function(){
+
+
+        $('input[name="authinput"]').change(function(){
+            var postdata = {
+                opp : $(this).val(),
+                v : $(this).prop('checked'),
+            };
+
+            Http('post','json','changeauth',postdata,function(data){
+                webAlert(data.res);
+            },true);
+        });
+
+
+	});
+</script>
+
+{/if}
+</div>	
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}  
+{template 'common/footer'}

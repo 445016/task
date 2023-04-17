@@ -1,0 +1,959 @@
+
+{if $_GPC['do'] == 'pub' || $_GPC['do'] == 'pubtb'}	
+	<!-- 超链接 -->
+	<div class="popup popup-link">
+	  <div class="content-block">
+		<div class="form_list">
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					链接文字
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="linkname" class="form_input form_into" value="" placeholder="请输入文字">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					链接网址
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="linkurl" class="form_input form_into" value="" placeholder="将网址粘贴到这">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>
+		</div>
+
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_link">确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+
+	<!-- 卡首屏 -->
+	<div class="popup popup-ka">
+	  <div class="content-block">
+
+		<div class="form_list">
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					宝贝ID
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="goodid" class="form_input form_into" value="" placeholder="请输入宝贝ID">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>		
+		</div>
+
+
+		<div class="form_list popup_ka_list">
+			<div class="mb05 form_group item_cell_box popup_ka_item">
+				<div class="form_title">
+					关键词
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="ka[]" class="form_input form_into" value="" placeholder="请输入关键词">
+					</li>
+					<li class="form_per delete_ka">删除</li>
+				</div>
+			</div>
+		</div>
+		<div class="popup_ka_add">
+			添加关键字(最多9个)
+		</div>
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_ka">确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-continue">
+	  <div class="content-block">
+		<div class="form_list">
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					连续天数
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="tel" name="continueday" class="form_input form_into" value="" placeholder="请输入数字">
+					</li>
+					<li class="form_per">天</li>
+				</div>
+			</div>
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					额外奖励
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="number" name="continuemoney" class="form_input form_into" value="" placeholder="请输入金额">
+					</li>
+					<li class="form_per">{$_W['cper']}</li>
+				</div>
+			</div>
+			<p class="form_tips">连续发布是指，除了此次发布以外，往后在连续天数内每天系统自动帮你发布一条此任务。额外奖励是指连续完成了这些任务的人将得到额外的奖励。</p>
+			<p class="form_tips">
+				没有奖励完的额外奖励将在最后一天退还到您的{$_W['cname']}内。
+			</p>
+		</div>
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_continue">确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-tbform">
+	  <div class="content-block">
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+		<div class="form_list tbform_list">
+			
+		</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-taskform">
+	  <div class="content-block">
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+		<div class="form_list">
+			{loop $form $item}
+				<div class="showform_item item_cell_box">
+					<div class="showform_name item_cell_flex">{$item['name']}</div>
+					<div class="showform_btn showform_view" fid="{$item['id']}">查看</div>
+					<div class="showform_btn showform_select" fid="{$item['id']}" name="{$item['name']}">选择</div>
+				</div>
+			{/loop}
+		</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-steptemp">
+	  <div class="content-block">
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+		<div class="form_list">
+			{loop $steptemp $item}
+				<div class="showform_item item_cell_box">
+					<div class="showform_name item_cell_flex">{$item['name']}</div>
+					<div class="showform_btn steptemp_view" fid="{$item['id']}">查看</div>
+					<div class="showform_btn steptemp_select" fid="{$item['id']}" name="{$item['name']}">选择</div>
+				</div>
+			{/loop}
+		</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-viewform">
+	  <div class="content-block">
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class=" popup_btn popup_close viewform_close">关闭</a>
+	  	</div>
+		<div class="form_list">
+			
+		</div>
+	  </div>
+	</div>
+
+	<!-- 隐藏内容 -->
+	<div class="popup popup-hide">
+	  <div class="content-block">
+		<div class="form_list">
+			<div class="pub_content mt05">
+				<div class="pub_content_title">隐藏内容</div>
+				<div class="weui_textarea pub_hide_content needsclick" contenteditable="true"></div>
+			</div>
+		</div>
+
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_hide">确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  	<p class="form_tips">提示：会员接到任务后才能看见隐藏内容。</p>
+	  </div>
+	</div>
+
+	<div class="popup popup-stepname">
+	  <div class="content-block">
+		<div class="form_list">
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					第一步
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="steptempname" step="1" class="form_input form_into" value="{php echo empty( $step ) ? ( empty( $_W['set']['tbstep1'] ) ? '上传浏览图片' : $_W['set']['tbstep1'] ) : $step[0]['name']}" placeholder="请输入名称">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					第二步
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="steptempname" step="2" class="form_input form_into" value="{php echo empty( $step ) ? ( empty( $_W['set']['tbstep2'] ) ? '上传下单图片' : $_W['set']['tbstep2'] ) : $step[1]['name']}" placeholder="请输入名称">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					第三步
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="steptempname" step="3" class="form_input form_into" value="{php echo empty( $step ) ? ( empty( $_W['set']['tbstep3'] ) ? '上传签收图片' : $_W['set']['tbstep3'] ) : $step[2]['name']}" placeholder="请输入名称">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					第四步
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="steptempname" step="4" class="form_input form_into" value="{php echo empty( $step ) ? ( empty( $_W['set']['tbstep4'] ) ? '上传评价图片' : $_W['set']['tbstep4'] ) : $step[3]['name']}" placeholder="请输入名称">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>
+			<div class="mb05 form_group item_cell_box">
+				<div class="form_title">
+					第五步
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="steptempname" step="5" class="form_input form_into" value="{php echo empty( $step ) ? ( empty( $_W['set']['tbstep5'] ) ? '备注留言' : $_W['set']['tbstep5'] ) : $step[4]['name']}" placeholder="请输入名称">
+					</li>
+					<li class="form_per"></li>
+				</div>
+			</div>
+		</div>
+
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_editstep">确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+
+{/if}
+
+	<div class="popup popup-pubrule">
+	  <div class="content-block">
+		{php echo htmlspecialchars_decode($pubrule['content'])}
+	  	<div class="popup_bot " >
+	  		<a href="javascript:;" class="close-popup popup_btn pri-bg popup_close">阅读并遵守规则</a>
+	  	</div>
+	  	
+	  </div>
+	</div>
+
+{if $_GPC['do'] == 'tblist'}
+	<div class="popup popup-needtoplist">
+	  <div class="content-block">
+		
+		<div class="needtoplist_box">
+			<div class="needtop_item">
+				<div class="needtop_title">我欺负完全放弃发完全放弃无法去服务器放弃放我去飞</div>
+				<div class="item_cell_box font_mid">
+					<li>距任务结束:11小时</li>
+					<li class="item_cell_flex tr">剩余置顶时间:11小时</li>
+				</div>
+				<div class="item_cell_box ">
+					<li class="font_mid">可增加置顶:11小时</li>
+					<li class="item_cell_flex tr a_href">增加置顶时间</li>
+				</div>
+			</div>
+		</div>
+		
+	  	<div class="popup_bot " >
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  	
+	  </div>
+	</div>
+{/if}
+
+{if $_GPC['do'] == 'tbtask'}
+	<div class="popup popup-taketbtask">
+	  <div class="content-block">
+		<div class="form_group item_cell_box mt05 item_cell_start">
+			<div class="form_title">
+				提交内容
+			</div>
+			<div class="form_right item_cell_flex item_cell_box">
+				<li class="item_cell_flex">
+					<textarea name="taketbcontent" id="fwqfqwfaaa" class="form_textarea" placeholder="请在此输入内容"></textarea>
+				</li>
+				<li class="form_per"></li>
+			</div>
+		</div>
+		<div class="pub_content">
+			<div class="pub_content_title">提交图片</div>
+			<div class="pub_images_list taketbtask_imgbox">
+				<div class="upload_images_views">
+				</div>				
+				<div class="uploader_input uploader_input_sub" id="uploader_taketbtask"></div>	
+			</div>
+		</div>
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirmtaketbtask" >确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+
+	<!-- 筛选回复 -->
+	<div class="popup popup-filter popup-filter-tbtasklist">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			<li  class="popup_filter_btn filter_replay" name="待审核" type="1">待审核</li>
+			<li  class="popup_filter_btn filter_replay" name="任务中" type="2">任务中</li>
+			<li  class="popup_filter_btn filter_replay" name="已失败" type="3">已失败</li>
+			<li  class="popup_filter_btn filter_replay" name="已完成" type="4">已完成</li>
+			<li  class="popup_filter_btn filter_replay" name="申诉中" type="5">申诉中</li>
+		</div>
+
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-filter popup-filter-dealtask">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			<li class="popup_filter_btn " id="count_task">结算任务</li>
+			<li class="popup_filter_btn " id="addtask">追加任务</li>
+			<li class="popup_filter_btn " id="addtoptime">追加置顶</li>	
+		</div>
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>
+
+{/if}
+
+{if $_GPC['do'] == 'task' || $_GPC['do'] == 'tbtask'}
+	<!-- 留言 -->
+	<div class="popup popup-message">
+	  <div class="content-block">
+	  		<div class="popup_message_list">
+	  			<!-- <div class="popup_message_item item_cell_box">
+	  				<div class="popup_message_l">
+	  					<img src="http://wx.qlogo.cn/mmopen/wjVtTPhRGG9fZenhTfOXibjkpVmNsibEdArvR4ZS51erSX6AmhibrMEztkCoib1DYO0Yem16BPwaiaSGNZrTB4cG3ic3k1K9oicv9vr/0">
+	  				</div>
+	  				<div class="popup_message_r item_cell_flex">
+	  					<p class="popup_message_nick nickname">未到期的</p>
+	  					<p class="popup_message_content">未到期的未到期的未到期的未到期的</p>
+	  					<p class="popup_message_time font_13px_999">22分钟前</p>
+	  					<div class="reply_message_list">
+	  						<div class="item_cell_box reply_message_item">
+	  							<li class="nickname">服务器放弃发</li>
+	  							<li class="reply_message_content item_cell_flex">的服务器放弃发去发起的服务器放弃发去发起的服务器放弃发去发起</li>
+	  						</div>
+	  					</div>
+	  				</div>
+	  			</div> -->
+	  		</div>
+  			<li class="more_message">
+  				<span id="more_message">查看更多</span>
+  			</li>
+
+		  	<div class="popup_bot">
+		  		{if $task['userid'] != $userinfo['uid'] }
+		  		<div class="popup_form">
+		  			<textarea class="popup_form_text" name="taskmessage" placeholder="在此输入留言内容"></textarea>
+		  		</div>
+		  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_message">留言提问</a>
+		  		{/if}
+		  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+		  	</div>
+	  </div>
+	</div>
+
+	<!-- 连续任务 -->
+	<div class="popup popup-continue">
+	  <div class="content-block" style="margin-bottom: 3rem;">
+	  		<div class="popup_continue_list bordbot">
+	  		</div>
+		  	<div class="popup_bot">
+		  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+		  	</div>
+		  	<div class="form_tips">提示：完成所有连续任务，并都被采纳将获得<span class="font_ff5f27">{$continue['money']}</span>额外奖励 </div>
+	  </div>
+	</div>
+
+	<!-- 筛选回复 -->
+	<div class="popup popup-filter popup-filter-replay">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			<li  class="popup_filter_btn filter_replay" name="我回复的" type="1">我回复的</li>
+			{if $_W['set']['tlshow'] == 0 || $task['userid'] == $userinfo['uid']}
+			<li  class="popup_filter_btn filter_replay" name="待采纳" type="2">待采纳</li>
+			<li  class="popup_filter_btn filter_replay" name="已采纳" type="3">已采纳</li>
+			<li  class="popup_filter_btn filter_replay" name="已拒绝" type="4">已拒绝</li>
+			{/if}
+		</div>
+
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>
+
+
+	<!-- 筛选回复 -->
+	<div class="popup popup-filter popup-filter-takerule" style="border-radius: 10px 10px 0px 0px;">
+	  <div class="content-block pd05 fffbg" style="border-radius: 10px 10px 0px 0px;">
+		<div class="takerule_box" style="border-radius: 10px 10px 0px 0px;">
+			
+			<div class="mb05">
+				{php echo htmlspecialchars_decode($takerule['content'])}
+			</div>
+			<div class="weui_cells_checkbox">
+				<label class="weui_cell weui_check_label needsclick" for="isform1">
+					<div class="weui_cell_hd needsclick">
+						<input type="checkbox" class="weui_check needsclick" name="notips" id="isform1" value="1" >
+						<i class="weui_icon_checked needsclick"></i>
+					</div>
+					<div class="weui_cell_bd weui_cell_primary needsclick">
+						<span class="form_tips needsclick">不再提示</span>
+					</div>
+				</label>
+			</div>
+		</div>
+
+	  	<div class="popup_bot pd05">
+	  		<li class="pri-bg close-popup pub_btn tc " id="confirmtake">我知道了</li>
+	  	</div>
+	  </div>
+	</div>	
+
+	<!-- 筛选回复 -->
+	<div class="popup popup-filter popup-filter-usetaskreplay">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			<li  class="popup_filter_btn filter_replay" name="待审核" type="1">待审核</li>
+			<li  class="popup_filter_btn filter_replay" name="待提交订单" type="2">待提交订单</li>
+			<li  class="popup_filter_btn filter_replay" name="待完成" type="3">已提交订单</li>
+			<li  class="popup_filter_btn filter_replay" name="已完成" type="4">已完成</li>
+			<li  class="popup_filter_btn filter_replay" name="已失败" type="5">已失败</li>
+		</div>
+
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>
+
+	<!-- 审核任务 -->
+	<div class="popup popup-filter popup-filter-verify">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			<li  class="popup_filter_btn filter_verify" type="1">审核通过</li>
+			<li  class="popup_filter_btn filter_verify" type="2">审核不通过</li>
+		</div>
+
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>
+
+	<!-- 回复任务 -->
+	<div class="popup popup-reply">
+	  <div class="content-block">
+	  		{if $_GPC['do'] == 'task' && $task['type'] == 0 && $task['istaskform'] == 1 && !empty( $form['form'] )}
+				{loop $form['form'] $k $item}
+					{if $item['type'] == 'img'}
+						<div class="pub_content mt05">
+							<div class="pub_content_title">{$item['name']}</div>
+							<div class="pub_images_list formitemimg" fid="{$item['id']}">
+								<div class="upload_images_views"></div>			
+								<div class="uploader_input {$item['id']} subform_img" key="{$item['id']}" num="{$item['maxnum']}"></div>
+							</div>
+						</div>
+					{elseif $item['type'] == 'text'}
+						<div class="form_group mt05 item_cell_box">
+							<div class="form_title">
+								{$item['name']}
+							</div>
+							<div class="form_right item_cell_flex">
+								<textarea style="border:0;" class="pub_task_content reply_task_content formitem" fid="{$item['id']}" placeholder="{$item['pla']}"></textarea>
+							</div>
+						</div>			
+					{else}
+						<div class="form_group mt05 item_cell_box">
+							<div class="form_title">
+								{$item['name']}
+							</div>
+							<div class="form_right item_cell_flex item_cell_box">
+								<li class="item_cell_flex">
+									<input type="{php echo $item['type'] == 'card' || $item['type'] == 'tel' ? 'tel' : ( $item['type'] == 'num' ? 'number' : 'text' ) }" name="taskmoney" class="form_input form_into formitem" fid="{$item['id']}" value="" placeholder="{$item['pla']}">
+								</li>
+							</div>
+						</div>
+					{/if}
+				{/loop}
+			{else}
+				<div class="pub_content mt05 ">
+					<div class="pub_content_title">回复内容</div>
+					<textarea name="content" class="pub_task_content reply_task_content" placeholder="在此输入回复内容"></textarea>
+				</div>
+				<div class="pub_content">
+					<div class="pub_content_title">回复图片</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views"></div>			
+						<div class="uploader_input uploader_reply"></div>
+					</div>
+				</div>
+			{/if}
+		  	<div class="popup_bot">
+		  		<a href="javascript:;" class="popup_btn popup_confirm" id="reply_confirm" >确定</a>
+		  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+		  	</div>
+			<div class="guy_task_item font_mini">提示：请不要回复虚假内容，否则将被雇主拒绝。</div>
+	  </div>
+	</div>
+
+
+	<!-- 补充 -->
+	<div class="popup popup-addcontent">
+	  <div class="content-block">
+			<div class="pub_content mt05 ">
+				<div class="pub_content_title">补充内容</div>
+				<textarea name="addcontent" class="pub_task_content reply_task_content" placeholder="在此输入补充的内容"></textarea>
+			</div>
+			<div class="pub_content">
+				<div class="pub_content_title">补充图片</div>
+				<div class="pub_images_list">
+					<div class="upload_images_views"></div>			
+					<div class="uploader_input uploader_addcontent"></div>
+				</div>
+			</div>
+		  	<div class="popup_bot">
+		  		<a href="javascript:;" class="popup_btn popup_confirm" id="addcontent_confirm" >确定</a>
+		  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+		  	</div>
+	  </div>
+	</div>
+
+	{if $_GPC['do'] == 'task'}
+	<div class="popup popup-filter popup-filter-dealtask">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			{if $_W['set']['iscandownload'] == 1}
+				<li class="popup_filter_btn " id="down_task">下载数据</li>
+			{/if}
+			{if empty($task['ispause'])}
+				<li class="popup_filter_btn pause_task" type="0">关闭任务</li>
+			{else}
+				<li class="popup_filter_btn pause_task" type="1">开启任务</li>
+			{/if}
+			<li class="popup_filter_btn " id="count_task">结算任务</li>
+			<li class="popup_filter_btn " id="addtask">追加任务</li>			
+		</div>
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>
+	{/if}
+
+	<!-- 投诉 -->
+	<div class="popup popup-complain">
+	  <div class="content-block">
+			<div class="pub_content mt05 ">
+				<div class="pub_content_title">投诉内容</div>
+				<textarea name="commplain" class="pub_task_content " placeholder="在此输入投诉的内容"></textarea>
+			</div>
+			<div class="pub_content">
+				<div class="pub_content_title">投诉图片</div>
+				<div class="pub_images_list">
+					<div class="upload_images_views"></div>			
+					<div class="uploader_input uploader_complain"></div>
+				</div>
+			</div>
+		  	<div class="popup_bot">
+		  		<a href="javascript:;" class="popup_btn popup_confirm" id="complain_confirm" >确定</a>
+		  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+		  	</div>
+	  </div>
+	</div>
+
+	<!-- 抢试用任务 -->
+	<div class="popup popup-takeuse">
+	  <div class="content-block">
+			<div class="pub_content mt05 ">
+				<div class="pub_content_title">提交内容</div>
+				<textarea name="takeuse" class="pub_task_content " placeholder="在此输入提交的内容"></textarea>
+			</div>
+			<div class="pub_content">
+				<div class="pub_content_title">提交图片</div>
+				<div class="pub_images_list">
+					<div class="upload_images_views"></div>			
+					<div class="uploader_input uploader_take"></div>
+				</div>
+			</div>
+		  	<div class="popup_bot">
+		  		<a href="javascript:;" class="popup_btn popup_confirm" id="takeuse_confirm" >确定</a>
+		  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+		  	</div>
+	  </div>
+	</div>	
+{/if}
+
+	<div class="popup popup-filter popup-filter-pub">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			{loop $tasksort $item}
+				<a href="{php echo $this->createMobileUrl('pub',array('sid'=>$item['id']))}">
+					<li  class="popup_filter_btn " >{$item['name']}</li>
+				</a>
+			{/loop}
+			{if $_W['set']['isusetask'] == 1}
+				<a href="{php echo $this->createMobileUrl('pubuse')}">
+					<li  class="popup_filter_btn" >试用任务</li>
+				</a>
+			{/if}
+			{if empty($_W['set']['isusetask']) && $_W['set']['istbtask'] == 1 && empty($_W['set']['ispubtbtask']) }
+				<a href="{php echo $this->createMobileUrl('pubtb')}">
+					<li  class="popup_filter_btn" >担保任务</li>
+				</a>
+			{/if}			
+		</div>
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>	
+
+
+		<!-- 主页导航 -->
+		<div class="popup popup-filter popup-filter-indexnav">
+		  <div class="content-block">
+			<div class="popup_filter_list">
+				<a href="{php echo $this->createMobileUrl('myreply',array('op'=>1))}">
+					<li  class="popup_filter_btn " >我接的任务</li>
+				</a>
+				{if $_W['set']['isclosepub'] == 0}
+				<a href="{php echo $this->createMobileUrl('mypub',array('op'=>2))}">
+					<li  class="popup_filter_btn " >我发的任务</li>
+				</a>
+				{/if}
+				{if $_W['set']['isusetask'] == 1}
+					<a href="{php echo $this->createMobileUrl('myuse',array('status'=>0))}">
+						<li  class="popup_filter_btn " >我的试用任务</li>
+					</a>
+				{/if}
+			</div>
+		  	<div class="popup_bot">
+		  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+		  	</div>
+		  </div>
+		</div>
+
+{if $_GPC['do'] == 'guy'}
+	<!--  -->
+	<div class="popup popup-guytask">
+	  <div class="content-block">
+			{if $_GPC['op'] == 'puber'}
+				<div class="form_group item_cell_box mt05 item_cell_start">
+					<div class="form_title">
+						任务内容
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<textarea name="tasktitle" class="form_textarea" placeholder="请在此输入您索要的任务内容"></textarea>
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+				<div class="form_group mt05 item_cell_box">
+					<div class="form_title">
+						要求赏金
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="number" name="taskmoney" class="form_input form_into" value="" placeholder="输入您要求的赏金">
+						</li>
+						<li class="form_per">{$_W['cper']}</li>
+					</div>
+				</div>
+				<div class="form_group mt05 item_cell_box">
+					<div class="form_title">
+						完成时限
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="tasktime" class="form_input form_into" value="" placeholder="您完成任务的时间">
+						</li>
+						<li class="form_per">小时</li>
+					</div>
+				</div>						
+					
+
+			{elseif $_GPC['op'] == 'accer'}
+				<div class="form_group item_cell_box mt05 item_cell_start">
+					<div class="form_title">
+						任务要求
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<textarea name="tasktitle" class="form_textarea" placeholder="请在此输入任务要求"></textarea>
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+				<div class="pub_content">
+					<div class="pub_content_title">任务配图</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views">
+						</div>				
+						<div class="uploader_input uploader_input_sub"></div>	
+					</div>
+				</div>
+				<div class="form_group mt05 item_cell_box">
+					<div class="form_title">
+						任务赏金
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="number" name="taskmoney" class="form_input form_into" value="" placeholder="输入您要求的赏金">
+						</li>
+						<li class="form_per">{$_W['cper']}</li>
+					</div>
+				</div>
+				<div class="form_group mt05 item_cell_box">
+					<div class="form_title">
+						任务时限
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="tasktime" class="form_input form_into" value="" placeholder="您完成任务的时间">
+						</li>
+						<li class="form_per">小时</li>
+					</div>
+				</div>
+			{/if}
+			{if $_GPC['op'] == 'puber'}	
+			<div class="guy_task_item font_13px_999 mt05">提示：任务将扣除服务费:
+				<font class="server font_ff5f27">0</font>，任务完成后您能获得收益:
+				<font class="income font_ff5f27">0</font>。
+			</div>
+			{else}
+			<div class="guy_task_item font_13px_999 mt05">提示：需支付:
+				<font class="income font_ff5f27">0</font>，其中服务费:
+				<font class="server font_ff5f27">0</font>。
+			</div>
+			{/if}
+
+		
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="guy_confirm" type="{$_GPC['op']}">确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+{/if}
+
+{if $_GPC['do'] == 'privatetask'}
+	<div class="popup popup-privatetask-com">
+	  <div class="content-block">
+		<div class="form_group item_cell_box mt05 item_cell_start">
+			<div class="form_title">
+				提交内容
+			</div>
+			<div class="form_right item_cell_flex item_cell_box">
+				<li class="item_cell_flex">
+					<textarea name="completecontenta" id="fwqfqwf" class="form_textarea" placeholder="请在此输入发给雇主的内容"></textarea>
+				</li>
+				<li class="form_per"></li>
+			</div>
+		</div>
+		<div class="pub_content">
+			<div class="pub_content_title">提交图片</div>
+			<div class="pub_images_list">
+				<div class="upload_images_views">
+				</div>				
+				<div class="uploader_input uploader_input_sub"></div>	
+			</div>
+		</div>
+		<p class="form_tips">提示:请确保任务已达到雇主要求再提交，否则会被雇主拒绝。</p>
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirmcomplete" >确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-privatetask-refuse">
+	  <div class="content-block">
+		<div class="form_group item_cell_box mt05 item_cell_start">
+			<div class="form_title">
+				拒绝理由
+			</div>
+			<div class="form_right item_cell_flex item_cell_box">
+				<li class="item_cell_flex">
+					<textarea name="refusereasona" id="fwqfqwf" class="form_textarea" placeholder="请在此输入理由"></textarea>
+				</li>
+				<li class="form_per"></li>
+			</div>
+		</div>
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirmrefuse" >确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>	
+	<div class="popup popup-privatetask-explain">
+	  <div class="content-block">
+		<div class="form_group item_cell_box mt05 item_cell_start">
+			<div class="form_title">
+				投诉理由
+			</div>
+			<div class="form_right item_cell_flex item_cell_box">
+				<li class="item_cell_flex">
+					<textarea name="refusereasonb" class="form_textarea" placeholder="请在此输入理由"></textarea>
+				</li>
+				<li class="form_per"></li>
+			</div>
+		</div>
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirmcomplain" >确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>		
+{/if}
+
+{if $_GPC['do'] == 'set'}
+	<div class="popup popup-privatetask-set">
+	  <div class="content-block">
+		{php echo htmlspecialchars_decode($instruct['set'])}
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+{/if}
+
+{if $_GPC['do'] == 'down'}
+	<div class="popup popup-privatetask-down">
+	  <div class="content-block">
+		{php echo htmlspecialchars_decode($instruct['down'])}
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+
+	<div class="popup popup-downa">
+	  <div class="content-block">
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+		<div class="content-body">
+			
+		</div>
+	  </div>
+	</div>
+	
+	<div class="popup popup-filter popup-filter-sharep">
+	  <div class="content-block">
+		<div class="popup_filter_list item_cell_box downs_sbox">
+			<div class="downs_in sharepriend">
+				<img src="https://img11.360buyimg.com/ddimg/jfs/t1/57133/8/248/5770/5cd3e68eE890623f4/1fcf7402c953b0dc.png">
+				<div class="downs_name">微信好友</div>
+			</div>
+			<div class="downs_in sharepriend">
+				<img src="https://img11.360buyimg.com/ddimg/jfs/t1/84533/6/178/5642/5cd3e693Ec41ccb71/7cba27c41db6b3df.png">
+				<div class="downs_name">朋友圈</div>
+			</div>
+			<div class="downs_in linkshare">
+				<img src="https://img11.360buyimg.com/ddimg/jfs/t1/35145/37/10098/5691/5cd3e697Eb2547d97/2f6ee138f0e7bd9e.png">
+				<div class="downs_name">链接分享</div>
+			</div>
+			<div class="downs_in createPoset">
+				<img src="https://img11.360buyimg.com/ddimg/jfs/t1/49385/21/256/5000/5cd3e69bEf68e8f80/044e62b9622eafd5.png">
+				<div class="downs_name">专属二维码</div>
+			</div>
+		</div>
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">取消</li>
+	  	</div>
+	  </div>
+	</div>
+
+{/if}
+{if $_GPC['do'] == 'mypub'}
+	<!-- 筛选我的试用 -->
+	<div class="popup popup-filter popup-filter-mypubfilter">
+	  <div class="content-block">
+		<div class="popup_filter_list">
+			{if !empty($tasksort)}
+				{loop $tasksort $item}
+					<a href="{php echo $this->createMobileUrl('mypub',array('sid'=>$item['id'],'op'=>$_GPC['op']))}">
+						<li  class="popup_filter_btn {if $_GPC['sid'] == $item['id']}pri-color{/if}" name="{$item['name']}" sortid="{$item['id']}">{$item['name']}</li>
+					</a>
+				{/loop}
+			{/if}
+			<li  class="popup_filter_btn filter_replay" name="普通任务" type="1">普通任务</li>
+			<li  class="popup_filter_btn filter_replay" name="试用任务" type="2">试用任务</li>
+		</div>
+	  	<div class="popup_bot">
+	  		<li class="close-popup popup_filter_btn popup_filter_close">关闭</li>
+	  	</div>
+	  </div>
+	</div>
+{/if}
+
+{if $_GPC['do'] == 'pubuse'}
+	<!-- 试用任务搜方式 -->
+	<div class="popup popup-usekey">
+	  <div class="content-block">
+	  	
+		<div class="form_list popup_ka_list">
+			<div class="mb05 form_group item_cell_box popup_ka_item">
+				<div class="form_title">
+					关键词
+				</div>
+				<div class="form_right item_cell_flex item_cell_box">
+					<li class="item_cell_flex">
+						<input type="text" name="ka[]" class="form_input form_into" value="" placeholder="请输入关键词">
+					</li>
+					<li class="form_per delete_ka">删除</li>
+				</div>
+			</div>
+		</div>
+		<div class="popup_ka_add">
+			添加关键字(最多9个)
+		</div>
+	  	<div class="popup_bot">
+	  		<a href="javascript:;" class="popup_btn popup_confirm" id="confirm_ka">确定</a>
+	  		<a href="javascript:;" class="close-popup popup_btn popup_close">关闭</a>
+	  	</div>
+	  </div>
+	</div>
+{/if}

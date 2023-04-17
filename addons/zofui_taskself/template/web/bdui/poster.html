@@ -1,0 +1,132 @@
+{template '../../../addons/'.MODULE.'/template/web/'.$_W['mtemp'].'/common/myheader'}
+<div class="list-content">
+    <div class="table-wrap" >		
+	{if $_GPC['op'] == 'design'}	
+		<script type="text/javascript" src="{php echo MODULE_URL}public/js/lib/angular.min.js"></script>
+		<div class="my_article_box set_prize_box" ng-app="myyapp" ng-controller="ctr" ng-cloak>
+		  	<div class=""  >
+		  		<div class="temp_head_item article_left_top " ng-class="{temp_head_item_select : headitem == 1}" ng-click="changeItem(1)">
+		  			设计海报
+		  		</div>
+		  		<div class="temp_head_item article_left_top " ng-class="{temp_head_item_select : headitem == 2}" ng-click="changeItem(2)">
+		  			设置关键词
+		  		</div>
+		  		
+		  		<div ng-show="headitem == 2" style="margin-top: 50px;">
+	                <div class="form-row" >
+	                    <label>生成海报关键词</label>
+	                    <div class="form-value">
+	                        <esui-text-box class="ui-ctrl ui-textbox">
+	                            <input type="text" class="input_300"  name="key" value="{$poster['key']}">
+	                        </esui-text-box>
+	                        <p class="note frm_tips_default">填写一个关键词，这个关键词可放菜单栏供粉丝点击使用</p>
+	                    </div>
+	                </div>
+					<div class="form-row">
+	                    <label>扫码成功提示</label>
+	                    <div class="form-value">
+	                        <esui-text-box class="ui-ctrl ui-textbox">
+	                            <textarea  name="content" class="frm_textarea" rows="6" placeholder="">{$poster['content']}</textarea>
+	                        </esui-text-box>
+	                        <p class="note">这个是扫码成功后，发给粉丝的文字提示</p>
+	                    </div>
+                	</div>
+                	<div class="form-row">
+	                    <label>生成海报提示</label>
+	                    <div class="form-value">
+	                        <esui-text-box class="ui-ctrl ui-textbox">
+	                            <textarea  name="ccontent" class="frm_textarea" rows="6" placeholder="">{$poster['ccontent']}</textarea>
+	                        </esui-text-box>
+	                        <p class="note">这个是生成海报后，发给粉丝的文字提示</p>
+	                    </div>
+                	</div>
+					<div class="form-row">
+	                    <label></label>
+	                    <div class="form-value">
+	                        <input type="submit" name="savekey" class="ui-button skin-ok-button" value="保存" ng-click="saveKey()" >
+	                    </div>
+                	</div>	
+					<div style="color: red !important;">&#x597D;&#x6E90;&#x7801;&#x7F51;&#x5206;&#x4EAB;</div>			
+
+		  		</div>
+			  	<div ng-show="headitem == 1">
+					<div class="my_article_box" >
+					  	<div class=""  ng-cload>
+						  	<div class="item_cell_box">
+								<div class="article_left">
+									<div class="article_left_mobile">
+										<div class="mobile_top"></div>
+										<div class="mobile_head">
+											<span class="title" ng-cloak></span> 
+										</div>
+										<div class="page-content"  style="padding: 5px 0">
+											<div class="mobile_body" ng-style="{'background-image':'url('+pbg+')'}" style="height: 500px">
+												<div ng-repeat="item in pitems track by $index"  ng-click="getFocus(item.id)"  class="view_item show_item" viewid="{{item.id}}"  ng-class="{'article_view_selected' : focus == item.id}" ng-style="{'left':item.params.left + 'px','top':item.params.top + 'px'}" on-draggable ng-include="'./../addons/zofui_taskself/template/web/default/temp/view-'+item.name+'.html'">
+												</div>
+											</div>
+										</div>
+										<div class="mobile_bottom"></div>
+									</div>
+								</div>
+								<div class="article_right item_cell_flex" style="">
+
+									<div class="portable_editor " style="margin-top: 40px">
+										<div class="editor_inner " >
+
+							                <div class="form-row" >
+							                    <label>页面元素</label>
+							                    <div class="form-value">
+							                        <span ng-repeat="item in pmodules" class="btn ui-button skin-ok-button" ng-click="addItem(item.name)">{{item.title}}</span>
+							                    </div>
+							                </div>
+							                <div class="form-row" >
+							                    <label>背景图片</label>
+							                    <div class="form-value">
+													<div class="edit_image_upload" ng-click="uploadImage('pbg')">
+														<img class="upload_image_img" ng-src="{{pbg}}" >
+														<span class="edit_image_notice">修改</span>
+													</div>
+													<p class="note input_300">提示：背景尺寸640X1008(像素)，用jpg格式的图片，在左边预览框内拖动元素可移动位置，点击图片右下角可缩放和放大图片。</p>
+							                    </div>
+							                </div>
+											
+											<div ng-repeat="item in pitems track by $index" class="edit_item simple" editid="{{item.id}}"  ng-show="focus == item.id" >
+												   <div ng-include="'./../addons/zofui_taskself/template/web/default/temp/edit-'+item.name+'.html?a=1'"></div>
+											</div>
+
+											<div class="form-row" >
+							                    <label></label>
+							                    <div class="form-value">
+													<span class="btn ui-button skin-ok-button" ng-click="savePoster()">保存预览</span>
+													<div style="margin-top: 10px">
+														<img src="{php echo $pimg['res']['url'] . '?a='.time()}" width="278px">
+													</div>
+							                    </div>
+							                </div>
+											
+										</div>
+										<span class="editor_arrow_wrp js_arrow">
+											<i class="editor_arrow editor_arrow_out"></i>
+											<i class="editor_arrow editor_arrow_in"></i>
+										</span>
+									</div>
+								</div>
+						  	</div>	
+						</div>
+					</div>
+
+					<script type="text/javascript">
+						var poster = {php echo empty($poster) ? '""' : json_encode($poster)};
+						var pparams = {php echo empty($poster['params']) ? '""' : json_encode($poster['params'])};
+					</script>
+			  	</div>
+
+			</div>
+		</div>
+	
+		<script type="text/javascript" src="{php echo MODULE_URL}template/web/bdui/js/custom.js"></script>
+	{/if}
+</div>
+</div>
+{template '../../../addons/'.MODULE.'/template/web/bdui/common/copyright'}	
+{template 'common/footer'}

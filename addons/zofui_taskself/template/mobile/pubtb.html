@@ -1,0 +1,408 @@
+
+{template 'common/myheader'}
+
+    <div id="page_pubtb" class="page page_pubtb page-current">
+		<div class="content">
+			{template 'common/top'}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务标题
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="title" class="form_input form_into" value="" placeholder="请输入文字">
+						</li>
+						<li class="form_per">
+							<span class="tbform quest_btn" content="">模板</span>
+						</li>
+					</div>
+				</div>
+			</div>
+			<div class="form_list ">
+				<div class="pub_content">
+					<div class="pub_content_title">任务内容</div>
+					<div class="weui_textarea pub_task_content needsclick" contenteditable="true" style="border-bottom: 0">
+						<span class="form_tips">请在此输入任务内容</span>
+					</div>
+					<div class="hide_box mt05"></div>
+					<div class="link_box mt05"></div>
+					<div class="pub_tool">
+						<span id="add_hide">添加隐藏内容</span>
+						<span id="into_link">超链接</span>
+						<span id="remove_all">清空</span>
+					</div>
+				</div>
+			</div>
+			<div class="form_list">
+				<div class="pub_content">
+					<div class="pub_content_title">任务配图 <span class="font_mini">(接到可看)</span></div>
+					<div class="pub_images_list needsclick">
+						<div class="upload_images_views">
+						</div>				
+						<div class="uploader_input needsclick" id="uploader_input"></div>	
+					</div>
+				</div>
+			</div>
+			<div class="form_list">
+				<div class="pub_content">
+					<div class="pub_content_title">隐藏配图 <span class="font_mini">(审核后可看)</span></div>
+					<div class="pub_images_list needsclick">
+						<div class="upload_images_views">
+						</div>				
+						<div class="uploader_input needsclick" id="uploader_hide"></div>	
+					</div>
+				</div>	
+			</div>
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						任务总量
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="num" class="form_input form_into" value="" placeholder="请填正整数">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						任务赏金
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="number" name="money" class="form_input form_into" value="" placeholder="给会员的赏金">
+						</li>
+						<li class="form_per">元/项</li>
+					</div>
+				</div>
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						担保金额
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="tbmoney" class="form_input form_into" value="" placeholder="会员预支的金额">
+						</li>
+						<li class="form_per">元/项</li>
+					</div>
+				</div>
+				{if $_W['set']['istbtkl'] == 1}
+					<div class="form_group item_cell_box">
+						<div class="form_title">
+							淘宝口令
+						</div>
+						<div class="form_right item_cell_flex item_cell_box">
+							<li class="item_cell_flex">
+								<input type="tel" name="tkl" class="form_input form_into" value="" placeholder="输入淘宝商品淘口令">
+							</li>
+						</div>
+					</div>
+				{/if}
+				{if $_W['set']['addr'] == 1}
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务地址
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="address" class="form_input form_into" value="" placeholder="请填任务详细地址">
+						</li>
+					</div>
+				</div>
+				{/if}
+			</div>
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务步骤
+					</div>
+					<div class="item_cell_flex pl0 weui_cells_checkbox tbtask_checkbox">
+							<label class="ml05 weui_cell weui_check_label needsclick  " step="1">
+								<div class="weui_cell_hd needsclick ">
+									<input type="checkbox" class="weui_check" name="step"  value="1" {if empty( $step[0] ) || $step[0]['ischecked']}checked="checked"{/if} >
+									<i class="weui_icon_checked"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">1.{php echo empty( $step ) ? ( empty( $_W['set']['tbstep1'] ) ? '上传浏览图片' : $_W['set']['tbstep1'] ) : $step[0]['name']}</span>
+								</div>
+								<input type="hidden" class="weui_check" name="stepname"  value="{php echo empty( $step[0] ) ? ( empty( $_W['set']['tbstep1'] ) ? '上传浏览图片' : $_W['set']['tbstep1'] ) : $step[0]['name']}" >
+							</label>
+							<label class="ml05 weui_cell weui_check_label needsclick " step="2">
+								<div class="weui_cell_hd needsclick">
+									<input type="checkbox" class="weui_check" name="step" value="2" {if empty( $step[1] ) || $step[1]['ischecked']}checked="checked"{/if}>
+									<i class="weui_icon_checked"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">2.{php echo empty( $step ) ? ( empty( $_W['set']['tbstep2'] ) ? '上传下单图片' : $_W['set']['tbstep2'] ) : $step[1]['name']}</span>
+								</div>
+								<input type="hidden" class="weui_check" name="stepname"  value="{php echo empty( $step[1] ) ? ( empty( $_W['set']['tbstep2'] ) ? '上传下单图片' : $_W['set']['tbstep2'] ) : $step[1]['name']}" >
+							</label>
+							<label class="ml05 weui_cell weui_check_label needsclick " step="3">
+								<div class="weui_cell_hd needsclick">
+									<input type="checkbox" class="weui_check" name="step" value="3" {if empty( $step[2] ) || $step[2]['ischecked']}checked="checked"{/if}>
+									<i class="weui_icon_checked"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick" step="1">
+									<span class="form_tips needsclick">3.{php echo empty( $step ) ? ( empty( $_W['set']['tbstep3'] ) ? '上传签收图片' : $_W['set']['tbstep3'] ) : $step[2]['name']}</span>
+								</div>
+								<input type="hidden" class="weui_check" name="stepname"  value="{php echo empty( $step[2] ) ? ( empty( $_W['set']['tbstep3'] ) ? '上传签收图片' : $_W['set']['tbstep3'] ) : $step[2]['name']}" >
+							</label>
+							<label class="ml05 weui_cell weui_check_label needsclick " step="4">
+								<div class="weui_cell_hd needsclick">
+									<input type="checkbox" class="weui_check" name="step" value="4" {if empty( $step[3] ) || $step[3]['ischecked']}checked="checked"{/if}>
+									<i class="weui_icon_checked"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">4.{php echo empty( $step ) ? ( empty( $_W['set']['tbstep4'] ) ? '上传评价图片' : $_W['set']['tbstep4'] ) : $step[3]['name']}</span>
+								</div>
+								<input type="hidden" class="weui_check" name="stepname"  value="{php echo empty( $step[3] ) ? ( empty( $_W['set']['tbstep4'] ) ? '上传评价图片' : $_W['set']['tbstep4'] ) : $step[3]['name']}" >
+							</label>
+							<label class="ml05 weui_cell weui_check_label needsclick " step="5">
+								<div class="weui_cell_hd needsclick">
+									<input type="checkbox" class="weui_check" name="step" value="5" {if empty( $step[4] ) || $step[4]['ischecked']}checked="checked"{/if}>
+									<i class="weui_icon_checked"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">5.{php echo empty( $step) ? ( empty( $_W['set']['tbstep5'] ) ? '备注留言' : $_W['set']['tbstep5'] ) : $step[4]['name']}</span>
+								</div>
+								<input type="hidden" class="weui_check" name="stepname"  value="{php echo empty( $step[4] ) ? ( empty( $_W['set']['tbstep5'] ) ? '备注留言' : $_W['set']['tbstep5'] ) : $step[4]['name']}" >
+							</label>
+							<div class="pl05">
+								<a href="javascript:;" id="edit_stepname">修改步骤名称</a>
+							</div>															
+					</div>
+				</div>			
+			</div>
+
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						限制次数
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="limitnum" class="form_input form_into" value="1" placeholder="每人能接的次数">
+						</li>
+						<li class="form_per">次/人</li>
+					</div>
+				</div>
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						性别限制
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check" name="sex" value="0" checked="checked" >
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不限制</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check" name="sex" value="1" >
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">男可接</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check" name="sex" value="2" >
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">女可接</span>
+							</div>
+						</label>						
+					</div>
+				</div>			
+				
+			</div>	
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						置顶任务
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check" name="istop" value="0" checked="checked" id="pub_isstop1">
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不置顶</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check" name="istop" value="1" id="pub_isstop2">
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">设置置顶 <font class="font_ff5f27 needsclick" id="toptime_notice">{if $settings['tbtopserver'] > 0}({php echo $settings['tbtopserver']*100/100}元/小时){/if}</font></span>
+							</div>
+						</label>
+					</div>
+				</div>
+				<input type="hidden" name="toptime" value="0">
+			</div>
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						区域限制
+					</div>
+					<div class="item_cell_flex weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick form_cityitem mb05" for="notarealimit" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="0" checked="checked" id="notarealimit">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不限制</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="arealimita" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="1" id="arealimita">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">限到区县</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="arealimitb" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="2" id="arealimitb">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">限到市</span>
+							</div>
+						</label>
+						<label class="mr05 weui_cell weui_check_label needsclick form_cityitem mb05" for="arealimitc" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isarealimit" value="3" id="arealimitc">
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">限到省</span>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div id="isarealimit" style="display: none;">
+					<div class="mt05 form_group item_cell_box">
+						<div class="form_title">
+							可接区域
+						</div>
+						<div class="item_cell_flex needsclick">
+							<input type="text" name="area" placeholder="请点击选择区域" id="city-picker" readonly="" value="" style="width: 100%;">
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务目标id
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="gid" class="form_input form_into" value="" placeholder="输入任务的id">
+						</li>
+						<li class="form_per">
+							<span class="quest quest_btn" content="发布的所有任务中，相同的任务目标id，每个人只能接一次。若不设置则不做限制">?</span>
+						</li>
+					</div>
+				</div>
+			</div>
+
+			
+			{if $_W['set']['istbka'] == 1}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						卡首屏
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick" for="pub_isshow1" id="pub_noka">
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check" name="iska" value="0" checked="checked" id="pub_isshow1">
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不设置</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick" for="pub_isshow2" id="pub_setka">
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check" name="iska" value="1" id="pub_isshow2">
+								<i class="weui_icon_checked"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">设置{if $settings['tbkaserver'] > 0}({$settings['tbkaserver']}元/次){/if}</span>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="form_group ka_show_list ">
+
+				</div>
+			</div>
+			{/if}
+			<p class="form_tips font_mini tr">
+				（ 服务费<font class="font_ff5f27" >{php echo $settings['tbpubserver']*100/100}</font> +
+				置顶费<font class="font_ff5f27" id="servertop">0</font>
+				{if $_W['set']['istbka'] == 1}+ 卡首屏<font class="font_ff5f27" id="kamoney">0</font>{/if}）
+			</p>
+			
+		</div>
+	</div>
+	<div class="max640_box">
+		<div class="pub_bot" >
+			{if $_W['set']['rdrule'] == 1}
+				<div class="pubrule">
+					<div class="weui_cells_checkbox" style="padding-left: 0">
+						<label class="weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="checkbox" class="weui_check needsclick" name="readit" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd needsclick">
+								我已阅读、理解并同意<a href="jacascript:;" id="showrule">《发布规则》</a>的全部内容
+							</div>
+						</label>
+					</div>
+				</div>
+			{/if}
+			<span id="pub_btn" class="pub_btn">确认发布 <font id="total_money" class="font_mini">({php echo $settings['tbpubserver']*100/100}元)</font> </span>
+		</div>	
+	</div>
+	{if $_W['set']['tbpubneedposit'] > 0 && $userinfo['deposit'] <  $_W['set']['tbpubneedposit']}
+		<div class="max640_box">
+			<div class="item_cell_box sub_item pub_warn">
+				{if $userinfo['deposit'] <= 0}
+					<div class="item_cell_flex pub_warn_l">您的保证金不足，不能发布任务</div>
+				{else}
+					<div class="item_cell_flex pub_warn_l">保证金不小于{php echo $_W['set']['tbpubneedposit']*100/100}才能发布任务</div>
+				{/if}
+				<div class="sub_btn">
+					<span class="toadd_click">去充值</span>  
+					<span class="close_sub">×</span>
+				</div>
+			</div>
+		</div>
+	{/if}
+
+{template 'common/setnick'}	
+{template 'common/myfooter'}

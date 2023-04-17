@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$settings['title']}</title>
+		<meta charset="utf-8">
+		{php $jstime = '?t='.time()}
+		<meta content="telephone=no, address=no" name="format-detection">
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+		<link href="../addons/{php echo MODULE}/public/css/sm.min.css" rel="stylesheet">
+		<link href="../addons/{php echo MODULE}/public/css/sm-extend.css" rel="stylesheet">
+		<link href="../addons/{php echo MODULE}/public/css/weui.min.css" rel="stylesheet">
+		<link href="../addons/{php echo MODULE}/public/css/common.css{$jstime}" rel="stylesheet">
+		<script src="../addons/{php echo MODULE}/public/js/lib/zepto.min.js"></script>
+		<script src="../addons/{php echo MODULE}/public/js/app/common.js{$jstime}"></script>
+	    {php echo Util::register_jssdk(false,$_W['dev']);}
+	    {php $actcolor = $this->module['config']['maintype'] == 0 ? '#ed414a' : ( $this->module['config']['maintype'] == 1 ? '#6683ff' : $this->module['config']['maincolor'] )}
+<style type="text/css">
+.pri-bg{
+	background-color: {$actcolor}!important;
+	color:#fff;
+}
+.pri-color{
+	color: {$actcolor}!important;
+}
+.pri-border{
+	border-color: {$actcolor}!important;
+}
+.font_activity{
+    background:{$actcolor}!important;
+}
+.font_activity_noback{
+    color:{$actcolor}!important;
+    border-color:{$actcolor}!important;
+}
+.font_ff5f27{
+    color:{$actcolor}!important;
+}
+.weui_cells_checkbox .weui_check:checked+.weui_icon_checked:before {
+    color: {$actcolor};
+}
+.foot_nav a.act {
+    color: {$actcolor};
+}
+.top_box {
+    background: {$actcolor};
+}
+.index_head {
+    background: {$actcolor};
+}
+.index_item_money{
+    color: {$actcolor};
+}
+.status_ing {
+    color: {$actcolor};
+}
+.top_task{
+    color: {$actcolor};
+}
+.pub_btn{
+    background: {$actcolor};
+}
+.ka_show_list span{
+    background: {$actcolor};
+}
+.label-switch input[type=checkbox]:checked+.checkbox {
+    background: {$actcolor};
+}
+.popup_confirm{
+    background: {$actcolor};
+}
+.buttons-row .button.active {
+    background-color: {$actcolor};
+}
+.buttons-row .button {
+    border-color: {$actcolor};
+    color: {$actcolor};
+}
+.buttons-row .mybutton {
+    border-color: {$actcolor};
+    color: {$actcolor};
+}
+.user_head{
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(rgb(220, 220, 220)), to({$actcolor}));
+}
+.user_list_item p:nth-of-type(1){
+    font-size: 16px;
+    font-weight: bold;
+    color: {$actcolor};
+}
+.task_contenthead span{
+    color: {$actcolor};
+}
+.task_replay_bottom .task_replay_in{
+    color: {$actcolor};
+}
+.task_replay_status.refuse{
+    color: {$actcolor};
+}
+.givetask_btn{
+    background: {$actcolor};
+}
+.money_log_money{
+    color: {$actcolor};
+}
+.private_btn{
+    background: {$actcolor};
+}
+.page_usetask .good_bot ,.page_mypub .good_bot{
+    color: {$actcolor};
+}
+.tao_box_top {
+    background: {$actcolor};
+}
+.tao_box_in .taotitle{
+    border: 1px dashed {$actcolor};
+}
+.tao_box_in .popwtitle {
+    background: {$actcolor};
+}
+.copy_btn span{
+    background: {$actcolor};
+}
+.share_typeact{
+    background: {$actcolor};
+}
+.showform_btn{
+    background: {$actcolor};
+}
+.level_top{
+    background: {$actcolor};
+}
+.level_item_act span{
+    background-color: {$actcolor};
+}
+.level_paybtn{
+    background: {$actcolor};
+}
+.level_t {
+    border-left: 4px solid {$actcolor};
+}
+.user_list_title{
+    border-left: 4px solid {$actcolor};
+}
+.setnick_btn{
+    background: {$actcolor};
+}
+.style-bg{
+    background-color: {$actcolor};
+    color:#fff;
+}
+</style>
+{if $_W['set']['maintype'] == 1}
+<style type="text/css">
+.index_ad_l{
+    background-image: url(../addons/zofui_taskself/public/images/blue/ad.png);
+}
+.index_item_money {
+	background: url(../addons/zofui_taskself/public/images/blue/coin.png) no-repeat;
+	background-size: 0.6rem;
+	background-position: left center;
+}
+
+.item_task .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/cold.png);
+}
+.item_add .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/tx.png);
+}
+.item_draw .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/ka.png);
+}
+.item_group .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/my_down.png);
+}
+.item_set .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/profile.png);
+}
+.item_mess .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/mess.png);
+}
+.item_pri .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/p_icon.png);
+}
+.item_tasktb .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/tb_icon.png);
+}
+.item_taskuse .imga{
+    background-image: url(../addons/zofui_taskself/public/images/blue/p_icon.png);
+}
+
+.foot_nav li.nav_index a {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_11.png);
+    
+}
+.foot_nav li.nav_pub a {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_21.png);
+}
+.foot_nav li.nav_find a {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_31.png);
+}
+.foot_nav li.nav_user a {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_41.png);
+}
+.foot_nav li.nav_use a {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_51.png);
+}
+.foot_nav li.nav_tb a {
+    background-image: url(../addons/zofui_taskself/public/images/blue/db1.png);
+}
+
+.foot_nav li.nav_index a.act {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_12.png);
+}
+.foot_nav li.nav_pub a.act {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_22.png);
+}
+.foot_nav li.nav_find a.act {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_32.png);
+}
+.foot_nav li.nav_user a.act {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_42.png);
+}
+.foot_nav li.nav_use a.act {
+    background-image: url(../addons/zofui_taskself/public/images/blue/icon_52.png);
+}
+.foot_nav li.nav_tb a.act {
+    background-image: url(../addons/zofui_taskself/public/images/blue/db2.png);
+}
+.index_item_read {
+    background: url(../addons/zofui_taskself/public/images/blue/rq1.png) no-repeat;
+    background-size: 0.6rem;
+    background-position: left center;
+}
+.page_usetask .price_icon, .page_mypub .price_icon {
+	background: url(../addons/zofui_taskself/public/images/blue/coin.png) no-repeat;
+    background-size: 0.6rem;
+    background-position: left center;
+}
+.page_usetask .good_cart, .page_mypub .good_cart {
+    background: url(../addons/zofui_taskself/public/images/blue/rq1.png) no-repeat;
+    background-size: 0.6rem;
+    background-position: left 0.15rem
+}
+</style>
+{/if}
+<style type="text/css">
+{if !empty($_W['set']['hhbg'])}
+.index_item_read {
+    background: url({php echo tomedia($_W['set']['hhbg'])}) no-repeat;
+}
+{/if}
+</style>
+
+	</head>
+	<body>
+		<div class="page-group">
+		    <script type="text/javascript">
+		    	var settings = {php echo json_encode($settings)};
+		    	settings.dev = "{$_W['dev']}";
+		    </script>
+	    	
+			{if $_W['issub'] == 0 && $_W['dev'] == 'wx'}
+			
+				<div class="max640_box">
+					<div class="item_cell_box sub_item">
+						<div class="sub_headimg">
+							<img src="{php echo  $_W['account']['avatar']}">
+						</div>
+						<div class="item_cell_flex sub_notice">{php echo $_W['set']['substr']}</div>
+						<div class="sub_btn">
+							<span class="sub_click">立即关注</span>  
+							<span class="close_sub">×</span>
+						</div>
+					</div>
+				</div>
+				<div class="atom-dialog-wrap" id="sub_me">
+					<div class="mask"></div>
+					<div class="atom-dialog share-dialog">
+						<div class="atom-dialog-title">长按图片-识别二维码</div>
+						<div class="atom-dialog-content" style="text-align: center;">
+							<img src="{php echo  $_W['account']['qrcode']}">
+							<p class="sub_str">{php echo $_W['set']['substr1']}</p>		
+						</div>
+						<span class="close_line"></span>
+						<li class="close_token"></li>
+					</div>
+				</div>
+			{/if}
+
+			{if $_GPC['do'] == 'index'  && empty($_W['set']['indexm'])}
+			<div href="javascript:;" class="more_btn" id="more_btn">
+				<div class="more_menu">
+					<div class="more_arrow"></div>
+					<div class="more_item" id="icantake">可接任务</div>
+					<div class="more_item">
+						<a href="{php echo $this->createMobileUrl('myreply',array('op'=>1))}">接的任务</a>
+					</div>
+					<div class="more_item">
+						<a href="{php echo $this->createMobileUrl('mypub',array('op'=>2))}">发的任务</a>
+					</div>
+					{if $_W['set']['isusetask'] == 1}
+					<div class="more_item">
+						<a href="{php echo $this->createMobileUrl('myuse',array('status'=>0))}">我的试用</a>
+					</div>
+					{/if}
+					{if $_W['set']['iskefu'] > 0 && in_array($_GPC['do'],(array)$_W['set']['kefupo']) }
+						<div class="more_item">
+							{if $_W['set']['iskefu'] == 1}
+								<a href="javascript:;" id="show_kefuimg">联系客服</a>
+							{elseif $_W['set']['iskefu'] == 2}
+								<a href="tel://{$_W['set']['kefutel']}">联系客服</a>
+							{elseif $_W['set']['iskefu'] == 3}
+								<a href="{$_W['set']['kefuurl']}">联系客服</a>
+							{/if}
+						</div>
+					{/if}
+				</div>
+			</div>
+			{/if}
+
+			{if $_W['set']['iskefu'] > 0 && in_array($_GPC['do'],(array)$_W['set']['kefupo']) && $_GPC['do'] != 'index' }
+				<div class="kefu_btn">
+					{if $_W['set']['iskefu'] == 1}	
+						<a href="javascript:;" id="show_kefuimg">客服</a>
+					{elseif $_W['set']['iskefu'] == 2}
+						<a href="tel://{$_W['set']['kefutel']}">客服</a>
+					{elseif $_W['set']['iskefu'] == 3}
+						<a href="{$_W['set']['kefuurl']}">客服</a>
+					{/if}
+				</div>
+			{/if}
+
+			{if $_W['set']['iskefu'] > 0 && in_array($_GPC['do'],(array)$_W['set']['kefupo']) }
+				{if $_W['set']['iskefu'] == 1}
+					<div class="atom-dialog-wrap" id="kefu_qrcode">
+						<div class="mask"></div>
+						<div class="atom-dialog share-dialog">
+							<div class="atom-dialog-title">长按图片-识别二维码</div>
+							<div class="atom-dialog-content" style="text-align: center;">
+								<img src="{php echo  tomedia( $_W['set']['kefuimg'] )}">	
+							</div>
+							<span class="close_line"></span>
+							<li class="close_token"></li>
+						</div>
+					</div>
+				{/if}
+			{/if}
+
+			{if ($_W['set']['ulevel'] == 1 && $_GPC['do'] == 'pub' && ($userinfo['level'] <= 0 || $userinfo['utime'] <= TIMESTAMP)  && $_W['set']['upubcom'] == 1) || ($_W['set']['ulevel'] == 1 && $_GPC['do'] == 'pubuse' && ($userinfo['level'] <= 0 || $userinfo['utime'] <= TIMESTAMP)  && $_W['set']['upubuse'] == 1) || ($_W['set']['ulevel'] == 1 && $_GPC['do'] == 'task' && $task['type'] == 0 && ($userinfo['level'] <= 0 || $userinfo['utime'] <= TIMESTAMP)  && $_W['set']['ugetcom'] == 1) || ($_W['set']['ulevel'] == 1 && $_GPC['do'] == 'task' && $task['type'] == 1 && ($userinfo['level'] <= 0 || $userinfo['utime'] <= TIMESTAMP)  && $_W['set']['ugetuse'] == 1) || ($_W['set']['ulevel'] == 1 && $_GPC['do'] == 'pubtb' && ($userinfo['level'] <= 0 || $userinfo['utime'] <= TIMESTAMP)  && $_W['set']['upubtb'] == 1) || ($_W['set']['ulevel'] == 1 && $_GPC['do'] == 'tbtask' && ($userinfo['level'] <= 0 || $userinfo['utime'] <= TIMESTAMP)  && $_W['set']['ugettb'] == 1)}
+				<div class="atom-dialog-wrap" id="upuser" style="display: block;">
+					<div class="mask"></div>
+					<div class="atom-dialog share-dialog">
+						<div class="atom-dialog-content" style="text-align: center;">
+							<div class="upuser_top"></div>
+							<div class="upuser_body">
+								<li>升级会员才能{php echo in_array($_GPC['do'],array('pub','pubtb','pubuse')) ? '发布' : '接'}任务</li>
+								<li>比普通会员更低的发任务服务费</li>
+								<li>比普通会员更高的做任务收益率</li>
+								<li>比普通会员更高的下级分佣提成</li>
+							</div>
+							<a class="btn minibtn style-bg" href="{php echo $this->createMobileUrl('level')}">升级会员</a>
+						</div>
+						<span class="close_line"></span>
+						<li class="close_token"></li>
+					</div>
+				</div>
+			{/if}
+
+			{if !empty($imesss)}
+			<div class="atom-dialog-wrap" id="imessbox" style="display: block;">
+				<div class="mask"></div>
+				<div class="atom-dialog share-dialog">
+					<div class="atom-dialog-content" style="text-align: center;">
+						<div class="upuser_body imesss_body" >
+							{loop $imesss $item}
+								<div class="item_cell_box imesss_item">
+									<div class="item_cell_flex ">
+										<a href="{$item['url']}" class="imesss_itemt">
+											{$item['mess']}
+										</a>
+									</div>
+									<div class="icon icon-right"></div>
+								</div>
+							{/loop}
+						</div>
+						<a class="btn minibtn style-bg" href="{php echo $this->createMobileUrl('imess')}">查看全部</a>
+					</div>
+					<span class="close_line"></span>
+					<li class="close_token"></li>
+				</div>
+			</div>
+			{/if}
+
+			{if $_W['newgive'] > 0}
+				<div class="atom-dialog-wrap" id="imessboxa" style="display: block;">
+					<div class="mask"></div>
+					<div class="atom-dialog share-dialog newmembergive" >
+						<div class="atom-dialog-content" style="text-align: center;">
+							赠送你新人礼{$_W['newgive']}{$_W['cname']}，已发放到你的余额。做任务可获得更多{$_W['cname']}
+						</div>
+						<span class="close_line"></span>
+						<li class="close_token"></li>
+					</div>
+				</div>
+			{/if}
+
+	{if $_W['needbindmobile'] == 1}
+    <div class="setnick_box ">
+        <div class="mask" style="z-index:3"></div>
+        <div class="setnick_content setnick_mobox">
+        	<div class="setnick_til">绑定登录手机</div>
+            <div class="setnick_nick setnick_mo">
+            	
+                <input type="tel" name="bindtel" value="" placeholder="输入手机号">
+            </div>
+            <div class="setnick_nick setnick_mo">
+            	
+                <input type="password" name="bindpass1" value="" placeholder="输入密码">
+            </div>
+            <div class="setnick_nick setnick_mo">
+            	
+                <input type="password" name="bindpass2" value="" placeholder="确认密码">
+            </div>
+            <div class="btn setnick_btn confirm_bind" id="confirm_setmobile">确定</div>
+        </div>
+    </div>
+    {/if}

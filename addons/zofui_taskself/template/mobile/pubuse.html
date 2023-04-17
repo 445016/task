@@ -1,0 +1,362 @@
+
+{template 'common/myheader'}
+
+    <div id="page_pub" class="page page_pub page-current">
+		<div class="content">
+			{template 'common/top'}
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						商品链接
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="taourl" class="form_input form_into" value="" placeholder="请粘贴商品链接">
+						</li>
+						<li class="form_per">
+							<a href="javascript:;" id="get_tao_good">提取</a>
+						</li>
+					</div>
+				</div>
+
+				<div class="form_group item_cell_box ">
+					<div class="form_title">
+						商品标题
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="gtitle" class="form_input form_into" value="" placeholder="输入商品标题">
+						</li>
+					</div>
+				</div>
+
+				<div class="pub_content gpic">
+					<div class="pub_content_title">商品图片</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views">
+						</div>	
+						<div class="uploader_input  uploader_input_useimages"></div>	
+					</div>
+				</div>
+
+				<div class="pub_showgood_box">
+					<div class="mb05 form_group item_cell_box " >
+						<div class="form_title">
+							拍下金额
+						</div>
+						<div class="form_right item_cell_flex item_cell_box">
+							<li class="item_cell_flex">
+								<input type="number" name="paymoney" class="form_input form_into" value="" placeholder="输入试用者需拍下的价格">
+							</li>
+							<li class="form_per">元</li>
+						</div>
+					</div>
+				</div>
+			</div>		
+			<!-- <div class="form_list pub_showgood_box">
+				<p class="form_tips">下单商品</p>
+				<div class="pub_show_good item_cell_box">
+					<div class="pub_show_goodimg">
+						<img src="">
+					</div>
+					<div class="item_cell_flex pub_show_goodtitle"></div>
+				</div>
+			</div> -->
+
+			<div class="form_list pub_showgood_box">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务标题
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="title" class="form_input form_into" value="" placeholder="输入任务标题">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>
+			</div>	
+			<!-- <div id="pubuse_notice" class="form_tips pd05">提示：在上方'商品链接'内输入:淘宝、天猫商品链接或在手机淘宝内复制的商品链接，点击确定</div>
+			<div id="pubuse_box"> -->
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						提交内容
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick pubuse_set_prizetype" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isform" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick" ></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不用提交</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick pubuse_set_prizetype" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="isform" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">申请任务时提交内容</span>
+							</div>
+						</label>						
+					</div>
+				</div>
+			</div>
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						奖励方式
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick pubuse_set_prizetype" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="prizetype" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick" ></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">赏金奖励</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick pubuse_set_prizetype" >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="prizetype" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">实物奖励</span>
+							</div>
+						</label>						
+					</div>
+				</div>
+			</div>
+
+			
+			<div class="form_list pubuse_prizegood">
+				<div class="form_group item_cell_box mb05">
+					<div class="form_title ">
+						奖励物品
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="prizetitle" class="form_input form_into" value="" placeholder="输入奖励物品名称">
+						</li>
+						<li class="form_per">
+							<a href="javascript:;" id="use_usetask_good">设置下单商品</a>
+						</li>
+					</div>
+				</div>
+				<div class="pub_content">
+					<div class="pub_content_title">奖励图片</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views">
+						</div>				
+						<div class="uploader_input uploader_input_goodimg"></div>	
+					</div>
+				</div>
+			</div>	
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						试用总量
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="tel" name="usenum" class="form_input form_into" value="" placeholder="请填正整数">
+						</li>
+						<li class="form_per"></li>
+					</div>
+				</div>			
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						返还赏金
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="number" name="usemoney" class="form_input form_into" value="" placeholder="输入数字">
+						</li>
+						<li class="form_per">{$_W['cper']}</li>
+					</div>
+				</div>	
+				{if $_W['set']['addr'] == 1}
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						任务地址
+					</div>
+					<div class="form_right item_cell_flex item_cell_box">
+						<li class="item_cell_flex">
+							<input type="text" name="address" class="form_input form_into" value="" placeholder="请填任务详细地址">
+						</li>
+					</div>
+				</div>
+				{/if}		
+			</div>
+			<div class="form_list">
+				<div class="mb05 form_group item_cell_box">
+					<div class="form_title">
+						性别限制
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="sex" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不限制</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick ">
+								<input type="radio" class="weui_check needsclick" name="sex" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">男可接</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="sex" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">女可接</span>
+							</div>
+						</label>						
+					</div>
+				</div>
+			</div>	
+
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						置顶任务
+					</div>
+					<div class="item_cell_flex item_cell_box weui_cells_checkbox">
+						<label class="weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="usetop" value="0" checked="checked" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">不置顶</span>
+							</div>
+						</label>
+						<label class="ml05 weui_cell weui_check_label needsclick " >
+							<div class="weui_cell_hd needsclick">
+								<input type="radio" class="weui_check needsclick" name="usetop" value="1" >
+								<i class="weui_icon_checked needsclick"></i>
+							</div>
+							<div class="weui_cell_bd weui_cell_primary needsclick">
+								<span class="form_tips needsclick">置顶{if $settings['usetopserver'] > 0}({$settings['usetopserver']}{$_W['cper']}/次){/if}</span>
+							</div>
+						</label>						
+					</div>
+				</div>
+			</div>
+			<div class="form_list">
+				<div class="form_group item_cell_box">
+					<div class="form_title">
+						找商品方式
+					</div>
+					<div class="item_cell_flex weui_cells_checkbox">
+						<div class="item_cell_box">
+							<label class="weui_cell weui_check_label needsclick notkeyfind" >
+								<div class="weui_cell_hd needsclick">
+									<input type="radio" class="weui_check needsclick" name="findtype" value="0" checked="checked" >
+									<i class="weui_icon_checked needsclick"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">直达商品页</span>
+								</div>
+							</label>
+							<label class="ml05 weui_cell weui_check_label needsclick keyfind" >
+								<div class="weui_cell_hd needsclick">
+									<input type="radio" class="weui_check needsclick" name="findtype" value="1" >
+									<i class="weui_icon_checked needsclick"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">淘宝关键字搜索{if $_W['set']['findkeyserver'] > 0}<font class="font_mini font_ff5f27">({php echo $_W['set']['findkeyserver']*100/100}/次)</font>{/if} </span>
+								</div>
+							</label>
+						</div>
+						<div>
+							<label class="mt05 weui_cell weui_check_label needsclick notkeyfind" >
+								<div class="weui_cell_hd needsclick">
+									<input type="radio" class="weui_check needsclick" name="findtype" value="2" >
+									<i class="weui_icon_checked needsclick"></i>
+								</div>
+								<div class="weui_cell_bd weui_cell_primary needsclick">
+									<span class="form_tips needsclick">都关闭</span>
+								</div>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form_group ka_show_list "></div>
+			</div>			
+			<div class="form_list ">
+				<div class="pub_content">
+					<div class="pub_content_title">任务说明</div>
+					<!-- <textarea name="content" class="pub_task_content" placeholder="在此输入任务内容"></textarea> -->
+					<div class="weui_textarea pub_task_content needsclick" contenteditable="true">
+					{if empty( $sort['content'] )}
+						<span class="form_tips contentfalg">请在此输入任务说明</span>
+					{else}
+						{php echo htmlspecialchars_decode( $sort['content'] )}
+					{/if}
+					</div>
+					<div class="link_box mt05"></div>
+					<div class="pub_tool">
+						<span id="remove_all">清空</span>
+					</div>
+				</div>
+			</div>
+			<div class="form_list">
+				<div class="pub_content">
+					<div class="pub_content_title">备注图片</div>
+					<div class="pub_images_list">
+						<div class="upload_images_views">
+						</div>				
+						<div class="uploader_input uploader_input_images"></div>	
+					</div>
+				</div>
+			</div>
+			<p class="form_tips font_mini pt05 tr">
+				任务费<font class="font_ff5f27" id="taskmoney">0</font> +
+				服务费<font class="font_ff5f27" id="servermoney">0</font> +
+				{if $_W['set']['findkeyserver'] > 0}
+					搜索费<font class="font_ff5f27" id="findmoney">0</font> +
+				{/if}
+				置顶费<font class="font_ff5f27" id="servertop">0</font>
+			</p>
+			</div>
+		</div>
+	</div>
+	<div class="max640_box">
+		<div class="pub_bot" id="pubuse_btn">
+			<span class="pub_btn">确认发布 <font id="total_money" class="font_mini"></font> </span>
+		</div>	
+	</div>
+	{if $userinfo['deposit'] <  $_W['set']['warndeposit']}
+		<div class="max640_box">
+			<div class="item_cell_box sub_item pub_warn">
+				{if $userinfo['deposit'] <= 0}
+					<div class="item_cell_flex pub_warn_l">您的保证金不足，不能发布任务</div>
+				{else}
+					<div class="item_cell_flex pub_warn_l">您发布任务支出不能超过您的保证金({$userinfo['deposit']})</div>
+				{/if}
+				<div class="sub_btn">
+					<span class="toadd_click">去充值</span>  
+					<span class="close_sub">×</span>
+				</div>
+			</div>
+		</div>
+	{/if}
+{template 'common/setnick'}
+{template 'common/myfooter'}
